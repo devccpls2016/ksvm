@@ -147,9 +147,9 @@ function SurveysList() {
                   <TableCell className="text-xs text-muted-foreground">{new Date(r.created_at).toLocaleDateString("mr-IN")}</TableCell>
                   <TableCell className="text-xs text-muted-foreground">{new Date(r.updated_at).toLocaleDateString("mr-IN")}</TableCell>
                   <TableCell className="text-right whitespace-nowrap">
-                    <Link to="/surveys/$id" params={{ id: r.id }}>
-                      <Button variant="ghost" size="sm" title="संपादन करा (Edit)"><Pencil className="h-4 w-4"/></Button>
-                    </Link>
+                    <Button variant="ghost" size="sm" title="संपादन करा (Edit)" asChild>
+                      <Link to="/surveys/$id" params={{ id: r.id }}><Pencil className="h-4 w-4"/></Link>
+                    </Button>
                     <Button variant="ghost" size="sm" title="प्रिंट करा (Print full form)" onClick={() => openSurveyPrint(r, true)}><Printer className="h-4 w-4"/></Button>
                     <Button variant="ghost" size="sm" title="PDF डाउनलोड करा (Save as PDF)" onClick={() => openSurveyPrint(r, true)}><FileText className="h-4 w-4"/></Button>
                     {role === "admin" && (
