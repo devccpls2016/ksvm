@@ -180,8 +180,28 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
                 <Field label="नाव"><Input value={m.name} onChange={e=>updMember(i, { name: e.target.value })}/></Field>
                 <SelectField label="नाते" value={m.relationship} onChange={x=>updMember(i, { relationship: x })} options={RELATIONSHIP} />
                 <SelectField label="लिंग" value={m.gender || ""} onChange={x=>updMember(i, { gender: x })} options={GENDER} />
-                <Field label="वय"><Input type="number" value={m.age ?? ""} onChange={e=>updMember(i, { age: e.target.value ? Number(e.target.value) : "" })}/></Field>
-                <Field label="जन्मतारीख"><Input type="date" value={m.dob || ""} onChange={e=>updMember(i, { dob: e.target.value })}/></Field>
+                <Field label="जन्मतारीख">
+                  <Input
+                    type="date"
+                    value={m.dob || ""}
+                    onChange={e => {
+                      const dob = e.target.value;
+                      let age: number | "" = "";
+                      if (dob) {
+                        const birth = new Date(dob);
+                        const now = new Date();
+                        let years = now.getFullYear() - birth.getFullYear();
+                        const mo = now.getMonth() - birth.getMonth();
+                        if (mo < 0 || (mo === 0 && now.getDate() < birth.getDate())) {
+                          years--;
+                        }
+                        if (years >= 0) age = years;
+                      }
+                      updMember(i, { dob, age });
+                    }}
+                  />
+                </Field>
+                <Field label="वय"><Input type="number" value={m.age ?? ""} readOnly className="bg-muted" /></Field>
                 <SelectField label="शिक्षण" value={m.education || ""} onChange={x=>updMember(i, { education: x })} options={EDUCATION} />
                 <SelectField label="नौकरी / व्यवसाय" value={m.occupation || ""} onChange={x=>updMember(i, { occupation: x })} options={OCCUPATION} />
                 <Field label="नौकरीचे ठिकाण"><Input value={m.job_place || ""} onChange={e=>updMember(i, { job_place: e.target.value })}/></Field>
