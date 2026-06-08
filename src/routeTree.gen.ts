@@ -12,9 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedUsersRouteImport } from './routes/_authenticated/users'
 import { Route as AuthenticatedSurveysRouteImport } from './routes/_authenticated/surveys'
 import { Route as AuthenticatedNewRouteImport } from './routes/_authenticated/new'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedUsersRouteImport } from './routes/_authenticated/users'
 import { Route as AuthenticatedSurveysIdRouteImport } from './routes/_authenticated/surveys.$id'
 
 const AuthRoute = AuthRouteImport.update({
@@ -31,6 +33,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedUsersRoute = AuthenticatedUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedSurveysRoute = AuthenticatedSurveysRouteImport.update({
   id: '/surveys',
   path: '/surveys',
@@ -46,6 +53,11 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedUsersRoute = AuthenticatedUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedSurveysIdRoute = AuthenticatedSurveysIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -58,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/new': typeof AuthenticatedNewRoute
   '/surveys': typeof AuthenticatedSurveysRouteWithChildren
+  '/users': typeof AuthenticatedUsersRoute
   '/surveys/$id': typeof AuthenticatedSurveysIdRoute
 }
 export interface FileRoutesByTo {
@@ -66,6 +79,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/new': typeof AuthenticatedNewRoute
   '/surveys': typeof AuthenticatedSurveysRouteWithChildren
+  '/users': typeof AuthenticatedUsersRoute
   '/surveys/$id': typeof AuthenticatedSurveysIdRoute
 }
 export interface FileRoutesById {
@@ -76,13 +90,28 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/new': typeof AuthenticatedNewRoute
   '/_authenticated/surveys': typeof AuthenticatedSurveysRouteWithChildren
+  '/_authenticated/users': typeof AuthenticatedUsersRoute
   '/_authenticated/surveys/$id': typeof AuthenticatedSurveysIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard' | '/new' | '/surveys' | '/surveys/$id'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/new'
+    | '/surveys'
+    | '/users'
+    | '/surveys/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/new' | '/surveys' | '/surveys/$id'
+  to:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/new'
+    | '/surveys'
+    | '/users'
+    | '/surveys/$id'
   id:
     | '__root__'
     | '/'
@@ -91,6 +120,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/new'
     | '/_authenticated/surveys'
+    | '/_authenticated/users'
     | '/_authenticated/surveys/$id'
   fileRoutesById: FileRoutesById
 }
@@ -123,6 +153,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/users': {
+      id: '/_authenticated/users'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof AuthenticatedUsersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/surveys': {
       id: '/_authenticated/surveys'
       path: '/surveys'
@@ -144,12 +181,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/users': {
+      id: '/_authenticated/users'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof AuthenticatedUsersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/surveys/$id': {
       id: '/_authenticated/surveys/$id'
       path: '/$id'
       fullPath: '/surveys/$id'
       preLoaderRoute: typeof AuthenticatedSurveysIdRouteImport
-      parentRoute: typeof AuthenticatedSurveysRoute
+      parentRoute: typeof AuthenticatedSurveysSetWithChildren
     }
   }
 }
@@ -169,12 +213,14 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedNewRoute: typeof AuthenticatedNewRoute
   AuthenticatedSurveysRoute: typeof AuthenticatedSurveysRouteWithChildren
+  AuthenticatedUsersRoute: typeof AuthenticatedUsersRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedNewRoute: AuthenticatedNewRoute,
   AuthenticatedSurveysRoute: AuthenticatedSurveysRouteWithChildren,
+  AuthenticatedUsersRoute: AuthenticatedUsersRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
