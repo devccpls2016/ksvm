@@ -165,14 +165,13 @@ export async function downloadSurveyPDF(r: any) {
   const { default: jsPDF } = await import("jspdf");
   const html = await buildSurveyHTML(r);
 
-  // A4 in pixels at 96dpi: 794 x 1123. We render at 800px content width.
-  const RENDER_WIDTH = 800;
+  const RENDER_WIDTH = 760;
 
   const iframe = document.createElement("iframe");
   iframe.style.position = "fixed";
   iframe.style.left = "-10000px";
   iframe.style.top = "0";
-  iframe.style.width = RENDER_WIDTH + "px";
+  iframe.style.width = RENDER_WIDTH + 40 + "px";
   iframe.style.height = "1200px";
   iframe.style.border = "0";
   document.body.appendChild(iframe);
@@ -183,8 +182,7 @@ export async function downloadSurveyPDF(r: any) {
     doc.write(html);
     doc.close();
 
-    // wait for fonts and images
-    await new Promise((res) => setTimeout(res, 400));
+    await new Promise((res) => setTimeout(res, 500));
     try { await (doc as any).fonts?.ready; } catch {}
     const imgs = Array.from(doc.images);
     await Promise.all(imgs.map((img: any) => img.complete ? Promise.resolve() : new Promise(res => {
@@ -192,49 +190,63 @@ export async function downloadSurveyPDF(r: any) {
     })));
     await new Promise((res) => setTimeout(res, 200));
 
-    const body = doc.body;
-    const fullHeight = Math.max(body.scrollHeight, body.offsetHeight);
-
-    const canvas = await html2canvas(body, {
-      scale: 2,
-      useCORS: true,
-      allowTaint: false,
-      backgroundColor: "#ffffff",
-      width: RENDER_WIDTH,
-      height: fullHeight,
-      windowWidth: RENDER_WIDTH,
-      windowHeight: fullHeight,
-    });
-
     const pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
-    const pageW = pdf.internal.pageSize.getWidth();   // 210
-    const pageH = pdf.internal.pageSize.getHeight();  // 297
-    const marginMm = 8;
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
+    const marginMm = 10;
     const contentW = pageW - marginMm * 2;
     const contentH = pageH - marginMm * 2;
 
-    // Compute pixel slice height per PDF page to avoid mid-content cuts
-    const pxPerMm = canvas.width / contentW;
-    const sliceHeightPx = Math.floor(contentH * pxPerMm);
+    // Render each block (header + section) separately to avoid mid-content cuts
+    const blocks = Array.from(doc.querySelectorAll(".doc > .header, .doc > .section, .doc > .footer")) as HTMLElement[];
 
-    let renderedPx = 0;
+    let cursorY = marginMm;
     let pageNum = 0;
-    while (renderedPx < canvas.height) {
-      const sliceH = Math.min(sliceHeightPx, canvas.height - renderedPx);
-      const pageCanvas = document.createElement("canvas");
-      pageCanvas.width = canvas.width;
-      pageCanvas.height = sliceH;
-      const ctx = pageCanvas.getContext("2d")!;
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
-      ctx.drawImage(canvas, 0, renderedPx, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
 
-      const imgData = pageCanvas.toDataURL("image/jpeg", 0.92);
-      const imgHmm = (sliceH / canvas.width) * contentW;
-      if (pageNum > 0) pdf.addPage();
-      pdf.addImage(imgData, "JPEG", marginMm, marginMm, contentW, imgHmm);
-      renderedPx += sliceH;
-      pageNum++;
+    for (const block of blocks) {
+      const canvas = await html2canvas(block, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+        windowWidth: RENDER_WIDTH + 40,
+      });
+      const imgWmm = contentW;
+      const imgHmm = (canvas.height / canvas.width) * imgWmm;
+      const imgData = canvas.toDataURL("image/jpeg", 0.92);
+
+      // If block taller than page, slice it across pages
+      if (imgHmm > contentH) {
+        const pxPerMm = canvas.width / contentW;
+        const sliceHpx = Math.floor(contentH * pxPerMm);
+        let rendered = 0;
+        // start on a fresh page if current page already has content
+        if (cursorY > marginMm) { pdf.addPage(); pageNum++; cursorY = marginMm; }
+        while (rendered < canvas.height) {
+          const sh = Math.min(sliceHpx, canvas.height - rendered);
+          const pageCanvas = document.createElement("canvas");
+          pageCanvas.width = canvas.width;
+          pageCanvas.height = sh;
+          const ctx = pageCanvas.getContext("2d")!;
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+          ctx.drawImage(canvas, 0, rendered, canvas.width, sh, 0, 0, canvas.width, sh);
+          const sliceData = pageCanvas.toDataURL("image/jpeg", 0.92);
+          const sliceHmm = (sh / canvas.width) * contentW;
+          if (rendered > 0) { pdf.addPage(); pageNum++; }
+          pdf.addImage(sliceData, "JPEG", marginMm, marginMm, contentW, sliceHmm);
+          rendered += sh;
+          cursorY = marginMm + sliceHmm + 2;
+        }
+      } else {
+        // Place block; new page if it doesn't fit
+        if (cursorY + imgHmm > pageH - marginMm) {
+          pdf.addPage();
+          pageNum++;
+          cursorY = marginMm;
+        }
+        pdf.addImage(imgData, "JPEG", marginMm, cursorY, imgWmm, imgHmm);
+        cursorY += imgHmm + 3;
+      }
     }
 
     const safeName = (r.head_name || "survey").replace(/[^\w\u0900-\u097F]+/g, "_");
