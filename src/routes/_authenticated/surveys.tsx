@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import { useAuth } from "@/lib/auth-context";
 import { exportExcel, exportPDF } from "@/lib/export";
 import { getSubmitterNames } from "@/lib/users.functions";
-import { openSurveyPrint } from "@/lib/single-export";
+import { openSurveyPrint, downloadSurveyPDF } from "@/lib/single-export";
 
 export const Route = createFileRoute("/_authenticated/surveys")({
   component: SurveysList,
