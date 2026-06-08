@@ -145,3 +145,60 @@ export async function openSurveyPrint(r: any, autoPrint = true) {
     setTimeout(() => { try { w.focus(); w.print(); } catch {} }, 600);
   }
 }
+
+export async function downloadSurveyPDF(r: any) {
+  const { default: html2canvas } = await import("html2canvas");
+  const { default: jsPDF } = await import("jspdf");
+  const html = await buildSurveyHTML(r);
+
+  const iframe = document.createElement("iframe");
+  iframe.style.position = "fixed";
+  iframe.style.left = "-10000px";
+  iframe.style.top = "0";
+  iframe.style.width = "800px";
+  iframe.style.height = "1000px";
+  document.body.appendChild(iframe);
+
+  try {
+    const doc = iframe.contentDocument!;
+    doc.open();
+    doc.write(html);
+    doc.close();
+
+    await new Promise((res) => setTimeout(res, 800));
+    try { await (doc as any).fonts?.ready; } catch {}
+
+    const body = doc.body;
+    body.style.width = "800px";
+    const canvas = await html2canvas(body, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+      windowWidth: 800,
+      windowHeight: body.scrollHeight,
+    });
+
+    const pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    const imgWidth = pageWidth;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    const imgData = canvas.toDataURL("image/jpeg", 0.92);
+    let heightLeft = imgHeight;
+    let position = 0;
+    pdf.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+    while (heightLeft > 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+
+    const safeName = (r.head_name || "survey").replace(/[^\w\u0900-\u097F]+/g, "_");
+    pdf.save(`survey_${safeName}_${String(r.id).slice(0, 8)}.pdf`);
+  } finally {
+    document.body.removeChild(iframe);
+  }
+}
