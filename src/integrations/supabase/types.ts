@@ -14,16 +14,165 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
+      surveys: {
+        Row: {
+          age: number | null
+          community: string | null
+          created_at: string
+          created_by: string | null
+          crops: Json | null
+          district: string | null
+          dob: string | null
+          education: string | null
+          farming_tools: string[] | null
+          gender: string | null
+          has_farmland: boolean | null
+          has_position: boolean | null
+          head_name: string
+          head_photo_url: string | null
+          house_type: string | null
+          household_items: string[] | null
+          id: string
+          irrigation_sources: string[] | null
+          living_status: string | null
+          marital_status: string | null
+          members: Json | null
+          mobile: string | null
+          occupation: string | null
+          owns_house: boolean | null
+          pincode: string | null
+          position_data: Json | null
+          taluka: string | null
+          total_farmland: string | null
+          updated_at: string
+          updated_by: string | null
+          village: string
+        }
+        Insert: {
+          age?: number | null
+          community?: string | null
+          created_at?: string
+          created_by?: string | null
+          crops?: Json | null
+          district?: string | null
+          dob?: string | null
+          education?: string | null
+          farming_tools?: string[] | null
+          gender?: string | null
+          has_farmland?: boolean | null
+          has_position?: boolean | null
+          head_name: string
+          head_photo_url?: string | null
+          house_type?: string | null
+          household_items?: string[] | null
+          id?: string
+          irrigation_sources?: string[] | null
+          living_status?: string | null
+          marital_status?: string | null
+          members?: Json | null
+          mobile?: string | null
+          occupation?: string | null
+          owns_house?: boolean | null
+          pincode?: string | null
+          position_data?: Json | null
+          taluka?: string | null
+          total_farmland?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          village: string
+        }
+        Update: {
+          age?: number | null
+          community?: string | null
+          created_at?: string
+          created_by?: string | null
+          crops?: Json | null
+          district?: string | null
+          dob?: string | null
+          education?: string | null
+          farming_tools?: string[] | null
+          gender?: string | null
+          has_farmland?: boolean | null
+          has_position?: boolean | null
+          head_name?: string
+          head_photo_url?: string | null
+          house_type?: string | null
+          household_items?: string[] | null
+          id?: string
+          irrigation_sources?: string[] | null
+          living_status?: string | null
+          marital_status?: string | null
+          members?: Json | null
+          mobile?: string | null
+          occupation?: string | null
+          owns_house?: boolean | null
+          pincode?: string | null
+          position_data?: Json | null
+          taluka?: string | null
+          total_farmland?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          village?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "surveyor"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +299,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "surveyor"],
+    },
   },
 } as const
