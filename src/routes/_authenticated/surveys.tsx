@@ -151,7 +151,7 @@ function SurveysList() {
                       <Link to="/surveys/$id" params={{ id: r.id }}><Pencil className="h-4 w-4"/></Link>
                     </Button>
                     <Button variant="ghost" size="sm" title="प्रिंट करा (Print full form)" onClick={() => openSurveyPrint(r, true)}><Printer className="h-4 w-4"/></Button>
-                    <Button variant="ghost" size="sm" title="PDF डाउनलोड करा (Save as PDF)" onClick={() => openSurveyPrint(r, true)}><FileText className="h-4 w-4"/></Button>
+                    <Button variant="ghost" size="sm" title="PDF डाउनलोड करा (Save as PDF)" onClick={() => toast.promise(downloadSurveyPDF(r), { loading: "PDF तयार होत आहे...", success: "PDF डाउनलोड झाले", error: "PDF अपयशी" })}><FileText className="h-4 w-4"/></Button>
                     {role === "admin" && (
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
