@@ -104,10 +104,22 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
               {v.head_photo_url ? <PhotoPreview path={v.head_photo_url} /> : <Upload className="h-8 w-8 text-muted-foreground" />}
             </div>
             <div>
-              <Label htmlFor="photo">कुटुंब प्रमुखाचा फोटो</Label>
-              <Input id="photo" type="file" accept="image/*" disabled={uploading}
-                onChange={e => e.target.files?.[0] && uploadPhoto(e.target.files[0])} />
-              {v.head_photo_url && (
+              <Label>कुटुंब प्रमुखाचा फोटो</Label>
+              <input
+                id="photo-camera"
+                type="file"
+                accept="image/*"
+                capture="environment"
+                className="hidden"
+                disabled={uploading}
+                onChange={e => e.target.files?.[0] && uploadPhoto(e.target.files[0])}
+              />
+              <div className="flex gap-2 mt-1">
+                <Button type="button" size="sm" disabled={uploading}
+                  onClick={() => document.getElementById("photo-camera")?.click()}>
+                  <Upload className="h-4 w-4 mr-1"/>{uploading ? "अपलोड होत आहे..." : "कॅमेरा उघडा"}
+                </Button>
+                {v.head_photo_url && (
                 <Button variant="ghost" size="sm" type="button" onClick={()=>upd("head_photo_url","")}>
                   <X className="h-4 w-4 mr-1"/>काढा
                 </Button>
