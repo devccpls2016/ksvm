@@ -100,7 +100,9 @@ export const createSurveyUser = createServerFn({ method: "POST" })
     await admin
       .from("profiles")
       .upsert({ id: uid, full_name: data.full_name, email: data.email, mobile: data.mobile ?? null, is_active: data.is_active });
-    // role inserted by trigger as surveyor
+    await admin
+      .from("user_roles")
+      .upsert({ user_id: uid, role: "surveyor" }, { onConflict: "user_id,role" });
     return { id: uid };
   });
 
