@@ -8,11 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Eye, Pencil, Trash2, Download, FileDown, Printer } from "lucide-react";
+import { Eye, Pencil, Trash2, Download, FileDown, Printer, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/lib/auth-context";
 import { exportExcel, exportPDF } from "@/lib/export";
 import { getSubmitterNames } from "@/lib/users.functions";
+import { openSurveyPrint } from "@/lib/single-export";
 
 export const Route = createFileRoute("/_authenticated/surveys")({
   component: SurveysList,
@@ -147,9 +148,10 @@ function SurveysList() {
                   <TableCell className="text-xs text-muted-foreground">{new Date(r.updated_at).toLocaleDateString("mr-IN")}</TableCell>
                   <TableCell className="text-right whitespace-nowrap">
                     <Link to="/surveys/$id" params={{ id: r.id }}>
-                      <Button variant="ghost" size="sm" title="View / Edit"><Pencil className="h-4 w-4"/></Button>
+                      <Button variant="ghost" size="sm" title="संपादन करा (Edit)"><Pencil className="h-4 w-4"/></Button>
                     </Link>
-                    <Button variant="ghost" size="sm" title="Print" onClick={() => window.print()}><Printer className="h-4 w-4"/></Button>
+                    <Button variant="ghost" size="sm" title="प्रिंट करा (Print full form)" onClick={() => openSurveyPrint(r, true)}><Printer className="h-4 w-4"/></Button>
+                    <Button variant="ghost" size="sm" title="PDF डाउनलोड करा (Save as PDF)" onClick={() => openSurveyPrint(r, true)}><FileText className="h-4 w-4"/></Button>
                     {role === "admin" && (
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
