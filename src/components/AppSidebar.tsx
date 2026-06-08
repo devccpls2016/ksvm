@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, ClipboardList, PlusCircle, LogOut } from "lucide-react";
+import { LayoutDashboard, ClipboardList, PlusCircle, LogOut, UserPlus } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
   SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter, useSidebar,
@@ -8,10 +8,16 @@ import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 import { T } from "@/lib/marathi";
 
-const items = [
-  { title: T.dashboard, url: "/dashboard", icon: LayoutDashboard },
-  { title: T.newSurvey, url: "/new", icon: PlusCircle },
-  { title: T.allSurveys, url: "/surveys", icon: ClipboardList },
+const ADMIN_ITEMS = [
+  { title: "Visual Dashboard", url: "/dashboard", icon: LayoutDashboard },
+  { title: "New Survey", url: "/new", icon: PlusCircle },
+  { title: "All Survey", url: "/surveys", icon: ClipboardList },
+  { title: "Create Survey User", url: "/users", icon: UserPlus },
+];
+
+const SURVEYOR_ITEMS = [
+  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
+  { title: "Make Survey", url: "/new", icon: PlusCircle },
 ];
 
 export function AppSidebar() {
@@ -19,6 +25,7 @@ export function AppSidebar() {
   const { user, role, signOut } = useAuth();
   const currentPath = useRouterState({ select: (s) => s.location.pathname });
   const collapsed = state === "collapsed";
+  const items = role === "admin" ? ADMIN_ITEMS : SURVEYOR_ITEMS;
 
   return (
     <Sidebar collapsible="icon">
@@ -28,7 +35,7 @@ export function AppSidebar() {
           {!collapsed && (
             <div className="flex flex-col min-w-0">
               <span className="font-semibold text-sm truncate">{T.appName}</span>
-              <span className="text-xs text-muted-foreground truncate">{role === "admin" ? "Administrator" : "Surveyor"}</span>
+              <span className="text-xs text-muted-foreground truncate">{role === "admin" ? "Administrator" : "Survey User"}</span>
             </div>
           )}
         </div>
@@ -60,7 +67,7 @@ export function AppSidebar() {
           <div className="text-xs text-muted-foreground px-2 truncate">{user.email}</div>
         )}
         <Button variant="ghost" size="sm" onClick={signOut} className="justify-start">
-          <LogOut className="h-4 w-4" />{!collapsed && <span className="ml-2">{T.logout}</span>}
+          <LogOut className="h-4 w-4" />{!collapsed && <span className="ml-2">Logout</span>}
         </Button>
       </SidebarFooter>
     </Sidebar>

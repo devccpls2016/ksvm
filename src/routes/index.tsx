@@ -43,7 +43,7 @@ function Index() {
           {T.appTagline}. कुटुंब प्रमुख, सदस्य, घर, शेती व आवश्यक गरजांची संपूर्ण माहिती एका ठिकाणी.
         </p>
         <div className="mt-8 flex gap-3 justify-center">
-          <Link to="/auth"><Button size="lg" className="text-base">{T.login} / {T.signup}</Button></Link>
+          <Link to="/auth"><Button size="lg" className="text-base">{T.login}</Button></Link>
         </div>
       </section>
 
