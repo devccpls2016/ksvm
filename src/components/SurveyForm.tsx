@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -333,11 +333,10 @@ function SelectField({ label, value, onChange, options }: { label: string; value
 
 function PhotoPreview({ path }: { path: string }) {
   const [url, setUrl] = useState<string>("");
-  useState(() => {
+  useEffect(() => {
     supabase.storage.from("survey-photos").createSignedUrl(path, 3600).then(({ data }) => {
       if (data?.signedUrl) setUrl(data.signedUrl);
     });
-    return undefined;
-  });
+  }, [path]);
   return url ? <img src={url} alt="" className="h-full w-full object-cover" /> : <span className="text-xs">...</span>;
 }
