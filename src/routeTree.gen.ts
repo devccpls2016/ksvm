@@ -16,7 +16,6 @@ import { Route as AuthenticatedUsersRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedSurveysRouteImport } from './routes/_authenticated/surveys'
 import { Route as AuthenticatedNewRouteImport } from './routes/_authenticated/new'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedUsersRouteImport } from './routes/_authenticated/users'
 import { Route as AuthenticatedSurveysIdRouteImport } from './routes/_authenticated/surveys.$id'
 
 const AuthRoute = AuthRouteImport.update({
@@ -51,11 +50,6 @@ const AuthenticatedNewRoute = AuthenticatedNewRouteImport.update({
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedUsersRoute = AuthenticatedUsersRouteImport.update({
-  id: '/users',
-  path: '/users',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedSurveysIdRoute = AuthenticatedSurveysIdRouteImport.update({
@@ -181,19 +175,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/users': {
-      id: '/_authenticated/users'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof AuthenticatedUsersRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/surveys/$id': {
       id: '/_authenticated/surveys/$id'
       path: '/$id'
       fullPath: '/surveys/$id'
       preLoaderRoute: typeof AuthenticatedSurveysIdRouteImport
-      parentRoute: typeof AuthenticatedSurveysSetWithChildren
+      parentRoute: typeof AuthenticatedSurveysRoute
     }
   }
 }
