@@ -123,7 +123,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
                 <Button variant="ghost" size="sm" type="button" onClick={()=>upd("head_photo_url","")}>
                   <X className="h-4 w-4 mr-1"/>काढा
                 </Button>
-              )}
+                )}
+              </div>
             </div>
           </div>
 
