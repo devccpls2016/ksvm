@@ -8,11 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Eye, Pencil, Trash2, Download, FileDown, Printer } from "lucide-react";
+import { Eye, Pencil, Trash2, Download, FileDown, Printer, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/lib/auth-context";
 import { exportExcel, exportPDF } from "@/lib/export";
 import { getSubmitterNames } from "@/lib/users.functions";
+import { openSurveyPrint } from "@/lib/single-export";
 
 export const Route = createFileRoute("/_authenticated/surveys")({
   component: SurveysList,
