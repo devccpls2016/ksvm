@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState, useMemo } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -7,10 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Eye, Pencil, Trash2, Download, FileDown } from "lucide-react";
+import { Eye, Pencil, Trash2, Download, FileDown, Printer } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/lib/auth-context";
 import { exportExcel, exportPDF } from "@/lib/export";
+import { getSubmitterNames } from "@/lib/users.functions";
 
 export const Route = createFileRoute("/_authenticated/surveys")({
   component: SurveysList,
@@ -24,6 +26,8 @@ function SurveysList() {
   const [villageF, setVillageF] = useState("all");
   const [houseF, setHouseF] = useState("all");
   const [farmF, setFarmF] = useState("all");
+  const [submitters, setSubmitters] = useState<Record<string, string>>({});
+  const fetchSubmitters = useServerFn(getSubmitterNames);
 
   async function load() {
     setLoading(true);
@@ -31,9 +35,17 @@ function SurveysList() {
     if (error) toast.error(error.message);
     setRows(data || []);
     setLoading(false);
+    if (role === "admin") {
+      try {
+        const list = await fetchSubmitters({} as any);
+        const map: Record<string, string> = {};
+        list.forEach((p: any) => { map[p.id] = p.full_name || p.email; });
+        setSubmitters(map);
+      } catch {}
+    }
   }
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [role]);
 
   const villages = useMemo(() => Array.from(new Set(rows.map(r => r.village).filter(Boolean))), [rows]);
   const filtered = useMemo(() => {
@@ -107,34 +119,37 @@ function SurveysList() {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>ID</TableHead>
                 <TableHead>कुटुंब प्रमुख</TableHead>
                 <TableHead>मोबाईल</TableHead>
                 <TableHead>गाव</TableHead>
                 <TableHead>तालुका</TableHead>
-                <TableHead>सदस्य</TableHead>
-                <TableHead>घर</TableHead>
-                <TableHead>शेती</TableHead>
-                <TableHead>दिनांक</TableHead>
+                <TableHead>जिल्हा</TableHead>
+                {role === "admin" && <TableHead>Submitted By</TableHead>}
+                <TableHead>Submitted</TableHead>
+                <TableHead>Updated</TableHead>
                 <TableHead className="text-right">क्रिया</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {loading && <TableRow><TableCell colSpan={9} className="text-center py-8">लोड होत आहे...</TableCell></TableRow>}
-              {!loading && filtered.length === 0 && <TableRow><TableCell colSpan={9} className="text-center py-8 text-muted-foreground">कोणताही रेकॉर्ड नाही</TableCell></TableRow>}
+              {loading && <TableRow><TableCell colSpan={11} className="text-center py-8">लोड होत आहे...</TableCell></TableRow>}
+              {!loading && filtered.length === 0 && <TableRow><TableCell colSpan={11} className="text-center py-8 text-muted-foreground">कोणताही रेकॉर्ड नाही</TableCell></TableRow>}
               {filtered.map(r => (
                 <TableRow key={r.id}>
+                  <TableCell className="text-xs text-muted-foreground">{r.id.slice(0, 8)}</TableCell>
                   <TableCell className="font-medium">{r.head_name}</TableCell>
                   <TableCell>{r.mobile || "-"}</TableCell>
                   <TableCell>{r.village}</TableCell>
                   <TableCell>{r.taluka || "-"}</TableCell>
-                  <TableCell>{Array.isArray(r.members) ? r.members.length : 0}</TableCell>
-                  <TableCell>{r.owns_house ? "होय" : r.owns_house === false ? "नाही" : "-"}</TableCell>
-                  <TableCell>{r.has_farmland ? "होय" : r.has_farmland === false ? "नाही" : "-"}</TableCell>
+                  <TableCell>{r.district || "-"}</TableCell>
+                  {role === "admin" && <TableCell className="text-xs">{submitters[r.created_by] || "-"}</TableCell>}
                   <TableCell className="text-xs text-muted-foreground">{new Date(r.created_at).toLocaleDateString("mr-IN")}</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-xs text-muted-foreground">{new Date(r.updated_at).toLocaleDateString("mr-IN")}</TableCell>
+                  <TableCell className="text-right whitespace-nowrap">
                     <Link to="/surveys/$id" params={{ id: r.id }}>
-                      <Button variant="ghost" size="sm"><Pencil className="h-4 w-4"/></Button>
+                      <Button variant="ghost" size="sm" title="View / Edit"><Pencil className="h-4 w-4"/></Button>
                     </Link>
+                    <Button variant="ghost" size="sm" title="Print" onClick={() => window.print()}><Printer className="h-4 w-4"/></Button>
                     {role === "admin" && (
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
