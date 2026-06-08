@@ -17,19 +17,14 @@ async function assertAdmin(supabase: any, userId: string) {
   if (!data) throw new Error("Forbidden: admin only");
 }
 
-// PUBLIC: bootstrap the default admin (admin@gmail.com / 123456) if no admin exists yet.
+// PUBLIC: bootstrap the default admin (admin@gmail.com / 123456). Idempotent — also
+// resets the password to the default on every call so the documented credentials always work.
 export const initAdmin = createServerFn({ method: "POST" }).handler(async () => {
   const admin = await getAdmin();
-  const { count } = await admin
-    .from("user_roles")
-    .select("*", { count: "exact", head: true })
-    .eq("role", "admin");
-  if ((count ?? 0) > 0) return { created: false };
-
   const email = "admin@gmail.com";
   const password = "123456";
 
-  // Try create user (idempotent)
+  // Try create user
   const { data: created, error: createErr } = await admin.auth.admin.createUser({
     email,
     password,
@@ -38,14 +33,15 @@ export const initAdmin = createServerFn({ method: "POST" }).handler(async () => 
   });
 
   let userId = created?.user?.id;
-  if (createErr && !userId) {
-    // user might already exist — look it up
-    const { data: list } = await admin.auth.admin.listUsers();
+  if (!userId) {
+    // user already exists — look it up
+    const { data: list } = await admin.auth.admin.listUsers({ page: 1, perPage: 1000 });
     const found = list?.users?.find((u) => u.email === email);
-    if (!found) throw new Error(createErr.message);
+    if (!found) throw new Error(createErr?.message || "Could not bootstrap admin user");
     userId = found.id;
+    // force password back to default so the documented login always works
+    await admin.auth.admin.updateUserById(userId, { password, email_confirm: true });
   }
-  if (!userId) throw new Error("Could not create admin user");
 
   // Ensure admin role
   await admin.from("user_roles").upsert(
@@ -58,7 +54,7 @@ export const initAdmin = createServerFn({ method: "POST" }).handler(async () => 
     email,
   });
 
-  return { created: true };
+  return { ok: true, userId };
 });
 
 // ADMIN ONLY: list survey users (and admins) with their roles
