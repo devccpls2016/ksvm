@@ -7,6 +7,7 @@ import {
 import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 import { T } from "@/lib/marathi";
+import logoAsset from "@/assets/kohli-samaj-logo.png.asset.json";
 
 const ADMIN_ITEMS = [
   { title: "Visual Dashboard", url: "/dashboard", icon: LayoutDashboard },
