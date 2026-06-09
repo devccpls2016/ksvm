@@ -44,6 +44,7 @@ function Index() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
         <div className="container mx-auto px-4 py-20 md:py-28 relative">
           <div className="max-w-3xl mx-auto text-center">
+            <img src={logoAsset.url} alt="कोहळी समाज विकास मंडळ लोगो" className="mx-auto h-32 w-32 md:h-40 md:w-40 object-contain mb-6 drop-shadow-lg" />
             <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 text-primary px-4 py-1.5 text-sm font-medium mb-6">
               <Shield className="h-4 w-4" />
               <span>कोहळी समाज विकास मंडळ, नागपूर</span>
