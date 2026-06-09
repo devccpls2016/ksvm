@@ -65,7 +65,7 @@ function AuthPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-secondary via-background to-accent/10 p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="mx-auto h-12 w-12 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-bold text-xl mb-2">कु</div>
+          <img src={logoAsset.url} alt="कोहळी समाज लोगो" className="mx-auto h-20 w-20 object-contain mb-3" />
           <CardTitle className="text-2xl">{T.appName}</CardTitle>
           <CardDescription>{T.appTagline}</CardDescription>
         </CardHeader>
