@@ -29,7 +29,7 @@ function Index() {
       <header className="border-b bg-background/80 backdrop-blur sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg shadow-sm">को</div>
+            <img src={logoAsset.url} alt="कोहळी समाज लोगो" className="h-12 w-12 rounded-full object-contain bg-white ring-1 ring-border shadow-sm" />
             <div className="flex flex-col">
               <span className="font-bold text-base leading-tight">{T.appName}</span>
               <span className="text-[11px] text-muted-foreground leading-tight">कुटुंब सर्वेक्षण व माहिती व्यवस्थापन प्रणाली</span>
