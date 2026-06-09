@@ -32,7 +32,7 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="border-b">
         <div className="flex items-center gap-2 px-2 py-2">
-          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold shrink-0">कु</div>
+          <img src={logoAsset.url} alt="लोगो" className="h-9 w-9 rounded-full object-contain bg-white ring-1 ring-border shrink-0" />
           {!collapsed && (
             <div className="flex flex-col min-w-0">
               <span className="font-semibold text-sm truncate">{T.appName}</span>
