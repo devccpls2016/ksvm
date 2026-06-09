@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { T } from "@/lib/marathi";
+import logoAsset from "@/assets/kohli-samaj-logo.png.asset.json";
 import { initAdmin } from "@/lib/users.functions";
 import { ShieldCheck, UserRound } from "lucide-react";
 
