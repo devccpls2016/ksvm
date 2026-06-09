@@ -4,6 +4,7 @@ import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 import { ClipboardList, BarChart3, Users, FileText, Target, Shield, HeartHandshake, TrendingUp } from "lucide-react";
 import { T } from "@/lib/marathi";
+import logoAsset from "@/assets/kohli-samaj-logo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,7 +29,7 @@ function Index() {
       <header className="border-b bg-background/80 backdrop-blur sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg shadow-sm">को</div>
+            <img src={logoAsset.url} alt="कोहळी समाज लोगो" className="h-12 w-12 rounded-full object-contain bg-white ring-1 ring-border shadow-sm" />
             <div className="flex flex-col">
               <span className="font-bold text-base leading-tight">{T.appName}</span>
               <span className="text-[11px] text-muted-foreground leading-tight">कुटुंब सर्वेक्षण व माहिती व्यवस्थापन प्रणाली</span>
@@ -43,6 +44,7 @@ function Index() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
         <div className="container mx-auto px-4 py-20 md:py-28 relative">
           <div className="max-w-3xl mx-auto text-center">
+            <img src={logoAsset.url} alt="कोहळी समाज विकास मंडळ लोगो" className="mx-auto h-32 w-32 md:h-40 md:w-40 object-contain mb-6 drop-shadow-lg" />
             <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 text-primary px-4 py-1.5 text-sm font-medium mb-6">
               <Shield className="h-4 w-4" />
               <span>कोहळी समाज विकास मंडळ, नागपूर</span>

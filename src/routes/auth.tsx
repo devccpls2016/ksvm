@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { T } from "@/lib/marathi";
+import logoAsset from "@/assets/kohli-samaj-logo.png.asset.json";
 import { initAdmin } from "@/lib/users.functions";
 import { ShieldCheck, UserRound } from "lucide-react";
 
@@ -64,7 +65,7 @@ function AuthPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-secondary via-background to-accent/10 p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="mx-auto h-12 w-12 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-bold text-xl mb-2">कु</div>
+          <img src={logoAsset.url} alt="कोहळी समाज लोगो" className="mx-auto h-20 w-20 object-contain mb-3" />
           <CardTitle className="text-2xl">{T.appName}</CardTitle>
           <CardDescription>{T.appTagline}</CardDescription>
         </CardHeader>
