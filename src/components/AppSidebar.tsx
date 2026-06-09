@@ -42,6 +42,9 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
+          <SidebarGroupLabel className="text-xs font-normal text-muted-foreground leading-tight">
+            कोहळी समाज विकास मंडळ, नागपूर
+          </SidebarGroupLabel>
           <SidebarGroupLabel>मेनू</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
