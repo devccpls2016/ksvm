@@ -4,7 +4,7 @@ import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 import { ClipboardList, BarChart3, Users, FileText, Target, Shield, HeartHandshake, TrendingUp } from "lucide-react";
 import { T } from "@/lib/marathi";
-import logoAsset from "@/assets/kohli-logo.asset.json";
+import logoAsset from "@/assets/kohli-logo-new.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -33,7 +33,7 @@ function Index() {
             <img
               src={logoAsset.url}
               alt="कोहळी समाज विकास मंडळ, नागपूर"
-              className="h-16 w-16 md:h-20 md:w-20 rounded-full object-cover border-2 border-primary/40 shadow-sm shrink-0"
+              className="h-16 w-16 md:h-20 md:w-20 object-contain shrink-0"
             />
 
             {/* Org block */}
