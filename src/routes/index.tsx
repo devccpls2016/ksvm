@@ -4,6 +4,7 @@ import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 import { ClipboardList, BarChart3, Users, FileText, Target, Shield, HeartHandshake, TrendingUp } from "lucide-react";
 import { T } from "@/lib/marathi";
+import logoAsset from "@/assets/kohli-samaj-logo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
