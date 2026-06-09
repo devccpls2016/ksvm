@@ -4,6 +4,7 @@ import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 import { ClipboardList, BarChart3, Users, FileText, Target, Shield, HeartHandshake, TrendingUp } from "lucide-react";
 import { T } from "@/lib/marathi";
+import logoAsset from "@/assets/kohli-logo.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -24,17 +25,41 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Navbar */}
-      <header className="border-b bg-background/80 backdrop-blur sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg shadow-sm">को</div>
-            <div className="flex flex-col">
-              <span className="font-bold text-base leading-tight">{T.appName}</span>
-              <span className="text-[11px] text-muted-foreground leading-tight">कुटुंब सर्वेक्षण व माहिती व्यवस्थापन प्रणाली</span>
+      {/* Navbar — official letterhead style */}
+      <header className="border-b-2 border-primary/30 bg-background sticky top-0 z-50 shadow-sm">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center gap-4">
+            {/* Logo */}
+            <img
+              src={logoAsset.url}
+              alt="कोहळी समाज विकास मंडळ, नागपूर"
+              className="h-16 w-16 md:h-20 md:w-20 rounded-full object-cover border-2 border-primary/40 shadow-sm shrink-0"
+            />
+
+            {/* Org block */}
+            <div className="flex-1 min-w-0 text-center">
+              <h1 className="font-bold text-xl md:text-3xl tracking-tight text-primary leading-tight truncate">
+                कोहळी समाज विकास मंडळ, नागपूर
+              </h1>
+              <div className="hidden md:flex items-center justify-between mt-1 text-[11px] md:text-xs text-muted-foreground font-medium">
+                <span>Society Reg. No. MAH.680/1989 (N)</span>
+                <span>Public Trust Reg. No. (F) 8666 (N)</span>
+              </div>
+              <p className="hidden md:block text-[11px] md:text-xs text-muted-foreground mt-1 leading-snug">
+                केंद्रिय कार्यालय :– प्लॉट नं. ०७, गावंडे ले-आऊट, तुकाराम सभागृहाचे मागे, रिंग रोड, नरेंद्रनगर, नागपूर, पिन कोड – ४४००२७
+              </p>
             </div>
+
+            <Link to="/auth" className="shrink-0">
+              <Button size="sm" className="md:size-default">{T.login}</Button>
+            </Link>
           </div>
-          <Link to="/auth"><Button>{T.login}</Button></Link>
+
+          {/* Mobile reg + address */}
+          <div className="md:hidden mt-2 text-center text-[10px] text-muted-foreground space-y-0.5">
+            <div className="flex justify-between"><span>Reg. MAH.680/1989 (N)</span><span>Trust (F) 8666 (N)</span></div>
+            <p>केंद्रिय कार्यालय :– प्लॉट नं. ०७, गावंडे ले-आऊट, रिंग रोड, नरेंद्रनगर, नागपूर – ४४००२७</p>
+          </div>
         </div>
       </header>
 
