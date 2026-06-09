@@ -1,6 +1,6 @@
 // Marathi constants & options for the survey app
 export const T = {
-  appName: "कुटुंब सर्वेक्षण",
+  appName: "कोहळी समाज विकास मंडळ, नागपूर",
   appTagline: "ग्राम / तालुका / जिल्हा स्तरीय कुटुंब सर्वेक्षण व्यवस्थापन",
   // Navigation
   dashboard: "डॅशबोर्ड",
