@@ -18,7 +18,6 @@ import {
 } from "@/lib/marathi";
 import type { SurveyFormValues, FamilyMember, Crop } from "@/lib/survey-types";
 import { emptySurvey } from "@/lib/survey-types";
-import { DobInput } from "@/components/DobInput";
 
 type Props = {
   initial?: Partial<SurveyFormValues>;
@@ -135,8 +134,26 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
             <Field label="समुदाय / जनजाती"><Input value={v.community} onChange={e=>upd("community", e.target.value)} /></Field>
             <SelectField label="वैवाहिक स्थिती" value={v.marital_status} onChange={x=>upd("marital_status", x)} options={MARITAL} />
             <SelectField label="लिंग" value={v.gender} onChange={x=>upd("gender", x)} options={GENDER} />
-            <Field label="जन्मतारीख (दिवस / महिना / वर्ष)">
-              <DobInput value={v.dob} onChange={(dob, age) => setV(p => ({ ...p, dob, age }))} />
+            <Field label="जन्मतारीख">
+              <Input
+                type="date"
+                value={v.dob}
+                onChange={e => {
+                  const dob = e.target.value;
+                  let age: number | "" = "";
+                  if (dob) {
+                    const birth = new Date(dob);
+                    const now = new Date();
+                    let years = now.getFullYear() - birth.getFullYear();
+                    const m = now.getMonth() - birth.getMonth();
+                    if (m < 0 || (m === 0 && now.getDate() < birth.getDate())) {
+                      years--;
+                    }
+                    if (years >= 0) age = years;
+                  }
+                  setV(p => ({ ...p, dob, age }));
+                }}
+              />
             </Field>
             <Field label="वय"><Input type="number" value={v.age} readOnly className="bg-muted" /></Field>
             <SelectField label="शिक्षण" value={v.education} onChange={x=>upd("education", x)} options={EDUCATION} />
@@ -163,8 +180,26 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
                 <Field label="नाव"><Input value={m.name} onChange={e=>updMember(i, { name: e.target.value })}/></Field>
                 <SelectField label="नाते" value={m.relationship} onChange={x=>updMember(i, { relationship: x })} options={RELATIONSHIP} />
                 <SelectField label="लिंग" value={m.gender || ""} onChange={x=>updMember(i, { gender: x })} options={GENDER} />
-                <Field label="जन्मतारीख (दि / म / वर्ष)">
-                  <DobInput value={m.dob || ""} onChange={(dob, age) => updMember(i, { dob, age })} />
+                <Field label="जन्मतारीख">
+                  <Input
+                    type="date"
+                    value={m.dob || ""}
+                    onChange={e => {
+                      const dob = e.target.value;
+                      let age: number | "" = "";
+                      if (dob) {
+                        const birth = new Date(dob);
+                        const now = new Date();
+                        let years = now.getFullYear() - birth.getFullYear();
+                        const mo = now.getMonth() - birth.getMonth();
+                        if (mo < 0 || (mo === 0 && now.getDate() < birth.getDate())) {
+                          years--;
+                        }
+                        if (years >= 0) age = years;
+                      }
+                      updMember(i, { dob, age });
+                    }}
+                  />
                 </Field>
                 <Field label="वय"><Input type="number" value={m.age ?? ""} readOnly className="bg-muted" /></Field>
                 <SelectField label="शिक्षण" value={m.education || ""} onChange={x=>updMember(i, { education: x })} options={EDUCATION} />
