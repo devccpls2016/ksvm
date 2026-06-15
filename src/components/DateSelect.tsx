@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar as CalendarIcon } from "lucide-react";
 
@@ -19,34 +19,44 @@ const MONTHS = [
 
 function getDaysInMonth(year: string, month: string) {
   if (!year || !month) return 31;
-  const y = parseInt(year, 10);
-  const m = parseInt(month, 10);
-  return new Date(y, m, 0).getDate();
+  return new Date(parseInt(year, 10), parseInt(month, 10), 0).getDate();
 }
 
 export function calcAge(dobStr: string): number | "" {
   if (!dobStr) return "";
-  const parts = dobStr.split("-");
-  if (parts.length !== 3 || !parts[0] || !parts[1] || !parts[2]) return "";
-  const birth = new Date(`${parts[0]}-${parts[1]}-${parts[2]}T00:00:00`);
+  const [y, m, d] = dobStr.split("-");
+  if (!y || !m || !d) return "";
+  const birth = new Date(`${y}-${m}-${d}T00:00:00`);
   if (isNaN(birth.getTime())) return "";
   const now = new Date();
   let years = now.getFullYear() - birth.getFullYear();
-  const m = now.getMonth() - birth.getMonth();
-  if (m < 0 || (m === 0 && now.getDate() < birth.getDate())) {
-    years--;
-  }
+  const mo = now.getMonth() - birth.getMonth();
+  if (mo < 0 || (mo === 0 && now.getDate() < birth.getDate())) years--;
   return years >= 0 ? years : "";
 }
 
 type DateSelectProps = {
-  value?: string; // yyyy-MM-dd
+  value?: string; // yyyy-MM-dd (complete only)
   onChange: (dob: string, age: number | "") => void;
   disabled?: boolean;
 };
 
 export function DateSelect({ value, onChange, disabled }: DateSelectProps) {
-  const [year = "", month = "", day = ""] = value ? value.split("-") : ["", "", ""];
+  // Local state holds partial selections; only propagate when complete
+  const init = value && value.split("-").length === 3 ? value.split("-") : ["", "", ""];
+  const [year, setYear] = useState(init[0] || "");
+  const [month, setMonth] = useState(init[1] || "");
+  const [day, setDay] = useState(init[2] || "");
+
+  useEffect(() => {
+    if (!value) {
+      setYear(""); setMonth(""); setDay("");
+    } else {
+      const [y, m, d] = value.split("-");
+      setYear(y || ""); setMonth(m || ""); setDay(d || "");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   const years = useMemo(() => {
     const current = new Date().getFullYear();
@@ -58,18 +68,16 @@ export function DateSelect({ value, onChange, disabled }: DateSelectProps) {
   const daysInMonth = getDaysInMonth(year, month);
   const days = Array.from({ length: daysInMonth }, (_, i) => String(i + 1).padStart(2, "0"));
 
-  function update(newYear: string, newMonth: string, newDay: string) {
-    if (newYear && newMonth && newDay) {
-      const dob = `${newYear}-${newMonth}-${newDay}`;
+  function propagate(y: string, m: string, d: string) {
+    if (y && m && d) {
+      const dob = `${y}-${m}-${d}`;
       onChange(dob, calcAge(dob));
-    } else {
-      // Keep partial date stored so selects retain user's picks, but age empty
-      const partial = `${newYear}-${newMonth}-${newDay}`;
-      onChange(partial === "--" ? "" : partial, "");
+    } else if (value) {
+      onChange("", "");
     }
   }
 
-  const age = calcAge(value || "");
+  const age = year && month && day ? calcAge(`${year}-${month}-${day}`) : "";
 
   return (
     <div className="space-y-2">
@@ -77,7 +85,7 @@ export function DateSelect({ value, onChange, disabled }: DateSelectProps) {
         <div className="flex items-center justify-center h-10 w-10 rounded-md border bg-muted/40 text-muted-foreground shrink-0">
           <CalendarIcon className="h-4 w-4" />
         </div>
-        <Select disabled={disabled} value={day || undefined} onValueChange={(d) => update(year, month, d)}>
+        <Select disabled={disabled} value={day || undefined} onValueChange={(d) => { setDay(d); propagate(year, month, d); }}>
           <SelectTrigger className="flex-1"><SelectValue placeholder="दिवस" /></SelectTrigger>
           <SelectContent className="max-h-60">
             {days.map((d) => (<SelectItem key={d} value={d}>{d}</SelectItem>))}
@@ -90,7 +98,8 @@ export function DateSelect({ value, onChange, disabled }: DateSelectProps) {
           onValueChange={(m) => {
             const maxDays = getDaysInMonth(year, m);
             const safeDay = day && parseInt(day, 10) > maxDays ? String(maxDays).padStart(2, "0") : day;
-            update(year, m, safeDay);
+            setMonth(m); setDay(safeDay);
+            propagate(year, m, safeDay);
           }}
         >
           <SelectTrigger className="flex-[2]"><SelectValue placeholder="महिना" /></SelectTrigger>
@@ -99,11 +108,16 @@ export function DateSelect({ value, onChange, disabled }: DateSelectProps) {
           </SelectContent>
         </Select>
 
-        <Select disabled={disabled} value={year || undefined} onValueChange={(y) => {
-          const maxDays = getDaysInMonth(y, month);
-          const safeDay = day && parseInt(day, 10) > maxDays ? String(maxDays).padStart(2, "0") : day;
-          update(y, month, safeDay);
-        }}>
+        <Select
+          disabled={disabled}
+          value={year || undefined}
+          onValueChange={(y) => {
+            const maxDays = getDaysInMonth(y, month);
+            const safeDay = day && parseInt(day, 10) > maxDays ? String(maxDays).padStart(2, "0") : day;
+            setYear(y); setDay(safeDay);
+            propagate(y, month, safeDay);
+          }}
+        >
           <SelectTrigger className="flex-[1.5]"><SelectValue placeholder="वर्ष" /></SelectTrigger>
           <SelectContent className="max-h-60">
             {years.map((y) => (<SelectItem key={y} value={y}>{y}</SelectItem>))}
@@ -111,11 +125,9 @@ export function DateSelect({ value, onChange, disabled }: DateSelectProps) {
         </Select>
       </div>
       {age !== "" && (
-        <div className="flex items-center gap-2 text-xs">
-          <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-2.5 py-1 font-medium">
-            वय: {age} वर्षे
-          </span>
-        </div>
+        <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-2.5 py-1 text-xs font-medium">
+          वय: {age} वर्षे
+        </span>
       )}
     </div>
   );
