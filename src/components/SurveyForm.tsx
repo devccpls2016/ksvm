@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator";
 import { DateSelect } from "@/components/DateSelect";
 import { EducationSelect } from "@/components/EducationSelect";
+import { OccupationSelect } from "@/components/OccupationSelect";
 import { Trash2, Plus, Upload, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -143,13 +144,14 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
               />
             </Field>
             <Field label="वय"><Input type="number" value={v.age} readOnly className="bg-muted" /></Field>
-            <SelectField label="व्यवसाय" value={v.occupation} onChange={x=>upd("occupation", x)} options={OCCUPATION} />
           </div>
           <div className="border rounded-lg p-3 bg-muted/20">
             <Label className="mb-2 block font-medium">शिक्षण (Education)</Label>
             <EducationSelect value={v.education} onChange={x=>upd("education", x)} />
           </div>
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="border rounded-lg p-3 bg-muted/20">
+            <Label className="mb-2 block font-medium">नौकरी / व्यवसाय (Job / Occupation)</Label>
+            <OccupationSelect value={v.occupation} onChange={x=>upd("occupation", x)} />
           </div>
         </CardContent>
       </Card>
@@ -179,16 +181,15 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
                   />
                 </Field>
                 <Field label="वय"><Input type="number" value={m.age ?? ""} readOnly className="bg-muted" /></Field>
-                <SelectField label="नौकरी / व्यवसाय" value={m.occupation || ""} onChange={x=>updMember(i, { occupation: x })} options={OCCUPATION} />
-                <Field label="नौकरीचे ठिकाण"><Input value={m.job_place || ""} onChange={e=>updMember(i, { job_place: e.target.value })}/></Field>
                 <Field label="मोबाईल"><Input value={m.mobile || ""} onChange={e=>updMember(i, { mobile: e.target.value })}/></Field>
-                {(m.occupation === "सरकारी नौकरी" || m.occupation === "खाजगी नौकरी") && (
-                  <SelectField label="नौकरी प्रकार" value={m.job_type || ""} onChange={x=>updMember(i, { job_type: x })} options={JOB_TYPE} />
-                )}
               </div>
               <div className="border rounded-md p-3 bg-background">
                 <Label className="mb-2 block text-sm font-medium">शिक्षण (Education)</Label>
                 <EducationSelect value={m.education || ""} onChange={x=>updMember(i, { education: x })} />
+              </div>
+              <div className="border rounded-md p-3 bg-background">
+                <Label className="mb-2 block text-sm font-medium">नौकरी / व्यवसाय (Job / Occupation)</Label>
+                <OccupationSelect value={m.occupation || ""} onChange={x=>updMember(i, { occupation: x })} />
               </div>
             </div>
           ))}
