@@ -138,41 +138,10 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
             <SelectField label="वैवाहिक स्थिती" value={v.marital_status} onChange={x=>upd("marital_status", x)} options={MARITAL} />
             <SelectField label="लिंग" value={v.gender} onChange={x=>upd("gender", x)} options={GENDER} />
             <Field label="जन्मतारीख">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className={cn("w-full justify-start text-left font-normal", !v.dob && "text-muted-foreground")}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {v.dob ? format(new Date(v.dob), "dd/MM/yyyy") : "तारीख निवडा"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={v.dob ? new Date(v.dob) : undefined}
-                    onSelect={date => {
-                      const dob = date ? format(date, "yyyy-MM-dd") : "";
-                      let age: number | "" = "";
-                      if (dob) {
-                        const birth = new Date(dob);
-                        const now = new Date();
-                        let years = now.getFullYear() - birth.getFullYear();
-                        const m = now.getMonth() - birth.getMonth();
-                        if (m < 0 || (m === 0 && now.getDate() < birth.getDate())) {
-                          years--;
-                        }
-                        if (years >= 0) age = years;
-                      }
-                      setV(p => ({ ...p, dob, age }));
-                    }}
-                    initialFocus
-                    className="pointer-events-auto"
-                  />
-                </PopoverContent>
-              </Popover>
+              <DateSelect
+                value={v.dob}
+                onChange={(dob, age) => setV(p => ({ ...p, dob, age }))}
+              />
             </Field>
             <Field label="वय"><Input type="number" value={v.age} readOnly className="bg-muted" /></Field>
             <SelectField label="शिक्षण" value={v.education} onChange={x=>upd("education", x)} options={EDUCATION} />
