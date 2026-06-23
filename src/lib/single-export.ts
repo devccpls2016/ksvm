@@ -22,6 +22,8 @@ export async function buildSurveyHTML(r: any) {
   const members = Array.isArray(r.members) ? r.members : [];
   const crops = Array.isArray(r.crops) ? r.crops : [];
   const pos = r.position_data || {};
+  const b = r.benefits_info || {};
+  const emp = r.employment_info || {};
 
   return `<!doctype html><html><head><meta charset="utf-8"/>
 <title>सर्वेक्षण - ${esc(r.head_name)}</title>
