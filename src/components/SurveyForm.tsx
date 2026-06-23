@@ -251,13 +251,32 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       <Card>
         <CardHeader><CardTitle>{T.needs} (घरातील वापराच्या वस्तू)</CardTitle></CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {HOUSEHOLD_ITEMS.map(item => (
-              <Label key={item} className="flex items-center gap-2 cursor-pointer p-2 rounded border hover:bg-accent/10">
-                <Checkbox checked={v.household_items.includes(item)} onCheckedChange={()=>toggleArr("household_items", item)} />
-                <span className="text-sm">{item}</span>
-              </Label>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {HOUSEHOLD_ITEMS.map(item => {
+              const checked = v.household_items.includes(item);
+              const count = v.household_item_counts?.[item] ?? 1;
+              return (
+                <div key={item} className="flex items-center justify-between gap-2 p-2 rounded border hover:bg-accent/10">
+                  <Label className="flex items-center gap-2 cursor-pointer flex-1">
+                    <Checkbox checked={checked} onCheckedChange={() => {
+                      toggleArr("household_items", item);
+                      const next = { ...(v.household_item_counts || {}) };
+                      if (checked) { delete next[item]; } else { next[item] = 1; }
+                      upd("household_item_counts", next);
+                    }} />
+                    <span className="text-sm">{item}</span>
+                  </Label>
+                  {checked && (
+                    <SelectField
+                      label=""
+                      value={String(count)}
+                      onChange={x => upd("household_item_counts", { ...(v.household_item_counts || {}), [item]: Number(x) })}
+                      options={Array.from({ length: 10 }, (_, i) => String(i + 1))}
+                    />
+                  )}
+                </div>
+              );
+            })}
           </div>
         </CardContent>
       </Card>
