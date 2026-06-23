@@ -407,17 +407,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
               <IrrigationSection v={v} setV={setV} />
 
 
-              <div>
-                <Label className="mb-2 block">शेती विषयक साधने</Label>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                  {FARM_TOOLS.map(i => (
-                    <Label key={i} className="flex items-center gap-2 p-2 border rounded cursor-pointer hover:bg-accent/10">
-                      <Checkbox checked={v.farming_tools.includes(i)} onCheckedChange={()=>toggleArr("farming_tools", i)} />
-                      <span className="text-sm">{i}</span>
-                    </Label>
-                  ))}
-                </div>
-              </div>
+              <FarmingToolsSection v={v} setV={setV} />
+
             </div>
           )}
         </CardContent>
@@ -606,4 +597,101 @@ function IrrigationSection({
     </div>
   );
 }
+
+const FARM_TOOL_LIST: { key: "tractor" | "harvester" | "rotavator" | "cultivator" | "tractor_trolley"; label: string; extra?: boolean }[] = [
+  { key: "tractor", label: "ट्रॅक्टर", extra: true },
+  { key: "harvester", label: "हार्वेस्टर (Harvestor)" },
+  { key: "rotavator", label: "रोटावेटर (Rotavator)" },
+  { key: "cultivator", label: "कल्टिवेटर (Cultivator)" },
+  { key: "tractor_trolley", label: "ट्रॅक्टर ट्रॉली (Tractor Trolley)" },
+];
+
+function YesNo({ value, onChange }: { value: boolean | null | undefined; onChange: (v: boolean | null) => void }) {
+  return (
+    <div className="flex gap-2 flex-wrap">
+      {[{ label: "होय", val: true }, { label: "नाही", val: false }].map((o) => (
+        <Label key={o.label} className="flex items-center gap-2 p-2 border rounded cursor-pointer hover:bg-accent/10 text-sm">
+          <Checkbox checked={value === o.val} onCheckedChange={(c) => onChange(c ? o.val : null)} />
+          {o.label}
+        </Label>
+      ))}
+    </div>
+  );
+}
+
+function FarmingToolsSection({ v, setV }: { v: SurveyFormValues; setV: React.Dispatch<React.SetStateAction<SurveyFormValues>> }) {
+  const details = v.farming_tools_details || {};
+  function patchTool(key: string, p: Record<string, any>) {
+    setV((prev) => ({
+      ...prev,
+      farming_tools_details: {
+        ...(prev.farming_tools_details || {}),
+        [key]: { ...((prev.farming_tools_details as any)?.[key] || {}), ...p },
+      },
+    }));
+  }
+  function patchRoot(p: Record<string, any>) {
+    setV((prev) => ({ ...prev, farming_tools_details: { ...(prev.farming_tools_details || {}), ...p } }));
+  }
+
+  return (
+    <div className="space-y-4">
+      <Label className="text-base font-semibold block">शेती विषयक साधने</Label>
+      <div className="grid gap-3 md:grid-cols-2">
+        {FARM_TOOL_LIST.map((tool, idx) => {
+          const d = (details as any)[tool.key] || {};
+          return (
+            <div key={tool.key} className="border rounded-lg p-4 space-y-3 bg-card/50">
+              <div className="font-medium text-sm">{idx + 1}. {tool.label}</div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div>
+                  <Label className="text-xs text-muted-foreground mb-1.5 block">आहे / नाही</Label>
+                  <YesNo value={d.has} onChange={(val) => patchTool(tool.key, { has: val })} />
+                </div>
+                {d.has === true && (
+                  <Field label="संख्या">
+                    <Input
+                      type="number" min={0}
+                      value={d.count ?? ""}
+                      onChange={(e) => patchTool(tool.key, { count: e.target.value === "" ? "" : Number(e.target.value) })}
+                    />
+                  </Field>
+                )}
+              </div>
+              {tool.extra && d.has === false && (
+                <div className="space-y-3 pt-2 border-t">
+                  <div>
+                    <Label className="text-xs text-muted-foreground mb-1.5 block">ट्रॅक्टर घ्यायची इच्छा आहे का?</Label>
+                    <YesNo value={d.want_to_buy} onChange={(val) => patchTool(tool.key, { want_to_buy: val })} />
+                  </div>
+                  {d.want_to_buy === true && (
+                    <div>
+                      <Label className="text-xs text-muted-foreground mb-1.5 block">कर्जाची आवश्यकता आहे का?</Label>
+                      <YesNo value={d.needs_loan} onChange={(val) => patchTool(tool.key, { needs_loan: val })} />
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="border rounded-lg p-4 space-y-3 bg-card/50">
+        <div className="font-medium text-sm">6. इतर आधुनिक कृषी अवजारे वापरता का?</div>
+        <YesNo value={details.other_uses} onChange={(val) => patchRoot({ other_uses: val })} />
+        {details.other_uses === true && (
+          <Field label="कृपया नमूद करा">
+            <Input
+              value={details.other_details || ""}
+              onChange={(e) => patchRoot({ other_details: e.target.value })}
+              placeholder="अवजारांची नावे लिहा"
+            />
+          </Field>
+        )}
+      </div>
+    </div>
+  );
+}
+
 

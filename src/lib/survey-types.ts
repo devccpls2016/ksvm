@@ -82,12 +82,29 @@ export interface SurveyFormValues {
   irrigation_sources: string[];
   irrigation_details: IrrigationDetails;
   farming_tools: string[];
+  farming_tools_details: FarmingToolsDetails;
 
 
   has_position: boolean;
   position_data: PositionData;
   members: FamilyMember[];
 }
+
+export type FarmingToolDetail = {
+  has?: boolean | null;
+  count?: number | "";
+  want_to_buy?: boolean | null;
+  needs_loan?: boolean | null;
+};
+export type FarmingToolsDetails = {
+  tractor?: FarmingToolDetail;
+  harvester?: FarmingToolDetail;
+  rotavator?: FarmingToolDetail;
+  cultivator?: FarmingToolDetail;
+  tractor_trolley?: FarmingToolDetail;
+  other_uses?: boolean | null;
+  other_details?: string;
+};
 
 export const emptySurvey: SurveyFormValues = {
   village: "", taluka: "", district: "", pincode: "",
@@ -99,7 +116,7 @@ export const emptySurvey: SurveyFormValues = {
   has_farmland: null, total_farmland: "",
   irrigated_area: "", dryland_area: "", kharif_area: "", rabi_area: "", summer_area: "",
   major_crop_types: [], major_crop_types_other: "",
-  crops: [], irrigation_sources: [], irrigation_details: {}, farming_tools: [],
+  crops: [], irrigation_sources: [], irrigation_details: {}, farming_tools: [], farming_tools_details: {},
 
   has_position: false, position_data: {},
   members: [],
