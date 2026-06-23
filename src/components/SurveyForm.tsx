@@ -457,3 +457,93 @@ function PhotoPreview({ path }: { path: string }) {
   }, [path]);
   return url ? <img src={url} alt="" className="h-full w-full object-cover" /> : <span className="text-xs">...</span>;
 }
+
+const IRRIGATION_SOURCES: { key: "tubewell" | "well" | "farm_pond" | "river" | "canal"; label: string; pumps?: boolean }[] = [
+  { key: "tubewell",  label: "ट्युबवेल / बोअरवेल", pumps: true },
+  { key: "well",      label: "विहीर",             pumps: true },
+  { key: "farm_pond", label: "शेततलाव" },
+  { key: "river",     label: "तलाव / नदी" },
+  { key: "canal",     label: "नहर" },
+];
+
+function IrrigationSection({
+  v,
+  setV,
+}: {
+  v: SurveyFormValues;
+  setV: React.Dispatch<React.SetStateAction<SurveyFormValues>>;
+}) {
+  function patch(key: string, p: Partial<{ count: number | ""; electric: boolean; solar: boolean }>) {
+    setV((prev) => {
+      const det = { ...(prev.irrigation_details || {}) } as any;
+      det[key] = { ...(det[key] || {}), ...p };
+      const labelMap: Record<string, string> = Object.fromEntries(
+        IRRIGATION_SOURCES.map((s) => [s.key, s.label])
+      );
+      const active = Object.entries(det)
+        .filter(([, val]: any) => (val?.count ?? 0) > 0)
+        .map(([k]) => labelMap[k])
+        .filter(Boolean);
+      return { ...prev, irrigation_details: det, irrigation_sources: active };
+    });
+  }
+
+  return (
+    <div>
+      <Label className="mb-2 block text-base font-semibold">सिंचनाचे साधन</Label>
+      <div className="grid gap-3">
+        {IRRIGATION_SOURCES.map((src) => {
+          const d = (v.irrigation_details as any)?.[src.key] || {};
+          const count = d.count ?? "";
+          const enabled = (typeof count === "number" && count > 0);
+          return (
+            <div key={src.key} className="border rounded-lg p-3 bg-card">
+              <div className="flex items-center justify-between gap-3 flex-wrap">
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    checked={enabled}
+                    onCheckedChange={(c) => patch(src.key, { count: c ? (count || 1) : "" })}
+                  />
+                  <span className="font-medium text-sm">{src.label}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Label className="text-xs text-muted-foreground">संख्या</Label>
+                  <Select
+                    value={count === "" ? "" : String(count)}
+                    onValueChange={(val) => patch(src.key, { count: val ? Number(val) : "" })}
+                  >
+                    <SelectTrigger className="h-8 w-20"><SelectValue placeholder="0" /></SelectTrigger>
+                    <SelectContent>
+                      {Array.from({ length: 20 }, (_, i) => i + 1).map((n) => (
+                        <SelectItem key={n} value={String(n)}>{n}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              {src.pumps && enabled && (
+                <div className="mt-3 pl-6 flex flex-wrap gap-2">
+                  <Label className="flex items-center gap-2 p-2 border rounded cursor-pointer hover:bg-accent/10 text-sm">
+                    <Checkbox
+                      checked={!!d.electric}
+                      onCheckedChange={(c) => patch(src.key, { electric: !!c })}
+                    />
+                    विद्युत पंप
+                  </Label>
+                  <Label className="flex items-center gap-2 p-2 border rounded cursor-pointer hover:bg-accent/10 text-sm">
+                    <Checkbox
+                      checked={!!d.solar}
+                      onCheckedChange={(c) => patch(src.key, { solar: !!c })}
+                    />
+                    सौर पंप
+                  </Label>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
