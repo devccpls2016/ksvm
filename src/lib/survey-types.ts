@@ -11,15 +11,12 @@ export type FamilyMember = {
   job_type?: string; // Government/Private/Department - when occupation is job
 };
 
-export type Crop = {
-  season: string;
-  dry_land: string;
-  dry_crop: string;
-  wet_land: string;
-  wet_crop: string;
-  kharif: string;
-  rabi: string;
-  total: string;
+export type FarmAreas = {
+  irrigated_area: string;
+  dryland_area: string;
+  kharif_area: string;
+  rabi_area: string;
+  summer_area: string;
 };
 
 export type PositionData = {
