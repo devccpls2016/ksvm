@@ -63,6 +63,8 @@ function EditSurvey() {
           dob: data.dob ?? "",
           household_items: data.household_items || [],
           irrigation_sources: data.irrigation_sources || [],
+          irrigation_details: (data as any).irrigation_details || {},
+
           farming_tools: data.farming_tools || [],
           crops: data.crops || [],
           members: data.members || [],
