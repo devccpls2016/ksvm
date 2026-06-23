@@ -20,7 +20,6 @@ export type Crop = {
   kharif: string;
   rabi: string;
   total: string;
-  crops_taken: string;
 };
 
 export type PositionData = {
