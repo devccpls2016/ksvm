@@ -24,6 +24,7 @@ export async function buildSurveyHTML(r: any) {
   const pos = r.position_data || {};
   const b = r.benefits_info || {};
   const emp = r.employment_info || {};
+  const fm = r.farm_management || {};
 
   return `<!doctype html><html><head><meta charset="utf-8"/>
 <title>सर्वेक्षण - ${esc(r.head_name)}</title>
@@ -168,7 +169,15 @@ export async function buildSurveyHTML(r: any) {
 </div>
 
 <div class="section">
-  <h2>J. सामाजिक व आर्थिक लाभार्थी माहिती</h2>
+  <h2>J. शेती व्यवस्थापन प्रकार</h2>
+  <table>
+    ${row("ठेक्याने / बटाईने शेती करता का?", fm.has_contract_or_share === true ? "होय" : fm.has_contract_or_share === false ? "नाही" : "-")}
+    ${fm.has_contract_or_share === true ? row("क्षेत्र (एकरमध्ये)", fm.contract_farming_area || "-") : ""}
+  </table>
+</div>
+
+<div class="section">
+  <h2>K. सामाजिक व आर्थिक लाभार्थी माहिती</h2>
   <table>
     ${row("मुख्यमंत्री लाडकी बहीण योजना लाभार्थी", b.ladki_bahin === true ? "होय" : b.ladki_bahin === false ? "नाही" : "-")}
     ${b.ladki_bahin === true ? row("लाभार्थी संख्या", b.ladki_bahin_count || "-") : ""}
@@ -182,7 +191,7 @@ export async function buildSurveyHTML(r: any) {
 </div>
 
 <div class="section">
-  <h2>K. उद्योजक / स्वयंरोजगार व रोजगार संबंधित माहिती</h2>
+  <h2>L. उद्योजक / स्वयंरोजगार व रोजगार संबंधित माहिती</h2>
   <table>
     ${row("उद्योजक / स्वयंरोजगारात कार्यरत", emp.has_entrepreneur === true ? "होय" : emp.has_entrepreneur === false ? "नाही" : "-")}
     ${emp.has_entrepreneur === true ? row("तपशील व व्यवसायाचा पत्ता", emp.entrepreneur_details || "-") : ""}

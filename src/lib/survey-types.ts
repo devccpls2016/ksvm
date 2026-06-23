@@ -90,6 +90,7 @@ export interface SurveyFormValues {
   members: FamilyMember[];
   benefits_info: BenefitsInfo;
   employment_info: EmploymentInfo;
+  farm_management: FarmManagement;
 }
 
 export type BenefitsInfo = {
@@ -109,6 +110,11 @@ export type EmploymentInfo = {
   entrepreneur_address?: string;
   has_side_business?: boolean | null;
   side_business_details?: string;
+};
+
+export type FarmManagement = {
+  has_contract_or_share?: boolean | null;
+  contract_farming_area?: string;
 };
 
 export type FarmingToolDetail = {
@@ -143,4 +149,5 @@ export const emptySurvey: SurveyFormValues = {
   members: [],
   benefits_info: {},
   employment_info: {},
+  farm_management: {},
 };

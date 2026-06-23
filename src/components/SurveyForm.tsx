@@ -410,6 +410,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
 
               <FarmingToolsSection v={v} setV={setV} />
 
+              <FarmManagementSection v={v} setV={setV} />
+
             </div>
           )}
         </CardContent>
