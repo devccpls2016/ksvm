@@ -353,7 +353,7 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
 
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <Label>पीक प्रकाराविषयी माहिती</Label>
+                  <Label className="text-base font-semibold">पीक प्रकाराविषयी माहिती</Label>
                   <Button type="button" variant="outline" size="sm" onClick={addCrop}><Plus className="h-4 w-4 mr-1"/>पीक जोडा</Button>
                 </div>
                 {v.crops.map((c, i) => (
@@ -362,19 +362,46 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
                       <span className="text-sm font-medium">पीक #{i+1}</span>
                       <Button type="button" variant="ghost" size="sm" onClick={()=>delCrop(i)}><Trash2 className="h-4 w-4"/></Button>
                     </div>
-                    <div className="grid md:grid-cols-4 gap-2">
+                    <div className="grid md:grid-cols-2 gap-2">
                       <SelectField label="पिक हंगाम" value={c.season} onChange={x=>updCrop(i,{season:x})} options={CROP_SEASONS} />
-                      <Field label="कोरडवाहू जमीन"><Input value={c.dry_land} onChange={e=>updCrop(i,{dry_land:e.target.value})}/></Field>
-                      <SelectField label="कोरडवाहू पिक प्रकार" value={c.dry_crop} onChange={x=>updCrop(i,{dry_crop:x})} options={CROP_TYPES} />
-                      <Field label="ओलितावली जमीन"><Input value={c.wet_land} onChange={e=>updCrop(i,{wet_land:e.target.value})}/></Field>
-                      <SelectField label="ओलितावली पिक प्रकार" value={c.wet_crop} onChange={x=>updCrop(i,{wet_crop:x})} options={CROP_TYPES} />
-                      <Field label="खरीप पिक"><Input value={c.kharif} onChange={e=>updCrop(i,{kharif:e.target.value})}/></Field>
-                      <Field label="रब्बी पिक"><Input value={c.rabi} onChange={e=>updCrop(i,{rabi:e.target.value})}/></Field>
-                      <Field label="एकूण"><Input value={c.total} onChange={e=>updCrop(i,{total:e.target.value})}/></Field>
                     </div>
                   </div>
                 ))}
               </div>
+
+              <Separator />
+              <div className="space-y-3">
+                <Label className="text-base font-semibold">क्षेत्र (एकरमध्ये)</Label>
+                <div className="grid md:grid-cols-2 gap-3">
+                  <Field label="ओलिताखालील क्षेत्र (एकरमध्ये)"><Input type="number" min="0" step="0.01" value={v.irrigated_area} onChange={e=>upd("irrigated_area", e.target.value)} /></Field>
+                  <Field label="कोरडवाहू क्षेत्र (एकरमध्ये)"><Input type="number" min="0" step="0.01" value={v.dryland_area} onChange={e=>upd("dryland_area", e.target.value)} /></Field>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <Label className="text-base font-semibold">हंगामनिहाय लागवड क्षेत्र</Label>
+                <div className="grid md:grid-cols-3 gap-3">
+                  <Field label="खरीप हंगामाखालील क्षेत्र (एकरमध्ये)"><Input type="number" min="0" step="0.01" value={v.kharif_area} onChange={e=>upd("kharif_area", e.target.value)} /></Field>
+                  <Field label="रब्बी हंगामाखालील क्षेत्र (एकरमध्ये)"><Input type="number" min="0" step="0.01" value={v.rabi_area} onChange={e=>upd("rabi_area", e.target.value)} /></Field>
+                  <Field label="उन्हाळी हंगामाखालील क्षेत्र (एकरमध्ये)"><Input type="number" min="0" step="0.01" value={v.summer_area} onChange={e=>upd("summer_area", e.target.value)} /></Field>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-base font-semibold">प्रमुख पीक प्रकार (एकापेक्षा अधिक निवडू शकता)</Label>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {MAJOR_CROP_TYPES.map(mc => (
+                    <Label key={mc} className="flex items-center gap-2 p-2 border rounded cursor-pointer hover:bg-accent/10">
+                      <Checkbox checked={v.major_crop_types.includes(mc)} onCheckedChange={()=>toggleArr("major_crop_types", mc)} />
+                      <span className="text-sm">{mc}</span>
+                    </Label>
+                  ))}
+                </div>
+                {v.major_crop_types.includes("इतर") && (
+                  <Field label="इतर पीक प्रकार"><Input value={v.major_crop_types_other} onChange={e=>upd("major_crop_types_other", e.target.value)} placeholder="इतर पीक प्रकार लिहा" /></Field>
+                )}
+              </div>
+
 
               <Separator />
               <div>
