@@ -416,6 +416,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
 
       <BenefitsSection v={v} setV={setV} />
 
+      <EmploymentSection v={v} setV={setV} />
+
 
       <div className="flex justify-end gap-2 sticky bottom-0 bg-background/80 backdrop-blur p-3 -mx-4 border-t">
         <Button type="submit" size="lg" disabled={submitting}>
@@ -760,6 +762,69 @@ function BenefitsSection({ v, setV }: { v: SurveyFormValues; setV: React.Dispatc
                     ))}
                   </SelectContent>
                 </Select>
+              </Field>
+            </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function EmploymentSection({ v, setV }: { v: SurveyFormValues; setV: React.Dispatch<React.SetStateAction<SurveyFormValues>> }) {
+  const e = v.employment_info || {};
+  function patch(p: Partial<typeof e>) {
+    setV((prev) => ({ ...prev, employment_info: { ...(prev.employment_info || {}), ...p } }));
+  }
+  return (
+    <Card>
+      <CardHeader><CardTitle>उद्योजक / स्वयंरोजगार व रोजगार संबंधित माहिती</CardTitle></CardHeader>
+      <CardContent className="space-y-5">
+        {/* 1. Entrepreneur / Self-employment */}
+        <div className="border rounded-lg p-4 space-y-3 bg-card/50">
+          <div className="font-medium text-sm">1. आपल्या कुटुंबातील सदस्य उद्योजक / स्वयंरोजगारात कार्यरत आहेत का?</div>
+          <YesNo
+            value={e.has_entrepreneur}
+            onChange={(val) =>
+              patch({
+                has_entrepreneur: val,
+                ...(val !== true ? { entrepreneur_details: "", entrepreneur_address: "" } : {}),
+              })
+            }
+          />
+          {e.has_entrepreneur === true && (
+            <div className="grid gap-3 pt-2 border-t">
+              <Field label="तपशील व व्यवसायाचा पत्ता नमूद करा">
+                <Textarea
+                  value={e.entrepreneur_details || ""}
+                  onChange={(ev) => patch({ entrepreneur_details: ev.target.value })}
+                  placeholder="व्यवसायाचे नाव, स्वरूप आणि पत्ता"
+                />
+              </Field>
+            </div>
+          )}
+        </div>
+
+        {/* 2. Side Business */}
+        <div className="border rounded-lg p-4 space-y-3 bg-card/50">
+          <div className="font-medium text-sm">2. आपल्या कुटुंबात “जोडधंदा / अतिरिक्त व्यवसाय” (Side Business) आहे का?</div>
+          <YesNo
+            value={e.has_side_business}
+            onChange={(val) =>
+              patch({
+                has_side_business: val,
+                ...(val !== true ? { side_business_details: "" } : {}),
+              })
+            }
+          />
+          {e.has_side_business === true && (
+            <div className="grid gap-3 pt-2 border-t">
+              <Field label="व्यवसायाचे स्वरूप व तपशील नमूद करा">
+                <Textarea
+                  value={e.side_business_details || ""}
+                  onChange={(ev) => patch({ side_business_details: ev.target.value })}
+                  placeholder="जोडधंद्याचे स्वरूप, उत्पादने/सेवा इ."
+                />
               </Field>
             </div>
           )}
