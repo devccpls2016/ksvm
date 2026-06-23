@@ -233,10 +233,10 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
 
               {v.position_data.type === "सामाजिक" && (
                 <>
-                  <SelectField label="संस्था" value={v.position_data.social_org || ""} onChange={x => upd("position_data", { ...v.position_data, social_org: x, social_role: "" })} options={SOCIAL_ORGS.map(s => s.name)} />
+                  <SelectField label="संस्था" value={v.position_data.social_org || ""} onChange={x => upd("position_data", { ...v.position_data, social_org: x, social_role: "" })} options={SOCIAL_ORGS.map((s: { name: string }) => s.name)} />
                   {v.position_data.social_org && (
                     <SelectField label="पद" value={v.position_data.social_role || ""} onChange={x => upd("position_data", { ...v.position_data, social_role: x })}
-                      options={SOCIAL_ORGS.find(s => s.name === v.position_data.social_org)?.roles || []} />
+                      options={SOCIAL_ORGS.find((s: { name: string; roles: string[] }) => s.name === v.position_data.social_org)?.roles || []} />
                   )}
                 </>
               )}

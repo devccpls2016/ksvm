@@ -99,6 +99,11 @@ export const REPRESENTATIVES = [
   "Co-operative Society (सहकारी संस्था)",
 ];
 
+export const SOCIAL_ORGS: { name: string; roles: string[] }[] = [
+  { name: "सामाजिक संस्था (Social Organisation)", roles: ["पदाधिकारी", "अध्यक्ष", "उपाध्यक्ष", "सचिव", "सदस्य"] },
+  { name: "शैक्षणिक संस्था (Educational Institution)", roles: ["पदाधिकारी", "अध्यक्ष", "उपाध्यक्ष", "सचिव", "सदस्य"] },
+];
+
 export const REPRESENTATIVE_ROLES: Record<string, string[]> = {
   "Co-operative Bank (सहकारी बँक)": ["अध्यक्ष", "उपाध्यक्ष", "संचालक", "सदस्य"],
   "Co-operative Society (सहकारी संस्था)": ["अध्यक्ष", "उपाध्यक्ष", "सचिव", "मेंबर"],
