@@ -222,10 +222,12 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
               {v.position_data.type === "लोकप्रतिनिधी" && (
                 <>
                   <SelectField label="लोकप्रतिनिधी पद" value={v.position_data.representative_type || ""} onChange={x => upd("position_data", { ...v.position_data, representative_type: x, coop_role: "" })} options={REPRESENTATIVES} />
-                  {v.position_data.representative_type && (v.position_data.representative_type === "Co-operative Bank (सहकारी बँक)" || v.position_data.representative_type === "Co-operative Society (सहकारी संस्था)") && (
+                  {v.position_data.representative_type && REPRESENTATIVE_ROLES[v.position_data.representative_type] && (
                     <>
-                      <SelectField label="संस्थेतील पद" value={v.position_data.coop_role || ""} onChange={x => upd("position_data", { ...v.position_data, coop_role: x })} options={REPRESENTATIVE_ROLES[v.position_data.representative_type] || []} />
-                      <Field label="संस्थेचे नाव"><Input value={v.position_data.coop_org_name || ""} onChange={e => upd("position_data", { ...v.position_data, coop_org_name: e.target.value })}/></Field>
+                      <SelectField label="पद" value={v.position_data.coop_role || ""} onChange={x => upd("position_data", { ...v.position_data, coop_role: x })} options={REPRESENTATIVE_ROLES[v.position_data.representative_type] || []} />
+                      {(v.position_data.representative_type === "Co-operative Bank (सहकारी बँक)" || v.position_data.representative_type === "Co-operative Society (सहकारी संस्था)") && (
+                        <Field label="संस्थेचे नाव"><Input value={v.position_data.coop_org_name || ""} onChange={e => upd("position_data", { ...v.position_data, coop_org_name: e.target.value })}/></Field>
+                      )}
                     </>
                   )}
                 </>
