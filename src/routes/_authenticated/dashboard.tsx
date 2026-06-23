@@ -115,16 +115,12 @@ function Dashboard() {
   }, [myRows]);
 
   const cropsData = useMemo(() => {
-    const totals: Record<string, number> = { खरीप: 0, रब्बी: 0, उन्हाळी: 0, ओलित: 0, कोरडवाहू: 0 };
-    myRows.forEach((r: any) => {
-      const c = r.crops && typeof r.crops === "object" && !Array.isArray(r.crops) ? r.crops : {};
-      totals["खरीप"] += parseFloat(c.kharif_area) || 0;
-      totals["रब्बी"] += parseFloat(c.rabi_area) || 0;
-      totals["उन्हाळी"] += parseFloat(c.summer_area) || 0;
-      totals["ओलित"] += parseFloat(c.irrigated_area) || 0;
-      totals["कोरडवाहू"] += parseFloat(c.dryland_area) || 0;
-    });
-    return Object.entries(totals).map(([name, value]) => ({ name, value: Math.round(value * 100) / 100 }));
+    const map: Record<string, number> = {};
+    myRows.forEach((r) => (Array.isArray(r.crops) ? r.crops : []).forEach((c: any) => {
+      const k = c.dry_crop || c.wet_crop || "—";
+      map[k] = (map[k] || 0) + 1;
+    }));
+    return Object.entries(map).map(([name, value]) => ({ name, value }));
   }, [myRows]);
 
   const irrigationData = useMemo(() => {

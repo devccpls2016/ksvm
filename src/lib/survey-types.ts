@@ -11,12 +11,15 @@ export type FamilyMember = {
   job_type?: string; // Government/Private/Department - when occupation is job
 };
 
-export type FarmAreas = {
-  irrigated_area: string;
-  dryland_area: string;
-  kharif_area: string;
-  rabi_area: string;
-  summer_area: string;
+export type Crop = {
+  season: string;
+  dry_land: string;
+  dry_crop: string;
+  wet_land: string;
+  wet_crop: string;
+  kharif: string;
+  rabi: string;
+  total: string;
 };
 
 export type PositionData = {
@@ -57,7 +60,7 @@ export interface SurveyFormValues {
   solar_panel_wanted: boolean | null;
   has_farmland: boolean | null;
   total_farmland: string;
-  crops: FarmAreas;
+  crops: Crop[];
   irrigation_sources: string[];
   farming_tools: string[];
   has_position: boolean;
@@ -72,7 +75,7 @@ export const emptySurvey: SurveyFormValues = {
   household_items: [],
   household_item_counts: {},
   owns_house: null, house_type: "", living_status: "", gharkul_received: null, gharkul_wanted: null, solar_panel_installed: null, solar_panel_wanted: null,
-  has_farmland: null, total_farmland: "", crops: { irrigated_area: "", dryland_area: "", kharif_area: "", rabi_area: "", summer_area: "" }, irrigation_sources: [], farming_tools: [],
+  has_farmland: null, total_farmland: "", crops: [], irrigation_sources: [], farming_tools: [],
   has_position: false, position_data: {},
   members: [],
 };

@@ -19,7 +19,7 @@ import {
   CROP_TYPES, CROP_SEASONS, IRRIGATION, FARM_TOOLS,
   POSITION_TYPES, POSITION_STATUS, POLITICAL_LEVELS, REPRESENTATIVES, SOCIAL_ORGS, REPRESENTATIVE_ROLES,
 } from "@/lib/marathi";
-import type { SurveyFormValues, FamilyMember, FarmAreas } from "@/lib/survey-types";
+import type { SurveyFormValues, FamilyMember, Crop } from "@/lib/survey-types";
 import { emptySurvey } from "@/lib/survey-types";
 
 type Props = {
@@ -69,10 +69,15 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
     setV(p => ({ ...p, members: p.members.filter((_, idx) => idx !== i) }));
   }
 
-  function updCrop(patch: Partial<FarmAreas>) {
-    setV(p => ({ ...p, crops: { ...p.crops, ...patch } }));
+  function addCrop() {
+    setV(p => ({ ...p, crops: [...p.crops, { season: "", dry_land: "", dry_crop: "", wet_land: "", wet_crop: "", kharif: "", rabi: "", total: "" }] }));
   }
-
+  function updCrop(i: number, patch: Partial<Crop>) {
+    setV(p => ({ ...p, crops: p.crops.map((c, idx) => idx === i ? { ...c, ...patch } : c) }));
+  }
+  function delCrop(i: number) {
+    setV(p => ({ ...p, crops: p.crops.filter((_, idx) => idx !== i) }));
+  }
 
   async function handle(e: React.FormEvent) {
     e.preventDefault();
@@ -344,20 +349,30 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
             <div className="space-y-4 border-t pt-4">
               <SelectField label="एकूण शेती" value={v.total_farmland} onChange={x=>upd("total_farmland", x)} options={FARMLAND_SIZES} />
 
-              <div className="grid md:grid-cols-2 gap-3">
-                <Field label="ओलिताखालील क्षेत्र (एकरमध्ये)"><Input type="number" min="0" step="0.01" value={v.crops.irrigated_area} onChange={e=>updCrop({irrigated_area:e.target.value})}/></Field>
-                <Field label="कोरडवाहू क्षेत्र (एकरमध्ये)"><Input type="number" min="0" step="0.01" value={v.crops.dryland_area} onChange={e=>updCrop({dryland_area:e.target.value})}/></Field>
-              </div>
-
-              <div className="border rounded-lg p-3 bg-muted/30 space-y-3">
-                <Label className="text-sm font-semibold">हंगामनिहाय लागवड क्षेत्र</Label>
-                <div className="grid md:grid-cols-3 gap-3">
-                  <Field label="खरीप हंगामाखालील क्षेत्र (एकरमध्ये)"><Input type="number" min="0" step="0.01" value={v.crops.kharif_area} onChange={e=>updCrop({kharif_area:e.target.value})}/></Field>
-                  <Field label="रब्बी हंगामाखालील क्षेत्र (एकरमध्ये)"><Input type="number" min="0" step="0.01" value={v.crops.rabi_area} onChange={e=>updCrop({rabi_area:e.target.value})}/></Field>
-                  <Field label="उन्हाळी हंगामाखालील क्षेत्र (एकरमध्ये)"><Input type="number" min="0" step="0.01" value={v.crops.summer_area} onChange={e=>updCrop({summer_area:e.target.value})}/></Field>
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <Label>पीक प्रकाराविषयी माहिती</Label>
+                  <Button type="button" variant="outline" size="sm" onClick={addCrop}><Plus className="h-4 w-4 mr-1"/>पीक जोडा</Button>
                 </div>
+                {v.crops.map((c, i) => (
+                  <div key={i} className="border rounded-lg p-3 mb-2 bg-muted/30 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">पीक #{i+1}</span>
+                      <Button type="button" variant="ghost" size="sm" onClick={()=>delCrop(i)}><Trash2 className="h-4 w-4"/></Button>
+                    </div>
+                    <div className="grid md:grid-cols-4 gap-2">
+                      <SelectField label="पिक हंगाम" value={c.season} onChange={x=>updCrop(i,{season:x})} options={CROP_SEASONS} />
+                      <Field label="कोरडवाहू जमीन"><Input value={c.dry_land} onChange={e=>updCrop(i,{dry_land:e.target.value})}/></Field>
+                      <SelectField label="कोरडवाहू पिक प्रकार" value={c.dry_crop} onChange={x=>updCrop(i,{dry_crop:x})} options={CROP_TYPES} />
+                      <Field label="ओलितावली जमीन"><Input value={c.wet_land} onChange={e=>updCrop(i,{wet_land:e.target.value})}/></Field>
+                      <SelectField label="ओलितावली पिक प्रकार" value={c.wet_crop} onChange={x=>updCrop(i,{wet_crop:x})} options={CROP_TYPES} />
+                      <Field label="खरीप पिक"><Input value={c.kharif} onChange={e=>updCrop(i,{kharif:e.target.value})}/></Field>
+                      <Field label="रब्बी पिक"><Input value={c.rabi} onChange={e=>updCrop(i,{rabi:e.target.value})}/></Field>
+                      <Field label="एकूण"><Input value={c.total} onChange={e=>updCrop(i,{total:e.target.value})}/></Field>
+                    </div>
+                  </div>
+                ))}
               </div>
-
 
               <Separator />
               <div>

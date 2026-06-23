@@ -20,7 +20,7 @@ function row(label: string, val: any) {
 export async function buildSurveyHTML(r: any) {
   const photo = await photoUrl(r.head_photo_url);
   const members = Array.isArray(r.members) ? r.members : [];
-  const crops = (r.crops && typeof r.crops === "object" && !Array.isArray(r.crops)) ? r.crops : {};
+  const crops = Array.isArray(r.crops) ? r.crops : [];
   const pos = r.position_data || {};
 
   return `<!doctype html><html><head><meta charset="utf-8"/>
@@ -135,13 +135,16 @@ export async function buildSurveyHTML(r: any) {
     ${row("शेतजमीन आहे?", r.has_farmland === true ? "होय" : r.has_farmland === false ? "नाही" : "-")}
     ${row("एकूण शेती", r.total_farmland)}
   </table>
+  ${crops.length > 0 ? `
   <table style="margin-top:8px;">
-    ${row("ओलिताखालील क्षेत्र (एकर)", crops.irrigated_area)}
-    ${row("कोरडवाहू क्षेत्र (एकर)", crops.dryland_area)}
-    ${row("खरीप हंगामाखालील क्षेत्र (एकर)", crops.kharif_area)}
-    ${row("रब्बी हंगामाखालील क्षेत्र (एकर)", crops.rabi_area)}
-    ${row("उन्हाळी हंगामाखालील क्षेत्र (एकर)", crops.summer_area)}
-  </table>
+    <thead><tr><th>#</th><th>हंगाम</th><th>कोरडवाहू</th><th>कोरडवाहू पिक</th><th>ओलितावली</th><th>ओलितावली पिक</th><th>खरीप</th><th>रब्बी</th><th>एकूण</th></tr></thead>
+    <tbody>
+    ${crops.map((c: any, i: number) => `<tr>
+      <td>${i + 1}</td><td>${esc(c.season)}</td><td>${esc(c.dry_land)}</td><td>${esc(c.dry_crop)}</td>
+      <td>${esc(c.wet_land)}</td><td>${esc(c.wet_crop)}</td><td>${esc(c.kharif)}</td><td>${esc(c.rabi)}</td><td>${esc(c.total)}</td>
+    </tr>`).join("")}
+    </tbody>
+  </table>` : ""}
 </div>
 
 <div class="section">
