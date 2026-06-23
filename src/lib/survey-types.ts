@@ -132,4 +132,5 @@ export const emptySurvey: SurveyFormValues = {
 
   has_position: false, position_data: {},
   members: [],
+  benefits_info: {},
 };
