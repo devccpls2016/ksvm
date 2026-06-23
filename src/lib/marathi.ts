@@ -97,7 +97,7 @@ export const MAJOR_CROP_TYPES = [
   "इतर",
 ];
 
-export const IRRIGATION = ["ट्युबवेल / बोअरवेल", "विहीर", "तलाव / नदी", "नहर"];
+export const IRRIGATION = ["ट्युबवेल / बोअरवेल", "विहीर", "तलाव", "नदी", "नहर"];
 export const FARM_TOOLS = ["बैलबंडी", "नांगर", "ट्रॅक्टर", "विहीर", "बोअरवेल"];
 
 // Position
