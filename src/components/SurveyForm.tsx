@@ -93,11 +93,55 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       {/* A. भौगोलिक माहिती */}
       <Card>
         <CardHeader><CardTitle>A. {T.geoInfo}</CardTitle></CardHeader>
-        <CardContent className="grid md:grid-cols-2 gap-4">
-          <Field label="गाव *"><Input required value={v.village} onChange={e=>upd("village", e.target.value)} /></Field>
-          <Field label="तालुका"><Input value={v.taluka} onChange={e=>upd("taluka", e.target.value)} /></Field>
-          <Field label="जिल्हा"><Input value={v.district} onChange={e=>upd("district", e.target.value)} /></Field>
-          <Field label="पिनकोड"><Input value={v.pincode} onChange={e=>upd("pincode", e.target.value)} /></Field>
+        <CardContent className="space-y-6">
+          <div className="grid md:grid-cols-2 gap-4">
+            <Field label="गाव *"><Input required value={v.village} onChange={e=>upd("village", e.target.value)} /></Field>
+            <Field label="तालुका"><Input value={v.taluka} onChange={e=>upd("taluka", e.target.value)} /></Field>
+            <Field label="जिल्हा"><Input value={v.district} onChange={e=>upd("district", e.target.value)} /></Field>
+            <Field label="पिनकोड"><Input value={v.pincode} onChange={e=>upd("pincode", e.target.value)} /></Field>
+          </div>
+
+          <div className="border rounded-lg p-4 space-y-4 bg-muted/20">
+            <Label className="text-base font-semibold block">मूळ वस्ती (Permanent Address)</Label>
+            <div className="grid md:grid-cols-3 gap-4">
+              <Field label="आपली मूळ वस्ती (गाव / शहर)">
+                <Input
+                  value={v.permanent_address?.native_village || ""}
+                  onChange={(e) =>
+                    setV((p) => ({
+                      ...p,
+                      permanent_address: { ...(p.permanent_address || {}), native_village: e.target.value },
+                    }))
+                  }
+                  placeholder="गाव / शहर"
+                />
+              </Field>
+              <Field label="तालुका">
+                <Input
+                  value={v.permanent_address?.native_taluka || ""}
+                  onChange={(e) =>
+                    setV((p) => ({
+                      ...p,
+                      permanent_address: { ...(p.permanent_address || {}), native_taluka: e.target.value },
+                    }))
+                  }
+                  placeholder="तालुका"
+                />
+              </Field>
+              <Field label="जिल्हा">
+                <Input
+                  value={v.permanent_address?.native_district || ""}
+                  onChange={(e) =>
+                    setV((p) => ({
+                      ...p,
+                      permanent_address: { ...(p.permanent_address || {}), native_district: e.target.value },
+                    }))
+                  }
+                  placeholder="जिल्हा"
+                />
+              </Field>
+            </div>
+          </div>
         </CardContent>
       </Card>
 

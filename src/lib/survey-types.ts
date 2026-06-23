@@ -91,7 +91,14 @@ export interface SurveyFormValues {
   benefits_info: BenefitsInfo;
   employment_info: EmploymentInfo;
   farm_management: FarmManagement;
+  permanent_address: PermanentAddress;
 }
+
+export type PermanentAddress = {
+  native_village?: string;
+  native_taluka?: string;
+  native_district?: string;
+};
 
 export type BenefitsInfo = {
   ladki_bahin?: boolean | null;
@@ -150,4 +157,5 @@ export const emptySurvey: SurveyFormValues = {
   benefits_info: {},
   employment_info: {},
   farm_management: {},
+  permanent_address: {},
 };

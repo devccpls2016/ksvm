@@ -80,6 +80,7 @@ export type Database = {
           mobile: string | null
           occupation: string | null
           owns_house: boolean | null
+          permanent_address: Json | null
           pincode: string | null
           position_data: Json | null
           rabi_area: string | null
@@ -130,6 +131,7 @@ export type Database = {
           mobile?: string | null
           occupation?: string | null
           owns_house?: boolean | null
+          permanent_address?: Json | null
           pincode?: string | null
           position_data?: Json | null
           rabi_area?: string | null
@@ -180,6 +182,7 @@ export type Database = {
           mobile?: string | null
           occupation?: string | null
           owns_house?: boolean | null
+          permanent_address?: Json | null
           pincode?: string | null
           position_data?: Json | null
           rabi_area?: string | null
