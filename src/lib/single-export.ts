@@ -134,18 +134,22 @@ export async function buildSurveyHTML(r: any) {
   <table>
     ${row("शेतजमीन आहे?", r.has_farmland === true ? "होय" : r.has_farmland === false ? "नाही" : "-")}
     ${row("एकूण शेती", r.total_farmland)}
+    ${row("ओलिताखालील क्षेत्र (एकर)", r.irrigated_area)}
+    ${row("कोरडवाहू क्षेत्र (एकर)", r.dryland_area)}
+    ${row("खरीप हंगामाखालील क्षेत्र (एकर)", r.kharif_area)}
+    ${row("रब्बी हंगामाखालील क्षेत्र (एकर)", r.rabi_area)}
+    ${row("उन्हाळी हंगामाखालील क्षेत्र (एकर)", r.summer_area)}
+    ${row("प्रमुख पीक प्रकार", [...(r.major_crop_types || []), r.major_crop_types_other].filter(Boolean).join(", "))}
   </table>
   ${crops.length > 0 ? `
   <table style="margin-top:8px;">
-    <thead><tr><th>#</th><th>हंगाम</th><th>कोरडवाहू</th><th>कोरडवाहू पिक</th><th>ओलितावली</th><th>ओलितावली पिक</th><th>खरीप</th><th>रब्बी</th><th>एकूण</th></tr></thead>
+    <thead><tr><th>#</th><th>पिक हंगाम</th></tr></thead>
     <tbody>
-    ${crops.map((c: any, i: number) => `<tr>
-      <td>${i + 1}</td><td>${esc(c.season)}</td><td>${esc(c.dry_land)}</td><td>${esc(c.dry_crop)}</td>
-      <td>${esc(c.wet_land)}</td><td>${esc(c.wet_crop)}</td><td>${esc(c.kharif)}</td><td>${esc(c.rabi)}</td><td>${esc(c.total)}</td>
-    </tr>`).join("")}
+    ${crops.map((c: any, i: number) => `<tr><td>${i + 1}</td><td>${esc(c.season)}</td></tr>`).join("")}
     </tbody>
   </table>` : ""}
 </div>
+
 
 <div class="section">
   <h2>H. सिंचनाचे साधन</h2>

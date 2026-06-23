@@ -13,14 +13,8 @@ export type FamilyMember = {
 
 export type Crop = {
   season: string;
-  dry_land: string;
-  dry_crop: string;
-  wet_land: string;
-  wet_crop: string;
-  kharif: string;
-  rabi: string;
-  total: string;
 };
+
 
 export type PositionData = {
   type?: string; // राजकीय / सामाजिक / लोकप्रतिनिधी
@@ -60,9 +54,17 @@ export interface SurveyFormValues {
   solar_panel_wanted: boolean | null;
   has_farmland: boolean | null;
   total_farmland: string;
+  irrigated_area: string;
+  dryland_area: string;
+  kharif_area: string;
+  rabi_area: string;
+  summer_area: string;
+  major_crop_types: string[];
+  major_crop_types_other: string;
   crops: Crop[];
   irrigation_sources: string[];
   farming_tools: string[];
+
   has_position: boolean;
   position_data: PositionData;
   members: FamilyMember[];
@@ -75,7 +77,11 @@ export const emptySurvey: SurveyFormValues = {
   household_items: [],
   household_item_counts: {},
   owns_house: null, house_type: "", living_status: "", gharkul_received: null, gharkul_wanted: null, solar_panel_installed: null, solar_panel_wanted: null,
-  has_farmland: null, total_farmland: "", crops: [], irrigation_sources: [], farming_tools: [],
+  has_farmland: null, total_farmland: "",
+  irrigated_area: "", dryland_area: "", kharif_area: "", rabi_area: "", summer_area: "",
+  major_crop_types: [], major_crop_types_other: "",
+  crops: [], irrigation_sources: [], farming_tools: [],
+
   has_position: false, position_data: {},
   members: [],
 };
