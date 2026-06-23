@@ -54,6 +54,8 @@ export interface SurveyFormValues {
   owns_house: boolean | null;
   house_type: string;
   living_status: string;
+  gharkul_received: boolean | null;
+  gharkul_wanted: boolean | null;
   has_farmland: boolean | null;
   total_farmland: string;
   crops: Crop[];
