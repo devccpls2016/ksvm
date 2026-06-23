@@ -85,7 +85,7 @@ export const FARMLAND_SIZES = [
   "20 एकरपेक्षा जास्त (> 20 acres)",
 ];
 export const CROP_TYPES = ["गहू", "धान", "मका"];
-export const CROP_SEASONS = ["खरीप", "रब्बी", "उन्हाळी"];
+export const CROP_SEASONS = ["खरीप", "रब्बी (धान सोडून)", "उन्हाळी (धानासह)"];
 export const IRRIGATION = ["ट्युबवेल / बोअरवेल", "विहीर", "तलाव / नदी", "नहर"];
 export const FARM_TOOLS = ["बैलबंडी", "नांगर", "ट्रॅक्टर", "विहीर", "बोअरवेल"];
 
