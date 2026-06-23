@@ -91,15 +91,16 @@ export const POLITICAL_LEVELS = [
   "प्रदेश पदाधिकारी", "जिल्हा पदाधिकारी", "तालुका पदाधिकारी", "गाव पदाधिकारी",
 ];
 export const REPRESENTATIVES = [
-  "आमदार", "जिल्हा परिषद सदस्य", "पंचायत समिती सदस्य", "नगरपरिषद सदस्य",
-];
-export const SOCIAL_ORGS = [
-  { name: "सामाजिक संस्था (Social Organisation)", roles: ["पदाधिकारी", "अध्यक्ष", "उपाध्यक्ष", "सचिव", "सदस्य"] },
-  { name: "शैक्षणिक संस्था (Educational Institution)", roles: ["पदाधिकारी", "अध्यक्ष", "उपाध्यक्ष", "सचिव", "सदस्य"] },
+  "आमदार",
+  "जिल्हा परिषद सदस्य",
+  "पंचायत समिती सदस्य",
+  "नगरपरिषद सदस्य",
+  "Co-operative Bank (सहकारी बँक)",
+  "Co-operative Society (सहकारी संस्था)",
 ];
 
-// लोकप्रतिनिधी अंतर्गत सहकारी संस्था
-export const REPRESENTATIVE_ORGS = [
-  { name: "Co-operative Bank (सहकारी बँक)", roles: ["अध्यक्ष", "उपाध्यक्ष", "संचालक", "सदस्य"] },
-  { name: "Co-operative Society (सहकारी संस्था)", roles: ["अध्यक्ष", "उपाध्यक्ष", "सचिव", "मेंबर"] },
-];
+export const REPRESENTATIVE_ROLES: Record<string, string[]> = {
+  "Co-operative Bank (सहकारी बँक)": ["अध्यक्ष", "उपाध्यक्ष", "संचालक", "सदस्य"],
+  "Co-operative Society (सहकारी संस्था)": ["अध्यक्ष", "उपाध्यक्ष", "सचिव", "मेंबर"],
+};
+

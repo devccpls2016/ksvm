@@ -28,7 +28,6 @@ export type PositionData = {
   political_level?: string;
   party_name?: string;
   representative_type?: string;
-  coop_org?: string;
   coop_role?: string;
   coop_org_name?: string;
   social_org?: string;
