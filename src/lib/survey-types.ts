@@ -50,6 +50,7 @@ export interface SurveyFormValues {
   education: string;
   occupation: string;
   household_items: string[];
+  household_item_counts: Record<string, number>;
   owns_house: boolean | null;
   house_type: string;
   living_status: string;
@@ -68,6 +69,7 @@ export const emptySurvey: SurveyFormValues = {
   head_name: "", head_photo_url: "", mobile: "", community: "कोहळी",
   marital_status: "", gender: "", age: "", dob: "", education: "", occupation: "",
   household_items: [],
+  household_item_counts: {},
   owns_house: null, house_type: "", living_status: "",
   has_farmland: null, total_farmland: "", crops: [], irrigation_sources: [], farming_tools: [],
   has_position: false, position_data: {},
