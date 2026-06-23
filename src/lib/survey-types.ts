@@ -96,7 +96,7 @@ export const emptySurvey: SurveyFormValues = {
   has_farmland: null, total_farmland: "",
   irrigated_area: "", dryland_area: "", kharif_area: "", rabi_area: "", summer_area: "",
   major_crop_types: [], major_crop_types_other: "",
-  crops: [], irrigation_sources: [], farming_tools: [],
+  crops: [], irrigation_sources: [], irrigation_details: {}, farming_tools: [],
 
   has_position: false, position_data: {},
   members: [],
