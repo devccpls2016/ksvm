@@ -64,7 +64,7 @@ function EditSurvey() {
           household_items: data.household_items || [],
           irrigation_sources: data.irrigation_sources || [],
           farming_tools: data.farming_tools || [],
-          crops: data.crops || [],
+          crops: (data.crops && typeof data.crops === "object" && !Array.isArray(data.crops)) ? data.crops as any : { irrigated_area: "", dryland_area: "", kharif_area: "", rabi_area: "", summer_area: "" },
           members: data.members || [],
           position_data: data.position_data || {},
           solar_panel_installed: data.solar_panel_installed ?? null,
