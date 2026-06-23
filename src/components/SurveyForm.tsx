@@ -17,7 +17,7 @@ import {
   T, MARITAL, GENDER, OCCUPATION, EDUCATION, RELATIONSHIP, JOB_TYPE,
   HOUSEHOLD_ITEMS, HOUSE_TYPES, LIVING_STATUS, FARMLAND_SIZES,
   CROP_TYPES, CROP_SEASONS, IRRIGATION, FARM_TOOLS,
-  POSITION_TYPES, POSITION_STATUS, POLITICAL_LEVELS, REPRESENTATIVES, SOCIAL_ORGS, REPRESENTATIVE_ORGS,
+  POSITION_TYPES, POSITION_STATUS, POLITICAL_LEVELS, REPRESENTATIVES, SOCIAL_ORGS, REPRESENTATIVE_ROLES,
 } from "@/lib/marathi";
 import type { SurveyFormValues, FamilyMember, Crop } from "@/lib/survey-types";
 import { emptySurvey } from "@/lib/survey-types";
@@ -221,22 +221,22 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
 
               {v.position_data.type === "लोकप्रतिनिधी" && (
                 <>
-                  <SelectField label="लोकप्रतिनिधी पद" value={v.position_data.representative_type || ""} onChange={x => upd("position_data", { ...v.position_data, representative_type: x })} options={REPRESENTATIVES} />
-                  <SelectField label="संस्था (Co-operative)" value={v.position_data.coop_org || ""} onChange={x => upd("position_data", { ...v.position_data, coop_org: x, coop_role: "" })} options={REPRESENTATIVE_ORGS.map(s => s.name)} />
-                  {v.position_data.coop_org && (
-                    <SelectField label="संस्थेतील पद" value={v.position_data.coop_role || ""} onChange={x => upd("position_data", { ...v.position_data, coop_role: x })}
-                      options={REPRESENTATIVE_ORGS.find(s => s.name === v.position_data.coop_org)?.roles || []} />
+                  <SelectField label="लोकप्रतिनिधी पद" value={v.position_data.representative_type || ""} onChange={x => upd("position_data", { ...v.position_data, representative_type: x, coop_role: "" })} options={REPRESENTATIVES} />
+                  {v.position_data.representative_type && (v.position_data.representative_type === "Co-operative Bank (सहकारी बँक)" || v.position_data.representative_type === "Co-operative Society (सहकारी संस्था)") && (
+                    <>
+                      <SelectField label="संस्थेतील पद" value={v.position_data.coop_role || ""} onChange={x => upd("position_data", { ...v.position_data, coop_role: x })} options={REPRESENTATIVE_ROLES[v.position_data.representative_type] || []} />
+                      <Field label="संस्थेचे नाव"><Input value={v.position_data.coop_org_name || ""} onChange={e => upd("position_data", { ...v.position_data, coop_org_name: e.target.value })}/></Field>
+                    </>
                   )}
-                  <Field label="संस्थेचे नाव"><Input value={v.position_data.coop_org_name || ""} onChange={e => upd("position_data", { ...v.position_data, coop_org_name: e.target.value })}/></Field>
                 </>
               )}
 
               {v.position_data.type === "सामाजिक" && (
                 <>
-                  <SelectField label="संस्था" value={v.position_data.social_org || ""} onChange={x => upd("position_data", { ...v.position_data, social_org: x, social_role: "" })} options={SOCIAL_ORGS.map(s => s.name)} />
+                  <SelectField label="संस्था" value={v.position_data.social_org || ""} onChange={x => upd("position_data", { ...v.position_data, social_org: x, social_role: "" })} options={SOCIAL_ORGS.map((s: { name: string }) => s.name)} />
                   {v.position_data.social_org && (
                     <SelectField label="पद" value={v.position_data.social_role || ""} onChange={x => upd("position_data", { ...v.position_data, social_role: x })}
-                      options={SOCIAL_ORGS.find(s => s.name === v.position_data.social_org)?.roles || []} />
+                      options={SOCIAL_ORGS.find((s: { name: string; roles: string[] }) => s.name === v.position_data.social_org)?.roles || []} />
                   )}
                 </>
               )}
