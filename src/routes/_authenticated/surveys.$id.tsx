@@ -80,6 +80,7 @@ function EditSurvey() {
           rabi_area: data.rabi_area ?? "",
           summer_area: data.summer_area ?? "",
           benefits_info: (data as any).benefits_info || {},
+          employment_info: (data as any).employment_info || {},
 
 
 
