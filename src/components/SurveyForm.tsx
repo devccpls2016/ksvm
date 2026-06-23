@@ -414,6 +414,9 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
         </CardContent>
       </Card>
 
+      <BenefitsSection v={v} setV={setV} />
+
+
       <div className="flex justify-end gap-2 sticky bottom-0 bg-background/80 backdrop-blur p-3 -mx-4 border-t">
         <Button type="submit" size="lg" disabled={submitting}>
           {submitting ? T.saving : (submitLabel || T.save)}
