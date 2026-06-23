@@ -220,7 +220,15 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
               )}
 
               {v.position_data.type === "लोकप्रतिनिधी" && (
-                <SelectField label="लोकप्रतिनिधी" value={v.position_data.representative_type || ""} onChange={x => upd("position_data", { ...v.position_data, representative_type: x })} options={REPRESENTATIVES} />
+                <>
+                  <SelectField label="लोकप्रतिनिधी पद" value={v.position_data.representative_type || ""} onChange={x => upd("position_data", { ...v.position_data, representative_type: x })} options={REPRESENTATIVES} />
+                  <SelectField label="संस्था (Co-operative)" value={v.position_data.coop_org || ""} onChange={x => upd("position_data", { ...v.position_data, coop_org: x, coop_role: "" })} options={REPRESENTATIVE_ORGS.map(s => s.name)} />
+                  {v.position_data.coop_org && (
+                    <SelectField label="संस्थेतील पद" value={v.position_data.coop_role || ""} onChange={x => upd("position_data", { ...v.position_data, coop_role: x })}
+                      options={REPRESENTATIVE_ORGS.find(s => s.name === v.position_data.coop_org)?.roles || []} />
+                  )}
+                  <Field label="संस्थेचे नाव"><Input value={v.position_data.coop_org_name || ""} onChange={e => upd("position_data", { ...v.position_data, coop_org_name: e.target.value })}/></Field>
+                </>
               )}
 
               {v.position_data.type === "सामाजिक" && (
