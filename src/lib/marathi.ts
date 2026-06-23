@@ -78,7 +78,11 @@ export const HOUSE_TYPES = ["कच्चा", "पक्का"];
 export const LIVING_STATUS = ["भाड्याचे", "आश्रित"];
 
 export const FARMLAND_SIZES = [
-  "0 – 2.5 आर", "2.5 – 5.0 आर", "5.0 – 10.0 आर", "More Than 10 आर",
+  "1 एकरपेक्षा कमी (< 1 acre)",
+  "1 ते 5 एकर (1–5 acres)",
+  "5 ते 10 एकर (5–10 acres)",
+  "10 ते 20 एकर (10–20 acres)",
+  "20 एकरपेक्षा जास्त (> 20 acres)",
 ];
 export const CROP_TYPES = ["गहू", "धान", "मका"];
 export const CROP_SEASONS = ["खरीप", "रब्बी", "उन्हाळी"];
