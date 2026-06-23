@@ -41,6 +41,9 @@ export const T = {
   needs: "कौटुंबिक आवश्यक गरजा",
   houseInfo: "घर विषयक माहिती",
   agriInfo: "शेती विषयक माहिती",
+  // Solar energy
+  solarPanelInstalled: "तुमच्या घरी सौर ऊर्जा (Solar Panel) प्रणाली बसविण्यात आलेली आहे का?",
+  solarPanelWanted: "तुम्हाला सौर ऊर्जा (Solar Panel) योजनेचा लाभ घ्यायचा आहे का?",
 };
 
 export const VILLAGES_PLACEHOLDER = "उदा. नागपूर";

@@ -250,7 +250,7 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       {/* 4. कौटुंबिक आवश्यक गरजा */}
       <Card>
         <CardHeader><CardTitle>{T.needs} (घरातील वापराच्या वस्तू)</CardTitle></CardHeader>
-        <CardContent>
+        <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {HOUSEHOLD_ITEMS.map(item => {
               const checked = v.household_items.includes(item);
@@ -278,8 +278,26 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
               );
             })}
           </div>
+
+          <Separator className="my-2" />
+
+          <Field label={T.solarPanelInstalled}>
+            <RadioGroup value={v.solar_panel_installed === null ? "" : v.solar_panel_installed ? "yes" : "no"} onValueChange={x => { upd("solar_panel_installed", x === "yes"); if (x === "yes") upd("solar_panel_wanted", null); }} className="flex gap-6">
+              <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
+              <Label className="flex items-center gap-2"><RadioGroupItem value="no"/>{T.no}</Label>
+            </RadioGroup>
+          </Field>
+          {v.solar_panel_installed === false && (
+            <Field label={T.solarPanelWanted}>
+              <RadioGroup value={v.solar_panel_wanted === null ? "" : v.solar_panel_wanted ? "yes" : "no"} onValueChange={x => upd("solar_panel_wanted", x === "yes")} className="flex gap-6">
+                <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
+                <Label className="flex items-center gap-2"><RadioGroupItem value="no"/>{T.no}</Label>
+              </RadioGroup>
+            </Field>
+          )}
         </CardContent>
       </Card>
+
 
       {/* 5. घर विषयक माहिती */}
       <Card>
