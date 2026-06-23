@@ -77,7 +77,9 @@ export interface SurveyFormValues {
   major_crop_types_other: string;
   crops: Crop[];
   irrigation_sources: string[];
+  irrigation_details: IrrigationDetails;
   farming_tools: string[];
+
 
   has_position: boolean;
   position_data: PositionData;
