@@ -295,7 +295,23 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
             <SelectField label="घराचा प्रकार" value={v.house_type} onChange={x=>upd("house_type", x)} options={HOUSE_TYPES} />
           )}
           {v.owns_house === false && (
-            <SelectField label="राहण्याची स्थिती" value={v.living_status} onChange={x=>upd("living_status", x)} options={LIVING_STATUS} />
+            <>
+              <SelectField label="राहण्याची स्थिती" value={v.living_status} onChange={x=>upd("living_status", x)} options={LIVING_STATUS} />
+              <Field label="तुम्हाला घरकुल योजनेचा लाभ मिळाला आहे का?">
+                <RadioGroup value={v.gharkul_received === null ? "" : v.gharkul_received ? "yes" : "no"} onValueChange={x => { upd("gharkul_received", x === "yes"); if (x === "yes") upd("gharkul_wanted", null); }} className="flex gap-6">
+                  <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
+                  <Label className="flex items-center gap-2"><RadioGroupItem value="no"/>{T.no}</Label>
+                </RadioGroup>
+              </Field>
+              {v.gharkul_received === false && (
+                <Field label="तुम्हाला घरकुल योजनेचा लाभ घ्यायचा आहे का?">
+                  <RadioGroup value={v.gharkul_wanted === null ? "" : v.gharkul_wanted ? "yes" : "no"} onValueChange={x => upd("gharkul_wanted", x === "yes")} className="flex gap-6">
+                    <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
+                    <Label className="flex items-center gap-2"><RadioGroupItem value="no"/>{T.no}</Label>
+                  </RadioGroup>
+                </Field>
+              )}
+            </>
           )}
         </CardContent>
       </Card>
