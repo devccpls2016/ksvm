@@ -36,12 +36,13 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
   const upd = <K extends keyof SurveyFormValues>(k: K, val: SurveyFormValues[K]) =>
     setV((p) => ({ ...p, [k]: val }));
 
-  function toggleArr(key: "household_items" | "irrigation_sources" | "farming_tools", item: string) {
+  function toggleArr(key: "household_items" | "irrigation_sources" | "farming_tools" | "major_crop_types", item: string) {
     setV((p) => {
-      const arr = p[key] || [];
+      const arr = (p[key] as string[]) || [];
       return { ...p, [key]: arr.includes(item) ? arr.filter(x => x !== item) : [...arr, item] };
     });
   }
+
 
   async function uploadPhoto(file: File) {
     setUploading(true);
