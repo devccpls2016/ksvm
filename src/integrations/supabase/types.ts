@@ -54,6 +54,7 @@ export type Database = {
           dryland_area: string | null
           education: string | null
           employment_info: Json
+          farm_management: Json
           farming_tools: string[] | null
           farming_tools_details: Json
           gender: string | null
@@ -103,6 +104,7 @@ export type Database = {
           dryland_area?: string | null
           education?: string | null
           employment_info?: Json
+          farm_management?: Json
           farming_tools?: string[] | null
           farming_tools_details?: Json
           gender?: string | null
@@ -152,6 +154,7 @@ export type Database = {
           dryland_area?: string | null
           education?: string | null
           employment_info?: Json
+          farm_management?: Json
           farming_tools?: string[] | null
           farming_tools_details?: Json
           gender?: string | null

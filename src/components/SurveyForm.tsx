@@ -410,6 +410,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
 
               <FarmingToolsSection v={v} setV={setV} />
 
+              <FarmManagementSection v={v} setV={setV} />
+
             </div>
           )}
         </CardContent>
@@ -834,6 +836,45 @@ function EmploymentSection({ v, setV }: { v: SurveyFormValues; setV: React.Dispa
     </Card>
   );
 }
+
+function FarmManagementSection({ v, setV }: { v: SurveyFormValues; setV: React.Dispatch<React.SetStateAction<SurveyFormValues>> }) {
+  const fm = v.farm_management || {};
+  function patch(p: Partial<typeof fm>) {
+    setV((prev) => ({ ...prev, farm_management: { ...(prev.farm_management || {}), ...p } }));
+  }
+  return (
+    <div className="space-y-4 border-t pt-4">
+      <Label className="text-base font-semibold block">शेती व्यवस्थापन प्रकार</Label>
+      <div className="border rounded-lg p-4 space-y-3 bg-card/50">
+        <div className="font-medium text-sm">1. आपण ठेक्याने (Contract Farming) किंवा बटाईने (Share Cropping) शेती करता का?</div>
+        <YesNo
+          value={fm.has_contract_or_share}
+          onChange={(val) =>
+            patch({
+              has_contract_or_share: val,
+              ...(val !== true ? { contract_farming_area: "" } : {}),
+            })
+          }
+        />
+        {fm.has_contract_or_share === true && (
+          <div className="grid md:grid-cols-2 gap-3 pt-2 border-t">
+            <Field label="ठेक्याने / बटाईने केलेल्या शेतीचे क्षेत्र (एकरमध्ये)">
+              <Input
+                type="number"
+                min={0}
+                step="0.01"
+                value={fm.contract_farming_area || ""}
+                onChange={(e) => patch({ contract_farming_area: e.target.value })}
+                placeholder="उदा. 2.5"
+              />
+            </Field>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 
 
 
