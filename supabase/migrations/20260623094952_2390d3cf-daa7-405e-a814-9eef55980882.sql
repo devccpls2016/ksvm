@@ -1,0 +1,1 @@
+ALTER TABLE public.surveys ADD COLUMN IF NOT EXISTS irrigation_details jsonb NOT NULL DEFAULT '{}'::jsonb;
