@@ -165,6 +165,30 @@ export async function buildSurveyHTML(r: any) {
     : `<div class="empty">नोंदवलेले नाही</div>`}
 </div>
 
+<div class="section">
+  <h2>J. सामाजिक व आर्थिक लाभार्थी माहिती</h2>
+  <table>
+    ${row("मुख्यमंत्री लाडकी बहीण योजना लाभार्थी", b.ladki_bahin === true ? "होय" : b.ladki_bahin === false ? "नाही" : "-")}
+    ${b.ladki_bahin === true ? row("लाभार्थी संख्या", b.ladki_bahin_count || "-") : ""}
+    ${b.ladki_bahin === true ? row("लाभ नियमितपणे मिळतो का?", b.ladki_bahin_regular === true ? "होय" : b.ladki_bahin_regular === false ? "नाही" : "-") : ""}
+    ${row("दुर्धर आजाराने बाधित रुग्ण", b.critical_illness === true ? "होय" : b.critical_illness === false ? "नाही" : "-")}
+    ${b.critical_illness === true ? row("वैद्यकीय सहाय्याची आवश्यकता", b.medical_aid_needed === true ? "होय" : b.medical_aid_needed === false ? "नाही" : "-") : ""}
+    ${row("राज्य / राष्ट्रीय / आंतरराष्ट्रीय खेळाडू", b.has_sportsperson === true ? "होय" : b.has_sportsperson === false ? "नाही" : "-")}
+    ${b.has_sportsperson === true ? row("खेळाचा प्रकार", b.sport_type || "-") : ""}
+    ${b.has_sportsperson === true ? row("स्तर", b.sport_level || "-") : ""}
+  </table>
+</div>
+
+<div class="section">
+  <h2>K. उद्योजक / स्वयंरोजगार व रोजगार संबंधित माहिती</h2>
+  <table>
+    ${row("उद्योजक / स्वयंरोजगारात कार्यरत", emp.has_entrepreneur === true ? "होय" : emp.has_entrepreneur === false ? "नाही" : "-")}
+    ${emp.has_entrepreneur === true ? row("तपशील व व्यवसायाचा पत्ता", emp.entrepreneur_details || "-") : ""}
+    ${row("जोडधंदा / अतिरिक्त व्यवसाय", emp.has_side_business === true ? "होय" : emp.has_side_business === false ? "नाही" : "-")}
+    ${emp.has_side_business === true ? row("व्यवसायाचे स्वरूप व तपशील", emp.side_business_details || "-") : ""}
+  </table>
+</div>
+
 <div class="footer">कुटुंब सर्वेक्षण अहवाल — ${esc(r.head_name)} — ${esc(r.village)}</div>
 
 </div>
