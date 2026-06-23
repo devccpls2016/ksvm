@@ -458,11 +458,12 @@ function PhotoPreview({ path }: { path: string }) {
   return url ? <img src={url} alt="" className="h-full w-full object-cover" /> : <span className="text-xs">...</span>;
 }
 
-const IRRIGATION_SOURCES: { key: "tubewell" | "well" | "farm_pond" | "river" | "canal"; label: string; pumps?: boolean }[] = [
+const IRRIGATION_SOURCES: { key: "tubewell" | "well" | "farm_pond" | "pond" | "river" | "canal"; label: string; pumps?: boolean }[] = [
   { key: "tubewell",  label: "ट्युबवेल / बोअरवेल", pumps: true },
   { key: "well",      label: "विहीर",             pumps: true },
   { key: "farm_pond", label: "शेततलाव" },
-  { key: "river",     label: "तलाव / नदी" },
+  { key: "pond",      label: "तलाव" },
+  { key: "river",     label: "नदी" },
   { key: "canal",     label: "नहर" },
 ];
 
@@ -539,7 +540,7 @@ function IrrigationSection({
                   </Label>
                 </div>
               )}
-              {src.key === "river" && enabled && (
+              {src.key === "pond" && enabled && (
                 <div className="mt-3 pl-6 space-y-3 border-l-2 border-primary/30">
                   <div>
                     <Label className="text-sm font-medium block mb-2">

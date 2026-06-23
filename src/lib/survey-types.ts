@@ -26,6 +26,7 @@ export type IrrigationDetails = {
   tubewell?: IrrigationSourceDetail;
   well?: IrrigationSourceDetail;
   farm_pond?: IrrigationSourceDetail;
+  pond?: IrrigationSourceDetail;
   river?: IrrigationSourceDetail;
   canal?: IrrigationSourceDetail;
 };
