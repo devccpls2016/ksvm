@@ -89,6 +89,7 @@ export interface SurveyFormValues {
   position_data: PositionData;
   members: FamilyMember[];
   benefits_info: BenefitsInfo;
+  employment_info: EmploymentInfo;
 }
 
 export type BenefitsInfo = {
@@ -100,6 +101,14 @@ export type BenefitsInfo = {
   has_sportsperson?: boolean | null;
   sport_type?: string;
   sport_level?: string;
+};
+
+export type EmploymentInfo = {
+  has_entrepreneur?: boolean | null;
+  entrepreneur_details?: string;
+  entrepreneur_address?: string;
+  has_side_business?: boolean | null;
+  side_business_details?: string;
 };
 
 export type FarmingToolDetail = {
@@ -133,4 +142,5 @@ export const emptySurvey: SurveyFormValues = {
   has_position: false, position_data: {},
   members: [],
   benefits_info: {},
+  employment_info: {},
 };
