@@ -71,9 +71,7 @@ export const HOUSEHOLD_ITEMS = [
   "सायकल", "दोन चाकी वाहन", "ऑटो", "चार चाकी वाहन",
 ];
 
-export const HOUSE_TYPES = [
-  "पाल / गवताचे", "माती / कावलारू", "टिनाचे / कुळाचे", "विटा / सिमेंटचे",
-];
+export const HOUSE_TYPES = ["कच्चा", "पक्का"];
 export const LIVING_STATUS = ["भाड्याचे", "आश्रित"];
 
 export const FARMLAND_SIZES = [
