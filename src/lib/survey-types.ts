@@ -77,7 +77,11 @@ export const emptySurvey: SurveyFormValues = {
   household_items: [],
   household_item_counts: {},
   owns_house: null, house_type: "", living_status: "", gharkul_received: null, gharkul_wanted: null, solar_panel_installed: null, solar_panel_wanted: null,
-  has_farmland: null, total_farmland: "", crops: [], irrigation_sources: [], farming_tools: [],
+  has_farmland: null, total_farmland: "",
+  irrigated_area: "", dryland_area: "", kharif_area: "", rabi_area: "", summer_area: "",
+  major_crop_types: [], major_crop_types_other: "",
+  crops: [], irrigation_sources: [], farming_tools: [],
+
   has_position: false, position_data: {},
   members: [],
 };
