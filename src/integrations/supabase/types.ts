@@ -44,6 +44,7 @@ export type Database = {
       surveys: {
         Row: {
           age: number | null
+          benefits_info: Json
           community: string | null
           created_at: string
           created_by: string | null
@@ -91,6 +92,7 @@ export type Database = {
         }
         Insert: {
           age?: number | null
+          benefits_info?: Json
           community?: string | null
           created_at?: string
           created_by?: string | null
@@ -138,6 +140,7 @@ export type Database = {
         }
         Update: {
           age?: number | null
+          benefits_info?: Json
           community?: string | null
           created_at?: string
           created_by?: string | null
