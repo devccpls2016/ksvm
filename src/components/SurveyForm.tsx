@@ -473,7 +473,7 @@ function IrrigationSection({
   v: SurveyFormValues;
   setV: React.Dispatch<React.SetStateAction<SurveyFormValues>>;
 }) {
-  function patch(key: string, p: Partial<{ count: number | ""; electric: boolean; solar: boolean }>) {
+  function patch(key: string, p: Record<string, any>) {
     setV((prev) => {
       const det = { ...(prev.irrigation_details || {}) } as any;
       det[key] = { ...(det[key] || {}), ...p };
