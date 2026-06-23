@@ -116,12 +116,13 @@ function Dashboard() {
 
   const cropsData = useMemo(() => {
     const map: Record<string, number> = {};
-    myRows.forEach((r) => (Array.isArray(r.crops) ? r.crops : []).forEach((c: any) => {
-      const k = c.dry_crop || c.wet_crop || "—";
+    myRows.forEach((r) => (Array.isArray(r.major_crop_types) ? r.major_crop_types : []).forEach((k: string) => {
+      if (!k) return;
       map[k] = (map[k] || 0) + 1;
     }));
     return Object.entries(map).map(([name, value]) => ({ name, value }));
   }, [myRows]);
+
 
   const irrigationData = useMemo(() => {
     const map: Record<string, number> = {};
