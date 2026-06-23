@@ -20,7 +20,7 @@ function row(label: string, val: any) {
 export async function buildSurveyHTML(r: any) {
   const photo = await photoUrl(r.head_photo_url);
   const members = Array.isArray(r.members) ? r.members : [];
-  const crops = Array.isArray(r.crops) ? r.crops : [];
+  const crops = (r.crops && typeof r.crops === "object" && !Array.isArray(r.crops)) ? r.crops : {};
   const pos = r.position_data || {};
 
   return `<!doctype html><html><head><meta charset="utf-8"/>
