@@ -15,6 +15,20 @@ export type Crop = {
   season: string;
 };
 
+export type IrrigationSourceDetail = {
+  count?: number | "";
+  electric?: boolean;
+  solar?: boolean;
+};
+export type IrrigationDetails = {
+  tubewell?: IrrigationSourceDetail;
+  well?: IrrigationSourceDetail;
+  farm_pond?: IrrigationSourceDetail;
+  river?: IrrigationSourceDetail;
+  canal?: IrrigationSourceDetail;
+};
+
+
 
 export type PositionData = {
   type?: string; // राजकीय / सामाजिक / लोकप्रतिनिधी
@@ -63,7 +77,9 @@ export interface SurveyFormValues {
   major_crop_types_other: string;
   crops: Crop[];
   irrigation_sources: string[];
+  irrigation_details: IrrigationDetails;
   farming_tools: string[];
+
 
   has_position: boolean;
   position_data: PositionData;
@@ -80,7 +96,7 @@ export const emptySurvey: SurveyFormValues = {
   has_farmland: null, total_farmland: "",
   irrigated_area: "", dryland_area: "", kharif_area: "", rabi_area: "", summer_area: "",
   major_crop_types: [], major_crop_types_other: "",
-  crops: [], irrigation_sources: [], farming_tools: [],
+  crops: [], irrigation_sources: [], irrigation_details: {}, farming_tools: [],
 
   has_position: false, position_data: {},
   members: [],

@@ -65,6 +65,7 @@ export type Database = {
           household_items: string[] | null
           id: string
           irrigated_area: string | null
+          irrigation_details: Json
           irrigation_sources: string[] | null
           kharif_area: string | null
           living_status: string | null
@@ -110,6 +111,7 @@ export type Database = {
           household_items?: string[] | null
           id?: string
           irrigated_area?: string | null
+          irrigation_details?: Json
           irrigation_sources?: string[] | null
           kharif_area?: string | null
           living_status?: string | null
@@ -155,6 +157,7 @@ export type Database = {
           household_items?: string[] | null
           id?: string
           irrigated_area?: string | null
+          irrigation_details?: Json
           irrigation_sources?: string[] | null
           kharif_area?: string | null
           living_status?: string | null
