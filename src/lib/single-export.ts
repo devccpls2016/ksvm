@@ -137,10 +137,10 @@ export async function buildSurveyHTML(r: any) {
   </table>
   ${crops.length > 0 ? `
   <table style="margin-top:8px;">
-    <thead><tr><th>#</th><th>हंगाम</th><th>कोरडवाहू</th><th>कोरडवाहू पिक</th><th>ओलितावली</th><th>ओलितावली पिक</th><th>खरीप</th><th>रब्बी</th><th>एकूण</th></tr></thead>
+    <thead><tr><th>#</th><th>हंगाम</th><th>घेतलेली पिके</th><th>कोरडवाहू</th><th>कोरडवाहू पिक</th><th>ओलितावली</th><th>ओलितावली पिक</th><th>खरीप</th><th>रब्बी</th><th>एकूण</th></tr></thead>
     <tbody>
     ${crops.map((c: any, i: number) => `<tr>
-      <td>${i + 1}</td><td>${esc(c.season)}</td><td>${esc(c.dry_land)}</td><td>${esc(c.dry_crop)}</td>
+      <td>${i + 1}</td><td>${esc(c.season)}</td><td>${esc(c.crops_taken)}</td><td>${esc(c.dry_land)}</td><td>${esc(c.dry_crop)}</td>
       <td>${esc(c.wet_land)}</td><td>${esc(c.wet_crop)}</td><td>${esc(c.kharif)}</td><td>${esc(c.rabi)}</td><td>${esc(c.total)}</td>
     </tr>`).join("")}
     </tbody>
