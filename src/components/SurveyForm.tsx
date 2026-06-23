@@ -70,7 +70,7 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
   }
 
   function addCrop() {
-    setV(p => ({ ...p, crops: [...p.crops, { season: "", dry_land: "", dry_crop: "", wet_land: "", wet_crop: "", kharif: "", rabi: "", total: "", crops_taken: "" }] }));
+    setV(p => ({ ...p, crops: [...p.crops, { season: "", dry_land: "", dry_crop: "", wet_land: "", wet_crop: "", kharif: "", rabi: "", total: "" }] }));
   }
   function updCrop(i: number, patch: Partial<Crop>) {
     setV(p => ({ ...p, crops: p.crops.map((c, idx) => idx === i ? { ...c, ...patch } : c) }));
@@ -362,7 +362,6 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
                     </div>
                     <div className="grid md:grid-cols-4 gap-2">
                       <SelectField label="पिक हंगाम" value={c.season} onChange={x=>updCrop(i,{season:x})} options={CROP_SEASONS} />
-                      <Field label="घेतलेली पिके"><Input value={c.crops_taken} onChange={e=>updCrop(i,{crops_taken:e.target.value})}/></Field>
                       <Field label="कोरडवाहू जमीन"><Input value={c.dry_land} onChange={e=>updCrop(i,{dry_land:e.target.value})}/></Field>
                       <SelectField label="कोरडवाहू पिक प्रकार" value={c.dry_crop} onChange={x=>updCrop(i,{dry_crop:x})} options={CROP_TYPES} />
                       <Field label="ओलितावली जमीन"><Input value={c.wet_land} onChange={e=>updCrop(i,{wet_land:e.target.value})}/></Field>
