@@ -267,12 +267,12 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
                     <span className="text-sm">{item}</span>
                   </Label>
                   {checked && (
-                    <SelectField
-                      label=""
-                      value={String(count)}
-                      onChange={x => upd("household_item_counts", { ...(v.household_item_counts || {}), [item]: Number(x) })}
-                      options={Array.from({ length: 10 }, (_, i) => String(i + 1))}
-                    />
+                    <div className="w-20 shrink-0">
+                      <Select value={String(count)} onValueChange={x => upd("household_item_counts", { ...(v.household_item_counts || {}), [item]: Number(x) })}>
+                        <SelectTrigger className="h-8"><SelectValue placeholder="#" /></SelectTrigger>
+                        <SelectContent>{Array.from({ length: 10 }, (_, i) => String(i + 1)).map(o => <SelectItem key={o} value={o}>{o}</SelectItem>)}</SelectContent>
+                      </Select>
+                    </div>
                   )}
                 </div>
               );
