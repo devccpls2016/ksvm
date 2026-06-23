@@ -25,6 +25,7 @@ export async function buildSurveyHTML(r: any) {
   const b = r.benefits_info || {};
   const emp = r.employment_info || {};
   const fm = r.farm_management || {};
+  const pa = r.permanent_address || {};
 
   return `<!doctype html><html><head><meta charset="utf-8"/>
 <title>सर्वेक्षण - ${esc(r.head_name)}</title>
@@ -65,6 +66,7 @@ export async function buildSurveyHTML(r: any) {
   <h2>A. भौगोलिक माहिती</h2>
   <table>
     ${row("गाव", r.village)}${row("तालुका", r.taluka)}${row("जिल्हा", r.district)}${row("पिनकोड", r.pincode)}
+    ${row("मूळ वस्ती (गाव / शहर)", pa.native_village)}${row("मूळ वस्ती - तालुका", pa.native_taluka)}${row("मूळ वस्ती - जिल्हा", pa.native_district)}
   </table>
 </div>
 

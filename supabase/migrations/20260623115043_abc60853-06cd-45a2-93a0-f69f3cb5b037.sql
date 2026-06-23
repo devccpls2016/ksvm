@@ -1,0 +1,1 @@
+ALTER TABLE public.surveys ADD COLUMN IF NOT EXISTS permanent_address JSONB DEFAULT '{}'::jsonb;

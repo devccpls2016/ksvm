@@ -82,6 +82,7 @@ function EditSurvey() {
           benefits_info: (data as any).benefits_info || {},
           employment_info: (data as any).employment_info || {},
           farm_management: (data as any).farm_management || {},
+          permanent_address: (data as any).permanent_address || {},
 
 
 
