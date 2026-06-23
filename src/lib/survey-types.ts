@@ -82,12 +82,29 @@ export interface SurveyFormValues {
   irrigation_sources: string[];
   irrigation_details: IrrigationDetails;
   farming_tools: string[];
+  farming_tools_details: FarmingToolsDetails;
 
 
   has_position: boolean;
   position_data: PositionData;
   members: FamilyMember[];
 }
+
+export type FarmingToolDetail = {
+  has?: boolean | null;
+  count?: number | "";
+  want_to_buy?: boolean | null;
+  needs_loan?: boolean | null;
+};
+export type FarmingToolsDetails = {
+  tractor?: FarmingToolDetail;
+  harvester?: FarmingToolDetail;
+  rotavator?: FarmingToolDetail;
+  cultivator?: FarmingToolDetail;
+  tractor_trolley?: FarmingToolDetail;
+  other_uses?: boolean | null;
+  other_details?: string;
+};
 
 export const emptySurvey: SurveyFormValues = {
   village: "", taluka: "", district: "", pincode: "",
