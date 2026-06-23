@@ -69,6 +69,14 @@ function EditSurvey() {
           position_data: data.position_data || {},
           solar_panel_installed: data.solar_panel_installed ?? null,
           solar_panel_wanted: data.solar_panel_wanted ?? null,
+          major_crop_types: data.major_crop_types || [],
+          major_crop_types_other: data.major_crop_types_other ?? "",
+          irrigated_area: data.irrigated_area ?? "",
+          dryland_area: data.dryland_area ?? "",
+          kharif_area: data.kharif_area ?? "",
+          rabi_area: data.rabi_area ?? "",
+          summer_area: data.summer_area ?? "",
+
         }}
         onSubmit={submit}
         submitting={busy}
