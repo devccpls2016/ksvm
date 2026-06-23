@@ -50,6 +50,7 @@ export type Database = {
           crops: Json | null
           district: string | null
           dob: string | null
+          dryland_area: string | null
           education: string | null
           farming_tools: string[] | null
           gender: string | null
@@ -63,8 +64,12 @@ export type Database = {
           household_item_counts: Json | null
           household_items: string[] | null
           id: string
+          irrigated_area: string | null
           irrigation_sources: string[] | null
+          kharif_area: string | null
           living_status: string | null
+          major_crop_types: string[] | null
+          major_crop_types_other: string | null
           marital_status: string | null
           members: Json | null
           mobile: string | null
@@ -72,8 +77,10 @@ export type Database = {
           owns_house: boolean | null
           pincode: string | null
           position_data: Json | null
+          rabi_area: string | null
           solar_panel_installed: boolean | null
           solar_panel_wanted: boolean | null
+          summer_area: string | null
           taluka: string | null
           total_farmland: string | null
           updated_at: string
@@ -88,6 +95,7 @@ export type Database = {
           crops?: Json | null
           district?: string | null
           dob?: string | null
+          dryland_area?: string | null
           education?: string | null
           farming_tools?: string[] | null
           gender?: string | null
@@ -101,8 +109,12 @@ export type Database = {
           household_item_counts?: Json | null
           household_items?: string[] | null
           id?: string
+          irrigated_area?: string | null
           irrigation_sources?: string[] | null
+          kharif_area?: string | null
           living_status?: string | null
+          major_crop_types?: string[] | null
+          major_crop_types_other?: string | null
           marital_status?: string | null
           members?: Json | null
           mobile?: string | null
@@ -110,8 +122,10 @@ export type Database = {
           owns_house?: boolean | null
           pincode?: string | null
           position_data?: Json | null
+          rabi_area?: string | null
           solar_panel_installed?: boolean | null
           solar_panel_wanted?: boolean | null
+          summer_area?: string | null
           taluka?: string | null
           total_farmland?: string | null
           updated_at?: string
@@ -126,6 +140,7 @@ export type Database = {
           crops?: Json | null
           district?: string | null
           dob?: string | null
+          dryland_area?: string | null
           education?: string | null
           farming_tools?: string[] | null
           gender?: string | null
@@ -139,8 +154,12 @@ export type Database = {
           household_item_counts?: Json | null
           household_items?: string[] | null
           id?: string
+          irrigated_area?: string | null
           irrigation_sources?: string[] | null
+          kharif_area?: string | null
           living_status?: string | null
+          major_crop_types?: string[] | null
+          major_crop_types_other?: string | null
           marital_status?: string | null
           members?: Json | null
           mobile?: string | null
@@ -148,8 +167,10 @@ export type Database = {
           owns_house?: boolean | null
           pincode?: string | null
           position_data?: Json | null
+          rabi_area?: string | null
           solar_panel_installed?: boolean | null
           solar_panel_wanted?: boolean | null
+          summer_area?: string | null
           taluka?: string | null
           total_farmland?: string | null
           updated_at?: string
