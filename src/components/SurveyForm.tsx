@@ -473,7 +473,7 @@ function IrrigationSection({
   v: SurveyFormValues;
   setV: React.Dispatch<React.SetStateAction<SurveyFormValues>>;
 }) {
-  function patch(key: string, p: Partial<{ count: number | ""; electric: boolean; solar: boolean }>) {
+  function patch(key: string, p: Record<string, any>) {
     setV((prev) => {
       const det = { ...(prev.irrigation_details || {}) } as any;
       det[key] = { ...(det[key] || {}), ...p };
@@ -537,6 +537,65 @@ function IrrigationSection({
                     />
                     सौर पंप
                   </Label>
+                </div>
+              )}
+              {src.key === "river" && enabled && (
+                <div className="mt-3 pl-6 space-y-3 border-l-2 border-primary/30">
+                  <div>
+                    <Label className="text-sm font-medium block mb-2">
+                      हा तलाव कोहळी समाजाच्या मालगुजारीचे तलाव आहे का?
+                    </Label>
+                    <div className="flex gap-2 flex-wrap">
+                      {[
+                        { label: "होय", val: true },
+                        { label: "नाही", val: false },
+                      ].map((o) => (
+                        <Label
+                          key={o.label}
+                          className="flex items-center gap-2 p-2 border rounded cursor-pointer hover:bg-accent/10 text-sm"
+                        >
+                          <Checkbox
+                            checked={d.is_kohli_malguzari === o.val}
+                            onCheckedChange={(c) =>
+                              patch(src.key, {
+                                is_kohli_malguzari: c ? o.val : null,
+                                ...(o.val === false ? { water_free_for_irrigation: null } : {}),
+                              } as any)
+                            }
+                          />
+                          {o.label}
+                        </Label>
+                      ))}
+                    </div>
+                  </div>
+                  {d.is_kohli_malguzari === true && (
+                    <div>
+                      <Label className="text-sm font-medium block mb-2">
+                        सिंचनासाठी या तलावाचे पाणी मोफत उपलब्ध होते का?
+                      </Label>
+                      <div className="flex gap-2 flex-wrap">
+                        {[
+                          { label: "होय", val: true },
+                          { label: "नाही", val: false },
+                        ].map((o) => (
+                          <Label
+                            key={o.label}
+                            className="flex items-center gap-2 p-2 border rounded cursor-pointer hover:bg-accent/10 text-sm"
+                          >
+                            <Checkbox
+                              checked={d.water_free_for_irrigation === o.val}
+                              onCheckedChange={(c) =>
+                                patch(src.key, {
+                                  water_free_for_irrigation: c ? o.val : null,
+                                } as any)
+                              }
+                            />
+                            {o.label}
+                          </Label>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

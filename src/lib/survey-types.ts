@@ -19,6 +19,8 @@ export type IrrigationSourceDetail = {
   count?: number | "";
   electric?: boolean;
   solar?: boolean;
+  is_kohli_malguzari?: boolean | null;
+  water_free_for_irrigation?: boolean | null;
 };
 export type IrrigationDetails = {
   tubewell?: IrrigationSourceDetail;
