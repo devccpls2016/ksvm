@@ -69,15 +69,10 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
     setV(p => ({ ...p, members: p.members.filter((_, idx) => idx !== i) }));
   }
 
-  function addCrop() {
-    setV(p => ({ ...p, crops: [...p.crops, { season: "", dry_land: "", dry_crop: "", wet_land: "", wet_crop: "", kharif: "", rabi: "", total: "" }] }));
+  function updCrop(patch: Partial<FarmAreas>) {
+    setV(p => ({ ...p, crops: { ...p.crops, ...patch } }));
   }
-  function updCrop(i: number, patch: Partial<Crop>) {
-    setV(p => ({ ...p, crops: p.crops.map((c, idx) => idx === i ? { ...c, ...patch } : c) }));
-  }
-  function delCrop(i: number) {
-    setV(p => ({ ...p, crops: p.crops.filter((_, idx) => idx !== i) }));
-  }
+
 
   async function handle(e: React.FormEvent) {
     e.preventDefault();
