@@ -79,6 +79,9 @@ function EditSurvey() {
           kharif_area: data.kharif_area ?? "",
           rabi_area: data.rabi_area ?? "",
           summer_area: data.summer_area ?? "",
+          benefits_info: (data as any).benefits_info || {},
+
+
 
         }}
         onSubmit={submit}

@@ -88,7 +88,19 @@ export interface SurveyFormValues {
   has_position: boolean;
   position_data: PositionData;
   members: FamilyMember[];
+  benefits_info: BenefitsInfo;
 }
+
+export type BenefitsInfo = {
+  ladki_bahin?: boolean | null;
+  ladki_bahin_count?: number | "";
+  ladki_bahin_regular?: boolean | null;
+  critical_illness?: boolean | null;
+  medical_aid_needed?: boolean | null;
+  has_sportsperson?: boolean | null;
+  sport_type?: string;
+  sport_level?: string;
+};
 
 export type FarmingToolDetail = {
   has?: boolean | null;
@@ -120,4 +132,5 @@ export const emptySurvey: SurveyFormValues = {
 
   has_position: false, position_data: {},
   members: [],
+  benefits_info: {},
 };
