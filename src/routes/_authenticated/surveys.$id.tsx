@@ -66,6 +66,7 @@ function EditSurvey() {
           irrigation_details: (data as any).irrigation_details || {},
 
           farming_tools: data.farming_tools || [],
+          farming_tools_details: (data as any).farming_tools_details || {},
           crops: data.crops || [],
           members: data.members || [],
           position_data: data.position_data || {},
