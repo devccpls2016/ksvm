@@ -70,7 +70,7 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
   }
 
   function addCrop() {
-    setV(p => ({ ...p, crops: [...p.crops, { season: "", dry_land: "", dry_crop: "", wet_land: "", wet_crop: "", kharif: "", rabi: "", total: "" }] }));
+    setV(p => ({ ...p, crops: [...p.crops, { season: "", dry_land: "", dry_crop: "", wet_land: "", wet_crop: "", kharif: "", rabi: "", total: "", crops_taken: "" }] }));
   }
   function updCrop(i: number, patch: Partial<Crop>) {
     setV(p => ({ ...p, crops: p.crops.map((c, idx) => idx === i ? { ...c, ...patch } : c) }));
