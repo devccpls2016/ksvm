@@ -109,8 +109,15 @@ export async function buildSurveyHTML(r: any) {
 <div class="section">
   <h2>E. घरातील वापराच्या वस्तू</h2>
   ${(r.household_items || []).length > 0
-    ? `<div class="tags">${(r.household_items || []).map((x: string) => `<span class="tag">${esc(x)}</span>`).join("")}</div>`
+    ? `<div class="tags">${(r.household_items || []).map((x: string) => {
+        const count = r.household_item_counts?.[x];
+        return `<span class="tag">${esc(x)}${count ? ` (${count})` : ""}</span>`;
+      }).join("")}</div>`
     : `<div class="empty">कोणतीही वस्तू नोंदवलेली नाही</div>`}
+  <table style="margin-top:10px;">
+    ${row("सौर ऊर्जा प्रणाली बसविण्यात आलेली आहे?", r.solar_panel_installed === true ? "होय" : r.solar_panel_installed === false ? "नाही" : "-")}
+    ${r.solar_panel_installed === false ? row("सौर ऊर्जा योजनेचा लाभ घ्यायचा आहे?", r.solar_panel_wanted === true ? "होय" : r.solar_panel_wanted === false ? "नाही" : "-") : ""}
+  </table>
 </div>
 
 <div class="section">

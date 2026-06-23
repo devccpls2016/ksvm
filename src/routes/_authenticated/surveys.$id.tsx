@@ -67,6 +67,8 @@ function EditSurvey() {
           crops: data.crops || [],
           members: data.members || [],
           position_data: data.position_data || {},
+          solar_panel_installed: data.solar_panel_installed ?? null,
+          solar_panel_wanted: data.solar_panel_wanted ?? null,
         }}
         onSubmit={submit}
         submitting={busy}

@@ -53,11 +53,14 @@ export type Database = {
           education: string | null
           farming_tools: string[] | null
           gender: string | null
+          gharkul_received: boolean | null
+          gharkul_wanted: boolean | null
           has_farmland: boolean | null
           has_position: boolean | null
           head_name: string
           head_photo_url: string | null
           house_type: string | null
+          household_item_counts: Json | null
           household_items: string[] | null
           id: string
           irrigation_sources: string[] | null
@@ -69,6 +72,8 @@ export type Database = {
           owns_house: boolean | null
           pincode: string | null
           position_data: Json | null
+          solar_panel_installed: boolean | null
+          solar_panel_wanted: boolean | null
           taluka: string | null
           total_farmland: string | null
           updated_at: string
@@ -86,11 +91,14 @@ export type Database = {
           education?: string | null
           farming_tools?: string[] | null
           gender?: string | null
+          gharkul_received?: boolean | null
+          gharkul_wanted?: boolean | null
           has_farmland?: boolean | null
           has_position?: boolean | null
           head_name: string
           head_photo_url?: string | null
           house_type?: string | null
+          household_item_counts?: Json | null
           household_items?: string[] | null
           id?: string
           irrigation_sources?: string[] | null
@@ -102,6 +110,8 @@ export type Database = {
           owns_house?: boolean | null
           pincode?: string | null
           position_data?: Json | null
+          solar_panel_installed?: boolean | null
+          solar_panel_wanted?: boolean | null
           taluka?: string | null
           total_farmland?: string | null
           updated_at?: string
@@ -119,11 +129,14 @@ export type Database = {
           education?: string | null
           farming_tools?: string[] | null
           gender?: string | null
+          gharkul_received?: boolean | null
+          gharkul_wanted?: boolean | null
           has_farmland?: boolean | null
           has_position?: boolean | null
           head_name?: string
           head_photo_url?: string | null
           house_type?: string | null
+          household_item_counts?: Json | null
           household_items?: string[] | null
           id?: string
           irrigation_sources?: string[] | null
@@ -135,6 +148,8 @@ export type Database = {
           owns_house?: boolean | null
           pincode?: string | null
           position_data?: Json | null
+          solar_panel_installed?: boolean | null
+          solar_panel_wanted?: boolean | null
           taluka?: string | null
           total_farmland?: string | null
           updated_at?: string
