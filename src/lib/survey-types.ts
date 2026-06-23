@@ -50,6 +50,7 @@ export interface SurveyFormValues {
   education: string;
   occupation: string;
   household_items: string[];
+  household_item_counts: Record<string, number>;
   owns_house: boolean | null;
   house_type: string;
   living_status: string;
