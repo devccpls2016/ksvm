@@ -19,7 +19,7 @@ import {
   CROP_TYPES, CROP_SEASONS, IRRIGATION, FARM_TOOLS,
   POSITION_TYPES, POSITION_STATUS, POLITICAL_LEVELS, REPRESENTATIVES, SOCIAL_ORGS, REPRESENTATIVE_ROLES,
 } from "@/lib/marathi";
-import type { SurveyFormValues, FamilyMember, Crop } from "@/lib/survey-types";
+import type { SurveyFormValues, FamilyMember, FarmAreas } from "@/lib/survey-types";
 import { emptySurvey } from "@/lib/survey-types";
 
 type Props = {
