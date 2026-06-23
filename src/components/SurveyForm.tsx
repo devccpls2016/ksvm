@@ -697,4 +697,77 @@ function FarmingToolsSection({ v, setV }: { v: SurveyFormValues; setV: React.Dis
   );
 }
 
+function BenefitsSection({ v, setV }: { v: SurveyFormValues; setV: React.Dispatch<React.SetStateAction<SurveyFormValues>> }) {
+  const b = v.benefits_info || {};
+  function patch(p: Partial<typeof b>) {
+    setV((prev) => ({ ...prev, benefits_info: { ...(prev.benefits_info || {}), ...p } }));
+  }
+  return (
+    <Card>
+      <CardHeader><CardTitle>सामाजिक व आर्थिक लाभार्थी माहिती</CardTitle></CardHeader>
+      <CardContent className="space-y-5">
+        {/* 1. Ladki Bahin */}
+        <div className="border rounded-lg p-4 space-y-3 bg-card/50">
+          <div className="font-medium text-sm">1. आपल्या घरामध्ये "मुख्यमंत्री लाडकी बहीण योजना" चे लाभार्थी आहेत का?</div>
+          <YesNo value={b.ladki_bahin} onChange={(val) => patch({ ladki_bahin: val, ...(val !== true ? { ladki_bahin_count: "", ladki_bahin_regular: null } : {}) })} />
+          {b.ladki_bahin === true && (
+            <div className="grid md:grid-cols-2 gap-3 pt-2 border-t">
+              <Field label="लाभार्थी संख्या (घरातील किती सदस्य)">
+                <Select value={b.ladki_bahin_count ? String(b.ladki_bahin_count) : ""} onValueChange={(x) => patch({ ladki_bahin_count: Number(x) })}>
+                  <SelectTrigger><SelectValue placeholder="निवडा" /></SelectTrigger>
+                  <SelectContent>
+                    {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
+                      <SelectItem key={n} value={String(n)}>{n}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+              <div>
+                <Label className="text-sm mb-1.5 block">या योजनेचा लाभ नियमितपणे मिळतो का?</Label>
+                <YesNo value={b.ladki_bahin_regular} onChange={(val) => patch({ ladki_bahin_regular: val })} />
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* 2. Critical illness */}
+        <div className="border rounded-lg p-4 space-y-3 bg-card/50">
+          <div className="font-medium text-sm">2. आपल्या कुटुंबात दुर्धर आजाराने बाधित रुग्ण आहे का? (Cancer / Heart Attack / Kidney / इ.)</div>
+          <YesNo value={b.critical_illness} onChange={(val) => patch({ critical_illness: val, ...(val !== true ? { medical_aid_needed: null } : {}) })} />
+          {b.critical_illness === true && (
+            <div className="pt-2 border-t">
+              <Label className="text-sm mb-1.5 block">वैद्यकीय सहाय्याची आवश्यकता आहे का?</Label>
+              <YesNo value={b.medical_aid_needed} onChange={(val) => patch({ medical_aid_needed: val })} />
+            </div>
+          )}
+        </div>
+
+        {/* 3. Sportsperson */}
+        <div className="border rounded-lg p-4 space-y-3 bg-card/50">
+          <div className="font-medium text-sm">3. आपल्या कुटुंबात राज्य / राष्ट्रीय / आंतरराष्ट्रीय स्तरावरील खेळाडू आहेत का?</div>
+          <YesNo value={b.has_sportsperson} onChange={(val) => patch({ has_sportsperson: val, ...(val !== true ? { sport_type: "", sport_level: "" } : {}) })} />
+          {b.has_sportsperson === true && (
+            <div className="grid md:grid-cols-2 gap-3 pt-2 border-t">
+              <Field label="खेळाचा प्रकार">
+                <Input value={b.sport_type || ""} onChange={(e) => patch({ sport_type: e.target.value })} placeholder="उदा. क्रिकेट, कबड्डी" />
+              </Field>
+              <Field label="स्तर">
+                <Select value={b.sport_level || ""} onValueChange={(x) => patch({ sport_level: x })}>
+                  <SelectTrigger><SelectValue placeholder="निवडा" /></SelectTrigger>
+                  <SelectContent>
+                    {["State", "National", "International"].map((o) => (
+                      <SelectItem key={o} value={o}>{o}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+            </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+
 
