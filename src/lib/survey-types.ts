@@ -54,9 +54,17 @@ export interface SurveyFormValues {
   solar_panel_wanted: boolean | null;
   has_farmland: boolean | null;
   total_farmland: string;
+  irrigated_area: string;
+  dryland_area: string;
+  kharif_area: string;
+  rabi_area: string;
+  summer_area: string;
+  major_crop_types: string[];
+  major_crop_types_other: string;
   crops: Crop[];
   irrigation_sources: string[];
   farming_tools: string[];
+
   has_position: boolean;
   position_data: PositionData;
   members: FamilyMember[];
