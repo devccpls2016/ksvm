@@ -15,6 +15,20 @@ export type Crop = {
   season: string;
 };
 
+export type IrrigationSourceDetail = {
+  count?: number | "";
+  electric?: boolean;
+  solar?: boolean;
+};
+export type IrrigationDetails = {
+  tubewell?: IrrigationSourceDetail;
+  well?: IrrigationSourceDetail;
+  farm_pond?: IrrigationSourceDetail;
+  river?: IrrigationSourceDetail;
+  canal?: IrrigationSourceDetail;
+};
+
+
 
 export type PositionData = {
   type?: string; // राजकीय / सामाजिक / लोकप्रतिनिधी
