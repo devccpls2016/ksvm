@@ -407,17 +407,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
               <IrrigationSection v={v} setV={setV} />
 
 
-              <div>
-                <Label className="mb-2 block">शेती विषयक साधने</Label>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                  {FARM_TOOLS.map(i => (
-                    <Label key={i} className="flex items-center gap-2 p-2 border rounded cursor-pointer hover:bg-accent/10">
-                      <Checkbox checked={v.farming_tools.includes(i)} onCheckedChange={()=>toggleArr("farming_tools", i)} />
-                      <span className="text-sm">{i}</span>
-                    </Label>
-                  ))}
-                </div>
-              </div>
+              <FarmingToolsSection v={v} setV={setV} />
+
             </div>
           )}
         </CardContent>
