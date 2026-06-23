@@ -13,14 +13,8 @@ export type FamilyMember = {
 
 export type Crop = {
   season: string;
-  dry_land: string;
-  dry_crop: string;
-  wet_land: string;
-  wet_crop: string;
-  kharif: string;
-  rabi: string;
-  total: string;
 };
+
 
 export type PositionData = {
   type?: string; // राजकीय / सामाजिक / लोकप्रतिनिधी
