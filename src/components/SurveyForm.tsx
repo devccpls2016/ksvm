@@ -263,6 +263,29 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
                 <Label className="mb-2 block text-sm font-medium">नौकरी / व्यवसाय (Job / Occupation)</Label>
                 <OccupationSelect value={m.occupation || ""} onChange={x=>updMember(i, { occupation: x })} />
               </div>
+              <div className="border rounded-md p-3 bg-background space-y-2">
+                <Label className="block text-sm font-medium">मामेकुळ तपशील</Label>
+                <div className="grid md:grid-cols-3 gap-3">
+                  <Field label="नाव">
+                    <Input
+                      value={m.maternal_family?.name || ""}
+                      onChange={e => updMember(i, { maternal_family: { ...(m.maternal_family || {}), name: e.target.value } })}
+                    />
+                  </Field>
+                  <Field label="संपूर्ण पत्ता">
+                    <Input
+                      value={m.maternal_family?.address || ""}
+                      onChange={e => updMember(i, { maternal_family: { ...(m.maternal_family || {}), address: e.target.value } })}
+                    />
+                  </Field>
+                  <Field label="मोबाईल क्रमांक">
+                    <Input
+                      value={m.maternal_family?.mobile || ""}
+                      onChange={e => updMember(i, { maternal_family: { ...(m.maternal_family || {}), mobile: e.target.value } })}
+                    />
+                  </Field>
+                </div>
+              </div>
             </div>
           ))}
         </CardContent>
