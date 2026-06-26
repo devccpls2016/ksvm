@@ -11,6 +11,7 @@ export type FamilyMember = {
   mobile?: string;
   job_type?: string; // Government/Private/Department - when occupation is job
   maternal_family?: MaternalFamily;
+  in_laws_family?: MaternalFamily;
 };
 
 export type MaternalFamily = {
