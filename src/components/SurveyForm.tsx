@@ -20,6 +20,19 @@ import {
   CROP_TYPES, CROP_SEASONS, MAJOR_CROP_TYPES, IRRIGATION, FARM_TOOLS,
   POSITION_TYPES, POSITION_STATUS, POLITICAL_LEVELS, REPRESENTATIVES, SOCIAL_ORGS, REPRESENTATIVE_ROLES,
 } from "@/lib/marathi";
+
+const POLITICAL_PARTIES = [
+  "भारतीय जनता पक्ष (BJP)",
+  "भारतीय राष्ट्रीय काँग्रेस (INC)",
+  "राष्ट्रवादी काँग्रेस पक्ष (NCP)",
+  "राष्ट्रवादी काँग्रेस पक्ष (शरदचंद्र पवार)",
+  "शिवसेना",
+  "शिवसेना (उद्धव बाळासाहेब ठाकरे)",
+  "महाराष्ट्र नवनिर्माण सेना (MNS)",
+  "अपक्ष (Independent)",
+  "इतर (Other)",
+];
+const YEAR_OPTIONS = Array.from({ length: new Date().getFullYear() - 1949 }, (_, i) => String(new Date().getFullYear() - i));
 import type { SurveyFormValues, FamilyMember, Crop } from "@/lib/survey-types";
 import { emptySurvey } from "@/lib/survey-types";
 
