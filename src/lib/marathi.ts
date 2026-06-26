@@ -112,10 +112,12 @@ export const REPRESENTATIVES = [
   "जिल्हा परिषद सदस्य",
   "पंचायत समिती सदस्य",
   "नगरपरिषद सदस्य",
+  "नगरपंचायत",
   "ग्रामपंचायत",
   "Co-operative Bank (सहकारी बँक)",
   "Co-operative Society (सहकारी संस्था)",
 ];
+
 
 export const SOCIAL_ORGS: { name: string; roles: string[] }[] = [
   { name: "सामाजिक संस्था (Social Organisation)", roles: ["पदाधिकारी", "अध्यक्ष", "उपाध्यक्ष", "सचिव", "सदस्य"] },
