@@ -1,0 +1,1 @@
+ALTER TABLE public.surveys ADD COLUMN IF NOT EXISTS maternal_family jsonb DEFAULT '{}'::jsonb;

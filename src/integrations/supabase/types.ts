@@ -76,6 +76,7 @@ export type Database = {
           major_crop_types: string[] | null
           major_crop_types_other: string | null
           marital_status: string | null
+          maternal_family: Json | null
           members: Json | null
           mobile: string | null
           occupation: string | null
@@ -127,6 +128,7 @@ export type Database = {
           major_crop_types?: string[] | null
           major_crop_types_other?: string | null
           marital_status?: string | null
+          maternal_family?: Json | null
           members?: Json | null
           mobile?: string | null
           occupation?: string | null
@@ -178,6 +180,7 @@ export type Database = {
           major_crop_types?: string[] | null
           major_crop_types_other?: string | null
           marital_status?: string | null
+          maternal_family?: Json | null
           members?: Json | null
           mobile?: string | null
           occupation?: string | null
