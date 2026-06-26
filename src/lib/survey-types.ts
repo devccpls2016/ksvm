@@ -10,6 +10,13 @@ export type FamilyMember = {
   job_place?: string;
   mobile?: string;
   job_type?: string; // Government/Private/Department - when occupation is job
+  maternal_family?: MaternalFamily;
+};
+
+export type MaternalFamily = {
+  name?: string;
+  address?: string;
+  mobile?: string;
 };
 
 export type Crop = {
