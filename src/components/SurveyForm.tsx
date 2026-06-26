@@ -317,7 +317,7 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
 
       {/* D. धारण केलेले पद */}
       <Card>
-        <CardHeader><CardTitle>D. {T.position}</CardTitle></CardHeader>
+        <CardHeader><CardTitle>D. ( राजकीय, सामाजिक, लोकप्रतिनिधी ) {T.position}</CardTitle></CardHeader>
         <CardContent className="space-y-4">
           <Field label="धारण केलेले पद आहे का?">
             <RadioGroup value={v.has_position ? "yes" : "no"} onValueChange={x => upd("has_position", x === "yes")} className="flex gap-6">
