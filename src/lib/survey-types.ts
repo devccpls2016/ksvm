@@ -100,6 +100,7 @@ export interface SurveyFormValues {
   employment_info: EmploymentInfo;
   farm_management: FarmManagement;
   permanent_address: PermanentAddress;
+  maternal_family: MaternalFamily;
 }
 
 export type PermanentAddress = {
