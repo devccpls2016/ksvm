@@ -192,15 +192,6 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
             </Field>
             <Field label="वय"><Input type="number" value={v.age} readOnly className="bg-muted" /></Field>
           </div>
-          <div className="border rounded-lg p-3 bg-muted/20">
-            <Label className="mb-2 block font-medium">शिक्षण (Education)</Label>
-            <EducationSelect value={v.education} onChange={x=>upd("education", x)} />
-          </div>
-          <div className="border rounded-lg p-3 bg-muted/20">
-            <Label className="mb-2 block font-medium">नौकरी / व्यवसाय (Job / Occupation)</Label>
-            <OccupationSelect value={v.occupation} onChange={x=>upd("occupation", x)} />
-          </div>
-
           <div className="border rounded-lg p-4 space-y-3 bg-muted/20">
             <Label className="text-base font-semibold block">मामेकुळ तपशील</Label>
             <div className="grid md:grid-cols-3 gap-3">
@@ -223,6 +214,14 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
                 />
               </Field>
             </div>
+          </div>
+          <div className="border rounded-lg p-3 bg-muted/20">
+            <Label className="mb-2 block font-medium">शिक्षण (Education)</Label>
+            <EducationSelect value={v.education} onChange={x=>upd("education", x)} />
+          </div>
+          <div className="border rounded-lg p-3 bg-muted/20">
+            <Label className="mb-2 block font-medium">नौकरी / व्यवसाय (Job / Occupation)</Label>
+            <OccupationSelect value={v.occupation} onChange={x=>upd("occupation", x)} />
           </div>
         </CardContent>
       </Card>
@@ -255,14 +254,6 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
                 <Field label="वय"><Input type="number" value={m.age ?? ""} readOnly className="bg-muted" /></Field>
                 <Field label="मोबाईल"><Input value={m.mobile || ""} onChange={e=>updMember(i, { mobile: e.target.value })}/></Field>
               </div>
-              <div className="border rounded-md p-3 bg-background">
-                <Label className="mb-2 block text-sm font-medium">शिक्षण (Education)</Label>
-                <EducationSelect value={m.education || ""} onChange={x=>updMember(i, { education: x })} />
-              </div>
-              <div className="border rounded-md p-3 bg-background">
-                <Label className="mb-2 block text-sm font-medium">नौकरी / व्यवसाय (Job / Occupation)</Label>
-                <OccupationSelect value={m.occupation || ""} onChange={x=>updMember(i, { occupation: x })} />
-              </div>
               <div className="border rounded-md p-3 bg-background space-y-2">
                 <Label className="block text-sm font-medium">मामेकुळ तपशील</Label>
                 <div className="grid md:grid-cols-3 gap-3">
@@ -285,6 +276,14 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
                     />
                   </Field>
                 </div>
+              </div>
+              <div className="border rounded-md p-3 bg-background">
+                <Label className="mb-2 block text-sm font-medium">शिक्षण (Education)</Label>
+                <EducationSelect value={m.education || ""} onChange={x=>updMember(i, { education: x })} />
+              </div>
+              <div className="border rounded-md p-3 bg-background">
+                <Label className="mb-2 block text-sm font-medium">नौकरी / व्यवसाय (Job / Occupation)</Label>
+                <OccupationSelect value={m.occupation || ""} onChange={x=>updMember(i, { occupation: x })} />
               </div>
             </div>
           ))}
