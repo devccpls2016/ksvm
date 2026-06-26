@@ -349,6 +349,26 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
                       )}
                     </>
                   )}
+                  {v.position_data.coop_role && (
+                    <>
+                      <div className="md:col-span-2 mt-2">
+                        <h4 className="font-semibold text-sm mb-2">१. कार्यकाळ (Period)</h4>
+                        <div className="grid grid-cols-2 gap-3">
+                          <SelectField label="वर्ष (पासून)" value={v.position_data.term_from || ""} onChange={x => upd("position_data", { ...v.position_data, term_from: x })} options={YEAR_OPTIONS} />
+                          <SelectField label="वर्ष (पर्यंत)" value={v.position_data.term_to || ""} onChange={x => upd("position_data", { ...v.position_data, term_to: x })} options={YEAR_OPTIONS} />
+                        </div>
+                      </div>
+                      <div className="md:col-span-2">
+                        <h4 className="font-semibold text-sm mb-2">२. पक्ष (Political Party)</h4>
+                        <SelectField label="पक्षाचे नाव" value={v.position_data.party_name || ""} onChange={x => upd("position_data", { ...v.position_data, party_name: x, party_name_other: x === "इतर (Other)" ? v.position_data.party_name_other : "" })} options={POLITICAL_PARTIES} />
+                        {v.position_data.party_name === "इतर (Other)" && (
+                          <div className="mt-2">
+                            <Field label="पक्षाचे नाव लिहा"><Input value={v.position_data.party_name_other || ""} onChange={e => upd("position_data", { ...v.position_data, party_name_other: e.target.value })}/></Field>
+                          </div>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </>
               )}
 
