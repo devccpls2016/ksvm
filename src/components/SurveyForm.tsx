@@ -281,7 +281,7 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
                 <div className="border rounded-md p-3 bg-background space-y-2">
                   <Label className="block text-sm font-medium">सासुरवाडी</Label>
                   <div className="grid md:grid-cols-3 gap-3">
-                    <Field label="नाव">
+                    <Field label={m.relationship === "मुलगी" || m.relationship === "बहीण" ? "पतीचे नाव" : "नाव"}>
                       <Input
                         value={m.in_laws_family?.name || ""}
                         onChange={e => updMember(i, { in_laws_family: { ...(m.in_laws_family || {}), name: e.target.value } })}
