@@ -32,7 +32,7 @@ const POLITICAL_PARTIES = [
   "अपक्ष (Independent)",
   "इतर (Other)",
 ];
-const YEAR_OPTIONS = Array.from({ length: new Date().getFullYear() - 1949 }, (_, i) => String(new Date().getFullYear() - i));
+const YEAR_OPTIONS = Array.from({ length: 2050 - 1949 }, (_, i) => String(2050 - i));
 import type { SurveyFormValues, FamilyMember, Crop } from "@/lib/survey-types";
 import { emptySurvey } from "@/lib/survey-types";
 
