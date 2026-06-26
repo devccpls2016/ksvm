@@ -167,4 +167,5 @@ export const emptySurvey: SurveyFormValues = {
   employment_info: {},
   farm_management: {},
   permanent_address: {},
+  maternal_family: {},
 };
