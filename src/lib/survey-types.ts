@@ -4,6 +4,7 @@ export type FamilyMember = {
   age?: number | "";
   dob?: string;
   gender?: string;
+  marital_status?: string;
   education?: string;
   occupation?: string;
   job_place?: string;
