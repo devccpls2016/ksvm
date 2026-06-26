@@ -47,6 +47,9 @@ export type PositionData = {
   status?: string; // आजी / माजी
   political_level?: string;
   party_name?: string;
+  party_name_other?: string;
+  term_from?: string;
+  term_to?: string;
   representative_type?: string;
   coop_role?: string;
   coop_org_name?: string;
