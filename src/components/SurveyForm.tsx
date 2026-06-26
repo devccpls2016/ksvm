@@ -277,6 +277,31 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
                   </Field>
                 </div>
               </div>
+              {["मुलगा","मुलगी","भाऊ","बहीण"].includes(m.relationship) && m.marital_status === "विवाहित" && (
+                <div className="border rounded-md p-3 bg-background space-y-2">
+                  <Label className="block text-sm font-medium">सासुरवाडी</Label>
+                  <div className="grid md:grid-cols-3 gap-3">
+                    <Field label="नाव">
+                      <Input
+                        value={m.in_laws_family?.name || ""}
+                        onChange={e => updMember(i, { in_laws_family: { ...(m.in_laws_family || {}), name: e.target.value } })}
+                      />
+                    </Field>
+                    <Field label="संपूर्ण पत्ता">
+                      <Input
+                        value={m.in_laws_family?.address || ""}
+                        onChange={e => updMember(i, { in_laws_family: { ...(m.in_laws_family || {}), address: e.target.value } })}
+                      />
+                    </Field>
+                    <Field label="मोबाईल क्रमांक">
+                      <Input
+                        value={m.in_laws_family?.mobile || ""}
+                        onChange={e => updMember(i, { in_laws_family: { ...(m.in_laws_family || {}), mobile: e.target.value } })}
+                      />
+                    </Field>
+                  </div>
+                </div>
+              )}
               <div className="border rounded-md p-3 bg-background">
                 <Label className="mb-2 block text-sm font-medium">शिक्षण (Education)</Label>
                 <EducationSelect value={m.education || ""} onChange={x=>updMember(i, { education: x })} />
