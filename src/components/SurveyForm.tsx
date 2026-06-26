@@ -221,6 +221,7 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
                 <Field label="नाव"><Input value={m.name} onChange={e=>updMember(i, { name: e.target.value })}/></Field>
                 <SelectField label="नाते" value={m.relationship} onChange={x=>updMember(i, { relationship: x })} options={RELATIONSHIP} />
                 <SelectField label="लिंग" value={m.gender || ""} onChange={x=>updMember(i, { gender: x })} options={GENDER} />
+                <SelectField label="वैवाहिक स्थिती" value={m.marital_status || ""} onChange={x=>updMember(i, { marital_status: x })} options={MARITAL} />
                 <Field label="जन्मतारीख">
                   <DateSelect
                     value={m.dob}
