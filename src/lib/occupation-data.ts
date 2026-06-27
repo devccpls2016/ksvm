@@ -22,6 +22,7 @@ export type OccupationValue = {
   designationOther?: string;         // custom when designation === "Other (इतर)"
   sector?: string;                   // IT / Banking / Healthcare …
   bankType?: string;                 // RBI / Nationalized / Cooperative …
+  bankTypeOther?: string;            // custom when bankType === "Other (इतर)"
   hospitalType?: string;             // सरकारी / खाजगी
   farmingTypes?: string[];           // multi-select
   landSize?: string;
