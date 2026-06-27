@@ -1,4 +1,8 @@
-export type FamilyMember = {
+export type WomenSelfHelpGroup = {
+  is_member?: boolean | null;
+  wants_to_join?: boolean | null;
+};
+
   name: string;
   relationship: string;
   age?: number | "";
