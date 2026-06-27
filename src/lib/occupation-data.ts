@@ -21,7 +21,9 @@ export type OccupationValue = {
   hospitalType?: string;             // सरकारी / खाजगी
   farmingTypes?: string[];           // multi-select
   landSize?: string;
-  businessType?: string;
+  businessType?: string;             // single (Agriculture + Business)
+  businessTypes?: string[];          // multi (Business Owner)
+  selfEmployedTypes?: string[];      // multi (Self Employed trades)
   businessName?: string;
   retiredFrom?: string;              // पूर्वीचा विभाग
   contributions?: string[];          // NRI – community contributions
