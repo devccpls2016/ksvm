@@ -73,6 +73,14 @@ export function OccupationSelect({ value, onChange }: Props) {
     const arr = state.farmingTypes || [];
     patch({ farmingTypes: arr.includes(t) ? arr.filter(x => x !== t) : [...arr, t] });
   }
+  function toggleBusinessType(t: string) {
+    const arr = state.businessTypes || [];
+    patch({ businessTypes: arr.includes(t) ? arr.filter(x => x !== t) : [...arr, t] });
+  }
+  function toggleSelfEmployed(t: string) {
+    const arr = state.selfEmployedTypes || [];
+    patch({ selfEmployedTypes: arr.includes(t) ? arr.filter(x => x !== t) : [...arr, t] });
+  }
   function toggleContribution(t: string) {
     const arr = state.contributions || [];
     patch({ contributions: arr.includes(t) ? arr.filter(x => x !== t) : [...arr, t] });
