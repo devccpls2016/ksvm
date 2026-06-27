@@ -233,10 +233,6 @@ export const GOVT_CLASSES = [
 
 export const GOVT_CLASS_DESIGNATIONS: Record<string, string[]> = {
   "Class 1 Officer (वर्ग 1 अधिकारी)": [
-    "IAS (भारतीय प्रशासन सेवा)",
-    "IPS (भारतीय पोलीस सेवा)",
-    "IFS (भारतीय वन सेवा)",
-    "IRS (भारतीय महसूल सेवा)",
     "State Civil Service Officer (राज्य नागरी सेवा अधिकारी)",
     "District Collector (जिल्हाधिकारी)",
     "CEO Zilla Parishad (मुख्य कार्यकारी अधिकारी, जि.प.)",
