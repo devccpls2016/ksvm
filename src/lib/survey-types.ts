@@ -3,6 +3,7 @@ export type WomenSelfHelpGroup = {
   wants_to_join?: boolean | null;
 };
 
+export type FamilyMember = {
   name: string;
   relationship: string;
   age?: number | "";
