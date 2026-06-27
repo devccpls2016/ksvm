@@ -100,15 +100,15 @@ export function summariseOccupation(v: OccupationValue): string {
   if (v.branch) parts.push(v.branch);
   if (v.sector) parts.push(v.sector);
   if (v.bankType) parts.push(v.bankType);
-  if (v.institutionType) parts.push(v.institutionType);
-  if (v.institutionLevel) parts.push(v.institutionLevel);
+  if (v.institutionType) parts.push(v.institutionType === "Other (इतर)" && v.institutionTypeOther ? `संस्था प्रकार: ${v.institutionTypeOther}` : v.institutionType);
+  if (v.institutionLevel) parts.push(v.institutionLevel === "Other (इतर)" && v.institutionLevelOther ? `स्तर: ${v.institutionLevelOther}` : v.institutionLevel);
   if (v.hospitalType) parts.push(v.hospitalType);
   if (v.businessType) parts.push(v.businessType);
   if (v.businessTypes?.length) parts.push(v.businessTypes.join(", "));
   if (v.selfEmployedTypes?.length) parts.push(v.selfEmployedTypes.join(", "));
   if (v.businessName) parts.push(v.businessName);
   if (v.retiredFrom) parts.push(`निवृत्त: ${v.retiredFrom}`);
-  if (v.designation) parts.push(v.designation);
+  if (v.designation) parts.push(v.designation === "Other (इतर)" && v.designationOther ? `पदनाम: ${v.designationOther}` : v.designation);
   if (v.rank) parts.push(v.rank);
   if (v.farmingTypes?.length) parts.push(v.farmingTypes.join(", "));
   if (v.landSize) parts.push(v.landSize);
