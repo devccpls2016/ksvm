@@ -27,7 +27,7 @@ import {
   ENG_DESIGNATIONS,
   engDesignationsForBranch,
   BANK_TYPES,
-  BANK_DESIGNATIONS,
+  bankDesignationsFor,
   JUDICIARY_DESIGNATIONS,
   DEFENCE_FORCES,
   MILITARY_RANKS,
