@@ -77,6 +77,7 @@ export function summariseOccupation(v: OccupationValue): string {
   if (v.institutionLevel) parts.push(v.institutionLevel);
   if (v.hospitalType) parts.push(v.hospitalType);
   if (v.businessType) parts.push(v.businessType);
+  if (v.businessName) parts.push(v.businessName);
   if (v.retiredFrom) parts.push(`निवृत्त: ${v.retiredFrom}`);
   if (v.designation) parts.push(v.designation);
   if (v.rank) parts.push(v.rank);
