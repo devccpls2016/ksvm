@@ -22,6 +22,7 @@ export type OccupationValue = {
   farmingTypes?: string[];           // multi-select
   landSize?: string;
   businessType?: string;
+  businessName?: string;
   retiredFrom?: string;              // पूर्वीचा विभाग
   contributions?: string[];          // NRI – community contributions
   // NRI specific
