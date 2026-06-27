@@ -116,6 +116,9 @@ export function OccupationSelect({ value, onChange }: Props) {
           {c === "शेती + व्यवसाय (Agriculture + Business)" && (
             <SelectFieldRow label="व्यवसाय प्रकार (Business Type)" value={state.businessType} options={BUSINESS_TYPES} onChange={x => patch({ businessType: x })} />
           )}
+          {c === "शेती + व्यवसाय (Agriculture + Business)" && state.businessType && (
+            <TextRow label="व्यवसायाचे नाव (Business Name)" value={state.businessName} onChange={x => patch({ businessName: x })} />
+          )}
         </div>
       )}
 
