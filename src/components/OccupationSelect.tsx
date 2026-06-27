@@ -200,10 +200,42 @@ export function OccupationSelect({ value, onChange }: Props) {
 
       {c === "शिक्षण क्षेत्र (Education Sector)" && (
         <div className="grid gap-3 md:grid-cols-2 border-t pt-3">
-          <SelectFieldRow label="संस्था प्रकार (Institution Type)" value={state.institutionType} options={EDU_INSTITUTION_TYPES} onChange={x => patch({ institutionType: x })} />
-          <SelectFieldRow label="शिक्षण स्तर (Institution Level)" value={state.institutionLevel} options={EDU_INSTITUTION_LEVELS} onChange={x => patch({ institutionLevel: x })} />
-          <SelectFieldRow label="पद (Designation)" value={state.designation} options={EDU_DESIGNATIONS} onChange={x => patch({ designation: x })} />
-          <TextRow label="संस्थेचे नाव (Institution Name)" value={state.organisation} onChange={x => patch({ organisation: x })} />
+          <SelectFieldRow
+            label="संस्था प्रकार (Institution Type)"
+            value={state.institutionType}
+            options={EDU_INSTITUTION_TYPES}
+            onChange={x => patch({ institutionType: x, institutionLevel: "", designation: "" })}
+          />
+          {state.institutionType && (
+            <SelectFieldRow
+              label="संस्था स्तर (Institution Level)"
+              value={state.institutionLevel}
+              options={eduLevelsForType(state.institutionType)}
+              onChange={x => patch({ institutionLevel: x, designation: "" })}
+            />
+          )}
+          {state.institutionLevel && (
+            <SelectFieldRow
+              label="पदनाम (Designation)"
+              value={state.designation}
+              options={EDU_DESIGNATIONS_BY_LEVEL[state.institutionLevel] || []}
+              onChange={x => patch({ designation: x })}
+            />
+          )}
+          {state.designation && (
+            <>
+              <TextRow
+                label="संस्थेचे नाव (School / College / University Name)"
+                value={state.organisation}
+                onChange={x => patch({ organisation: x })}
+              />
+              <TextRow
+                label="कार्यरत ठिकाण (Place of Posting)"
+                value={state.postingPlace}
+                onChange={x => patch({ postingPlace: x })}
+              />
+            </>
+          )}
         </div>
       )}
 
