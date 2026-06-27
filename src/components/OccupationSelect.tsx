@@ -31,7 +31,7 @@ import {
   PRIVATE_SECTORS,
   RETIRED_FROM,
   NRI_CONTRIBUTIONS,
-  INCOME_RANGES,
+  
   decodeOccupation,
   encodeOccupation,
   summariseOccupation,
