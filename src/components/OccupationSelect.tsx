@@ -452,11 +452,64 @@ export function OccupationSelect({ value, onChange }: Props) {
       )}
 
       {c === "अभियंता (Engineering Sector)" && (
-        <div className="grid gap-3 md:grid-cols-2 border-t pt-3">
-          <SelectFieldRow label="संस्था प्रकार (Institution Type)" value={state.institutionType} options={ENG_INSTITUTION_TYPES} onChange={x => patch({ institutionType: x })} />
-          <SelectFieldRow label="शाखा (Branch)" value={state.branch} options={ENG_BRANCHES} onChange={x => patch({ branch: x })} />
-          <SelectFieldRow label="पद (Designation)" value={state.designation} options={ENG_DESIGNATIONS} onChange={x => patch({ designation: x })} />
-          <TextRow label="संस्थेचे नाव (Organisation Name)" value={state.organisation} onChange={x => patch({ organisation: x })} />
+        <div className="space-y-4 border-t pt-3">
+          <div className="text-sm font-semibold">अभियंता क्षेत्र – तपशील (Engineering Sector Details)</div>
+
+          {/* Step 1 */}
+          <div className="space-y-2">
+            <div className="text-xs font-medium text-muted-foreground">Step 1 — संस्था प्रकार (Institution Type)</div>
+            <SelectFieldRow
+              label="संस्था प्रकार निवडा"
+              value={state.institutionType}
+              options={ENG_INSTITUTION_TYPES}
+              onChange={x => patch({ institutionType: x, branch: "", branchOther: "", designation: "", designationOther: "" })}
+            />
+          </div>
+
+          {/* Step 2 */}
+          {state.institutionType && (
+            <div className="space-y-2">
+              <div className="text-xs font-medium text-muted-foreground">Step 2 — शाखा (Engineering Branch)</div>
+              <SelectFieldRow
+                label="शाखा निवडा"
+                value={state.branch}
+                options={ENG_BRANCHES}
+                onChange={x => patch({ branch: x, branchOther: "", designation: "", designationOther: "" })}
+              />
+              {state.branch === "Other (इतर)" && (
+                <Input
+                  placeholder="शाखा नमूद करा"
+                  value={state.branchOther || ""}
+                  onChange={e => patch({ branchOther: e.target.value })}
+                />
+              )}
+            </div>
+          )}
+
+          {/* Step 3 */}
+          {state.branch && (
+            <div className="space-y-2">
+              <div className="text-xs font-medium text-muted-foreground">Step 3 — पदनाम (Designation)</div>
+              <SelectFieldRow
+                label="पदनाम निवडा"
+                value={state.designation}
+                options={engDesignationsForBranch(state.branch)}
+                onChange={x => patch({ designation: x, designationOther: "" })}
+              />
+              {state.designation === "Other (इतर)" && (
+                <Input
+                  placeholder="पदनाम नमूद करा"
+                  value={state.designationOther || ""}
+                  onChange={e => patch({ designationOther: e.target.value })}
+                />
+              )}
+            </div>
+          )}
+
+          <div className="grid gap-3 md:grid-cols-2">
+            <TextRow label="संस्थेचे नाव (Organisation Name)" value={state.organisation} onChange={x => patch({ organisation: x })} />
+            <TextRow label="कार्यरत ठिकाण (Place of Posting)" value={state.postingPlace} onChange={x => patch({ postingPlace: x })} />
+          </div>
         </div>
       )}
 
