@@ -306,6 +306,7 @@ export const EDU_INSTITUTION_TYPES = [
   "Aided (अनुदानित)",
   "Private (खाजगी)",
   "University (विद्यापीठ)",
+  "Other (इतर)",
 ];
 
 export const EDU_LEVELS_NON_UNIVERSITY = [
@@ -314,9 +315,10 @@ export const EDU_LEVELS_NON_UNIVERSITY = [
   "Higher Secondary School (उच्च माध्यमिक विद्यालय)",
   "Junior College (कनिष्ठ महाविद्यालय)",
   "Degree College (पदवी महाविद्यालय)",
+  "Other (इतर)",
 ];
 
-export const EDU_LEVELS_UNIVERSITY = ["University (विद्यापीठ)"];
+export const EDU_LEVELS_UNIVERSITY = ["University (विद्यापीठ)", "Other (इतर)"];
 
 export function eduLevelsForType(type?: string): string[] {
   if (!type) return [];
