@@ -387,22 +387,15 @@ export function OccupationSelect({ value, onChange }: Props) {
                     Step 3 — {state.hospitalType === "Clinic (दवाखाना)" ? "दवाखाना" : "प्रयोगशाळा"} तपशील (
                     {state.hospitalType === "Clinic (दवाखाना)" ? "Clinic" : "Laboratory"} Details)
                   </div>
-                  <div className="grid gap-3 md:grid-cols-2">
-                    <TextRow
-                      label={
-                        state.hospitalType === "Clinic (दवाखाना)"
-                          ? "दवाखान्याचे नाव (Clinic Name)"
-                          : "प्रयोगशाळेचे नाव (Laboratory Name)"
-                      }
-                      value={state.organisation}
-                      onChange={x => patch({ organisation: x })}
-                    />
-                    <TextRow
-                      label="कार्यरत ठिकाण (Place of Posting)"
-                      value={state.postingPlace}
-                      onChange={x => patch({ postingPlace: x })}
-                    />
-                  </div>
+                  <TextRow
+                    label={
+                      state.hospitalType === "Clinic (दवाखाना)"
+                        ? "दवाखान्याचे नाव (Clinic Name)"
+                        : "प्रयोगशाळेचे नाव (Laboratory Name)"
+                    }
+                    value={state.organisation}
+                    onChange={x => patch({ organisation: x })}
+                  />
                 </div>
               )}
 
