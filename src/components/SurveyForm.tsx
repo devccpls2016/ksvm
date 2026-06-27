@@ -323,6 +323,50 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
                 <Label className="mb-2 block text-sm font-medium">नौकरी / व्यवसाय (Job / Occupation)</Label>
                 <OccupationSelect value={m.occupation || ""} onChange={x=>updMember(i, { occupation: x })} />
               </div>
+              {m.gender === "स्त्री" && (
+                <div className="border rounded-md p-3 bg-background space-y-3">
+                  <Label className="block text-sm font-semibold text-primary">जर महिला असेल तर:</Label>
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">आपण महिला बचत गटाची सदस्य आहात का?</Label>
+                    <RadioGroup
+                      value={m.mahila_bachat_gat?.is_member === true ? "yes" : m.mahila_bachat_gat?.is_member === false ? "no" : ""}
+                      onValueChange={(x) =>
+                        updMember(i, {
+                          mahila_bachat_gat: {
+                            ...(m.mahila_bachat_gat || {}),
+                            is_member: x === "yes",
+                            wants_to_join: x === "yes" ? null : m.mahila_bachat_gat?.wants_to_join ?? null,
+                          },
+                        })
+                      }
+                      className="flex gap-6"
+                    >
+                      <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
+                      <Label className="flex items-center gap-2"><RadioGroupItem value="no"/>{T.no}</Label>
+                    </RadioGroup>
+                  </div>
+                  {m.mahila_bachat_gat?.is_member === false && (
+                    <div className="space-y-2 pl-4 border-l-2 border-primary/30">
+                      <Label className="text-sm font-medium">आपल्याला कोहळी समाजाच्या महिला बचत गटामध्ये सहभागी व्हायला आवडेल का?</Label>
+                      <RadioGroup
+                        value={m.mahila_bachat_gat?.wants_to_join === true ? "yes" : m.mahila_bachat_gat?.wants_to_join === false ? "no" : ""}
+                        onValueChange={(x) =>
+                          updMember(i, {
+                            mahila_bachat_gat: {
+                              ...(m.mahila_bachat_gat || {}),
+                              wants_to_join: x === "yes",
+                            },
+                          })
+                        }
+                        className="flex gap-6"
+                      >
+                        <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
+                        <Label className="flex items-center gap-2"><RadioGroupItem value="no"/>{T.no}</Label>
+                      </RadioGroup>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           ))}
         </CardContent>

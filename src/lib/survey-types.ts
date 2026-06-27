@@ -1,3 +1,8 @@
+export type WomenSelfHelpGroup = {
+  is_member?: boolean | null;
+  wants_to_join?: boolean | null;
+};
+
 export type FamilyMember = {
   name: string;
   relationship: string;
@@ -12,6 +17,7 @@ export type FamilyMember = {
   job_type?: string; // Government/Private/Department - when occupation is job
   maternal_family?: MaternalFamily;
   in_laws_family?: MaternalFamily;
+  mahila_bachat_gat?: WomenSelfHelpGroup;
 };
 
 export type MaternalFamily = {
