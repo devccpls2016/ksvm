@@ -370,25 +370,14 @@ export function OccupationSelect({ value, onChange }: Props) {
                 <div className="text-xs font-medium text-muted-foreground">
                   Step 3 — अतिरिक्त माहिती (Hospital / College Details)
                 </div>
-                <div className="grid gap-3 md:grid-cols-2">
-                  <TextRow
-                    label="रुग्णालय / महाविद्यालयाचे नाव (Hospital / College Name)"
-                    value={state.organisation}
-                    onChange={x => patch({ organisation: x })}
-                  />
-                  <TextRow
-                    label="कार्यरत ठिकाण (Place of Posting)"
-                    value={state.postingPlace}
-                    onChange={x => patch({ postingPlace: x })}
-                  />
-                  <TextRow
-                    label="विभाग / वार्ड (Department / Unit) – ऐच्छिक"
-                    value={state.department}
-                    onChange={x => patch({ department: x })}
-                  />
-                </div>
+                <TextRow
+                  label="रुग्णालय / महाविद्यालयाचे नाव (Hospital / College Name)"
+                  value={state.organisation}
+                  onChange={x => patch({ organisation: x })}
+                />
               </div>
             )}
+
 
             {/* Step 4 — Own Setup */}
             {state.designation && medIsOwnSetup(state.hospitalType) && (
