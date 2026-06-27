@@ -132,7 +132,6 @@ export const PRIMARY_CATEGORIES: string[] = [
   "व्यवसाय (Business Owner)",
   "मानधनधारक पदाधिकारी (Honorarium Based Position)",
   "सरकारी कर्मचारी (Government Employee)",
-  "निमसरकारी / PSU कर्मचारी (Semi Government / PSU)",
   "खाजगी कर्मचारी (Private Employee)",
   "शिक्षण क्षेत्र (Education Sector)",
   "वैद्यकीय क्षेत्र (Medical Sector)",
