@@ -315,6 +315,7 @@ export const EDU_LEVELS_NON_UNIVERSITY = [
   "Higher Secondary School (उच्च माध्यमिक विद्यालय)",
   "Junior College (कनिष्ठ महाविद्यालय)",
   "Degree College (पदवी महाविद्यालय)",
+  "Post Graduate College (पदव्युत्तर महाविद्यालय)",
   "Other (इतर)",
 ];
 
