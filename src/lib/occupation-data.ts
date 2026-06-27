@@ -22,6 +22,7 @@ export type OccupationValue = {
   designationOther?: string;         // custom when designation === "Other (इतर)"
   sector?: string;                   // IT / Banking / Healthcare …
   bankType?: string;                 // RBI / Nationalized / Cooperative …
+  bankTypeOther?: string;            // custom when bankType === "Other (इतर)"
   hospitalType?: string;             // सरकारी / खाजगी
   farmingTypes?: string[];           // multi-select
   landSize?: string;
@@ -109,7 +110,7 @@ export function summariseOccupation(v: OccupationValue): string {
   if (v.classLevel) parts.push(v.classLevel);
   if (v.branch) parts.push(v.branch === "Other (इतर)" && v.branchOther ? `शाखा: ${v.branchOther}` : v.branch);
   if (v.sector) parts.push(v.sector);
-  if (v.bankType) parts.push(v.bankType);
+  if (v.bankType) parts.push(v.bankType === "Other (इतर)" && v.bankTypeOther ? `संस्था प्रकार: ${v.bankTypeOther}` : v.bankType);
   if (v.institutionType) parts.push(v.institutionType === "Other (इतर)" && v.institutionTypeOther ? `संस्था प्रकार: ${v.institutionTypeOther}` : v.institutionType);
   if (v.institutionLevel) parts.push(v.institutionLevel === "Other (इतर)" && v.institutionLevelOther ? `स्तर: ${v.institutionLevelOther}` : v.institutionLevel);
   if (v.hospitalType) parts.push(v.hospitalType === "Other (इतर)" && v.hospitalTypeOther ? `संस्था प्रकार: ${v.hospitalTypeOther}` : v.hospitalType);
@@ -574,22 +575,78 @@ export const BANK_TYPES = [
   "Private Bank (खाजगी बँक)",
   "Insurance Sector (विमा क्षेत्र)",
   "NBFC / Finance Company (वित्त कंपनी)",
-];
-
-export const BANK_DESIGNATIONS = [
-  "Clerk (लिपिक)",
-  "Cashier (खजिनदार)",
-  "Officer (अधिकारी)",
-  "Probationary Officer / PO (परिविक्षाधीन अधिकारी)",
-  "Assistant Manager (सहाय्यक व्यवस्थापक)",
-  "Branch Manager (शाखा व्यवस्थापक)",
-  "Regional Manager (विभागीय व्यवस्थापक)",
-  "AGM (सहाय्यक महाव्यवस्थापक)",
-  "DGM (उप महाव्यवस्थापक)",
-  "GM (महाव्यवस्थापक)",
-  "Insurance Agent (विमा एजंट)",
   "Other (इतर)",
 ];
+
+export const BANK_DESIGNATIONS_BY_TYPE: Record<string, string[]> = {
+  "RBI (रिझर्व्ह बँक)": [
+    "Officer (अधिकारी)",
+    "Assistant Manager (सहाय्यक व्यवस्थापक)",
+    "Manager (व्यवस्थापक)",
+    "Deputy General Manager (उप महाव्यवस्थापक)",
+    "General Manager (महाव्यवस्थापक)",
+    "Other (इतर)",
+  ],
+  "Nationalized Bank (राष्ट्रीयीकृत बँक)": [
+    "Clerk (लिपिक)",
+    "Cashier (खजिनदार)",
+    "Probationary Officer / PO (परिविक्षाधीन अधिकारी)",
+    "Officer (अधिकारी)",
+    "Assistant Manager (सहाय्यक व्यवस्थापक)",
+    "Branch Manager (शाखा व्यवस्थापक)",
+    "Regional Manager (विभागीय व्यवस्थापक)",
+    "AGM (सहाय्यक महाव्यवस्थापक)",
+    "DGM (उप महाव्यवस्थापक)",
+    "GM (महाव्यवस्थापक)",
+    "Other (इतर)",
+  ],
+  "Cooperative Bank (सहकारी बँक)": [
+    "Clerk (लिपिक)",
+    "Cashier (खजिनदार)",
+    "Officer (अधिकारी)",
+    "Assistant Manager (सहाय्यक व्यवस्थापक)",
+    "Branch Manager (शाखा व्यवस्थापक)",
+    "Other (इतर)",
+  ],
+  "Private Bank (खाजगी बँक)": [
+    "Clerk (लिपिक)",
+    "Cashier (खजिनदार)",
+    "Relationship Officer (संबंध अधिकारी)",
+    "Customer Service Executive (ग्राहक सेवा कार्यकारी)",
+    "Probationary Officer / PO (परिविक्षाधीन अधिकारी)",
+    "Assistant Manager (सहाय्यक व्यवस्थापक)",
+    "Branch Manager (शाखा व्यवस्थापक)",
+    "Other (इतर)",
+  ],
+  "Insurance Sector (विमा क्षेत्र)": [
+    "Insurance Agent (विमा एजंट)",
+    "Development Officer (विकास अधिकारी)",
+    "Claims Officer (दावा अधिकारी)",
+    "Underwriter (अंडररायटर)",
+    "Branch Manager (शाखा व्यवस्थापक)",
+    "Other (इतर)",
+  ],
+  "NBFC / Finance Company (वित्त कंपनी)": [
+    "Loan Officer (कर्ज अधिकारी)",
+    "Credit Manager (क्रेडिट व्यवस्थापक)",
+    "Recovery Officer (वसुली अधिकारी)",
+    "Relationship Manager (संबंध व्यवस्थापक)",
+    "Finance Executive (वित्त कार्यकारी)",
+    "Branch Manager (शाखा व्यवस्थापक)",
+    "Other (इतर)",
+  ],
+  "Other (इतर)": ["Other (इतर)"],
+};
+
+export function bankDesignationsFor(type: string | undefined): string[] {
+  if (!type) return [];
+  return BANK_DESIGNATIONS_BY_TYPE[type] || ["Other (इतर)"];
+}
+
+// Kept for backward compatibility
+export const BANK_DESIGNATIONS = Array.from(
+  new Set(Object.values(BANK_DESIGNATIONS_BY_TYPE).flat())
+);
 
 // ---------- Judiciary ----------
 export const JUDICIARY_DESIGNATIONS = [
