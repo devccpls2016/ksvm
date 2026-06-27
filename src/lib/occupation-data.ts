@@ -12,6 +12,7 @@ export type OccupationValue = {
   classLevel?: string;               // Class 1 / 2 / 3 / 4
   designation?: string;              // पदनाम
   branch?: string;                   // शाखा (engineer / education stream)
+  branchOther?: string;              // custom when branch === "Other (इतर)"
   rank?: string;                     // सैन्य / पोलीस rank
   force?: string;                    // Army / Navy / BSF / Police force
   institutionType?: string;          // सरकारी / खाजगी / अनुदानित / PSU
@@ -106,7 +107,7 @@ export function summariseOccupation(v: OccupationValue): string {
   if (v.serviceType) parts.push(v.serviceType);
   if (v.force) parts.push(v.force);
   if (v.classLevel) parts.push(v.classLevel);
-  if (v.branch) parts.push(v.branch);
+  if (v.branch) parts.push(v.branch === "Other (इतर)" && v.branchOther ? `शाखा: ${v.branchOther}` : v.branch);
   if (v.sector) parts.push(v.sector);
   if (v.bankType) parts.push(v.bankType);
   if (v.institutionType) parts.push(v.institutionType === "Other (इतर)" && v.institutionTypeOther ? `संस्था प्रकार: ${v.institutionTypeOther}` : v.institutionType);
@@ -507,26 +508,25 @@ export const WCD_DESIGNATIONS = [
 // ---------- Engineering ----------
 export const ENG_INSTITUTION_TYPES = [
   "Government (सरकारी)",
-  "PSU (सार्वजनिक उपक्रम)",
   "Private (खाजगी)",
   "Self Employed / Consultant (स्वतंत्र सल्लागार)",
 ];
 
 export const ENG_BRANCHES = [
-  "Civil Engineer (स्थापत्य अभियंता)",
-  "Mechanical Engineer (यांत्रिक अभियंता)",
-  "Electrical Engineer (विद्युत अभियंता)",
-  "Electronics Engineer (इलेक्ट्रॉनिक्स)",
-  "Computer Engineer (संगणक अभियंता)",
-  "IT Engineer (माहिती तंत्रज्ञान)",
-  "Software Engineer (सॉफ्टवेअर)",
-  "Network Engineer (नेटवर्क)",
-  "Agriculture Engineer (कृषी अभियंता)",
-  "Chemical Engineer (रसायन अभियंता)",
+  "Civil Engineering (स्थापत्य अभियंता)",
+  "Mechanical Engineering (यांत्रिक अभियंता)",
+  "Electrical Engineering (विद्युत अभियंता)",
+  "Electronics Engineering (इलेक्ट्रॉनिक्स अभियंता)",
+  "Computer Engineering (संगणक अभियंता)",
+  "IT Engineering (माहिती तंत्रज्ञान)",
+  "Software Engineering (सॉफ्टवेअर अभियंता)",
+  "Network Engineering (नेटवर्क अभियंता)",
+  "Agriculture Engineering (कृषी अभियंता)",
+  "Chemical Engineering (रसायन अभियंता)",
   "Other (इतर)",
 ];
 
-export const ENG_DESIGNATIONS = [
+const ENG_DESIGNATIONS_CORE = [
   "Junior Engineer / JE (कनिष्ठ अभियंता)",
   "Assistant Engineer / AE (सहाय्यक अभियंता)",
   "Deputy Engineer (उप अभियंता)",
@@ -535,9 +535,36 @@ export const ENG_DESIGNATIONS = [
   "Chief Engineer / CE (मुख्य अभियंता)",
   "Project Manager (प्रकल्प व्यवस्थापक)",
   "Technical Director (तांत्रिक संचालक)",
-  "Software Developer (सॉफ्टवेअर डेव्हलपर)",
   "Other (इतर)",
 ];
+
+const ENG_DESIGNATIONS_IT = [
+  "Software Engineer (सॉफ्टवेअर अभियंता)",
+  "Software Developer (सॉफ्टवेअर डेव्हलपर)",
+  "System Engineer (सिस्टम अभियंता)",
+  "Network Engineer (नेटवर्क अभियंता)",
+  "DevOps Engineer (डेव्हऑप्स अभियंता)",
+  "Technical Lead (तांत्रिक प्रमुख)",
+  "Project Manager (प्रकल्प व्यवस्थापक)",
+  "Other (इतर)",
+];
+
+const ENG_IT_BRANCHES = new Set([
+  "Computer Engineering (संगणक अभियंता)",
+  "IT Engineering (माहिती तंत्रज्ञान)",
+  "Software Engineering (सॉफ्टवेअर अभियंता)",
+  "Network Engineering (नेटवर्क अभियंता)",
+]);
+
+export function engDesignationsForBranch(branch?: string): string[] {
+  if (!branch) return [];
+  if (ENG_IT_BRANCHES.has(branch)) return ENG_DESIGNATIONS_IT;
+  if (branch === "Other (इतर)") return [...new Set([...ENG_DESIGNATIONS_CORE, ...ENG_DESIGNATIONS_IT])];
+  return ENG_DESIGNATIONS_CORE;
+}
+
+// Kept for backward compatibility (older imports)
+export const ENG_DESIGNATIONS = ENG_DESIGNATIONS_CORE;
 
 // ---------- Banking & Finance ----------
 export const BANK_TYPES = [
