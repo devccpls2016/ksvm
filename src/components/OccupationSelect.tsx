@@ -180,7 +180,7 @@ export function OccupationSelect({ value, onChange }: Props) {
         </div>
       )}
 
-      {(c === "सरकारी कर्मचारी (Government Employee)" || c === "निमसरकारी / PSU कर्मचारी (Semi Government / PSU)") && (
+      {c === "सरकारी कर्मचारी (Government Employee)" && (
         <div className="grid gap-3 md:grid-cols-2 border-t pt-3">
           <SelectFieldRow label="सेवा प्रकार (Service Type)" value={state.serviceType} options={GOVT_SERVICE_TYPES} onChange={x => patch({ serviceType: x })} />
           <SelectFieldRow label="सेवा वर्ग (Class)" value={state.classLevel} options={GOVT_CLASSES} onChange={x => patch({ classLevel: x, designation: "" })} />
