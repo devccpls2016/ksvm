@@ -31,6 +31,8 @@ import {
   PRIVATE_SECTORS,
   RETIRED_FROM,
   NRI_CONTRIBUTIONS,
+  LOAN_AMOUNT_OPTIONS,
+  LOAN_PURPOSE_OPTIONS,
   
   decodeOccupation,
   encodeOccupation,
