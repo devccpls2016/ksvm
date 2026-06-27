@@ -1,6 +1,10 @@
 export type WomenSelfHelpGroup = {
   is_member?: boolean | null;
   wants_to_join?: boolean | null;
+  has_rural_home_business?: boolean | null;
+  business_name?: string;
+  wants_to_start_business?: boolean | null;
+  desired_business?: string;
 };
 
 export type FamilyMember = {
