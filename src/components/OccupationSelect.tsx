@@ -131,15 +131,37 @@ export function OccupationSelect({ value, onChange }: Props) {
       )}
 
       {c === "व्यवसाय (Business Owner)" && (
-        <div className="grid gap-3 md:grid-cols-2 border-t pt-3">
-          <SelectFieldRow label="व्यवसाय प्रकार (Business Type)" value={state.businessType} options={BUSINESS_TYPES} onChange={x => patch({ businessType: x })} />
-          <TextRow label="व्यवसायाचे नाव (Business Name)" value={state.organisation} onChange={x => patch({ organisation: x })} />
+        <div className="space-y-3 border-t pt-3">
+          <div>
+            <Label className="text-xs text-muted-foreground mb-1 block">व्यवसाय प्रकार (Business Type – multi)</Label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {BUSINESS_TYPES.map(t => (
+                <Label key={t} className="flex items-center gap-2 text-sm p-2 rounded border bg-background cursor-pointer">
+                  <Checkbox checked={state.businessTypes?.includes(t) || false} onCheckedChange={() => toggleBusinessType(t)} />
+                  <span>{t}</span>
+                </Label>
+              ))}
+            </div>
+          </div>
+          <div className="grid gap-3 md:grid-cols-2">
+            <TextRow label="व्यवसायाचे नाव (Business Name)" value={state.organisation} onChange={x => patch({ organisation: x })} />
+          </div>
         </div>
       )}
 
       {c === "स्वरोजगार (Self Employed)" && (
-        <div className="grid gap-3 md:grid-cols-2 border-t pt-3">
-          <SelectFieldRow label="कौशल्य / Trade" value={state.designation} options={SELF_EMPLOYED_TYPES} onChange={x => patch({ designation: x })} />
+        <div className="space-y-3 border-t pt-3">
+          <div>
+            <Label className="text-xs text-muted-foreground mb-1 block">कौशल्य / Trade (multi)</Label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {SELF_EMPLOYED_TYPES.map(t => (
+                <Label key={t} className="flex items-center gap-2 text-sm p-2 rounded border bg-background cursor-pointer">
+                  <Checkbox checked={state.selfEmployedTypes?.includes(t) || false} onCheckedChange={() => toggleSelfEmployed(t)} />
+                  <span>{t}</span>
+                </Label>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 
