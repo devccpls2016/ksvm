@@ -15,7 +15,10 @@ export type OccupationValue = {
   rank?: string;                     // सैन्य / पोलीस rank
   force?: string;                    // Army / Navy / BSF / Police force
   institutionType?: string;          // सरकारी / खाजगी / अनुदानित / PSU
+  institutionTypeOther?: string;     // custom when "Other (इतर)"
   institutionLevel?: string;         // प्राथमिक शाळा / महाविद्यालय …
+  institutionLevelOther?: string;    // custom when "Other (इतर)"
+  designationOther?: string;         // custom when designation === "Other (इतर)"
   sector?: string;                   // IT / Banking / Healthcare …
   bankType?: string;                 // RBI / Nationalized / Cooperative …
   hospitalType?: string;             // सरकारी / खाजगी
