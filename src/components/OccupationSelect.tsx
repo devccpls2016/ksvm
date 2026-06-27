@@ -217,8 +217,15 @@ export function OccupationSelect({ value, onChange }: Props) {
                 label="संस्था प्रकार निवडा"
                 value={state.institutionType}
                 options={EDU_INSTITUTION_TYPES}
-                onChange={x => patch({ institutionType: x, institutionLevel: "", designation: "" })}
+                onChange={x => patch({ institutionType: x, institutionTypeOther: "", institutionLevel: "", institutionLevelOther: "", designation: "", designationOther: "" })}
               />
+              {state.institutionType === "Other (इतर)" && (
+                <Input
+                  placeholder="संस्था प्रकार नमूद करा"
+                  value={state.institutionTypeOther || ""}
+                  onChange={e => patch({ institutionTypeOther: e.target.value })}
+                />
+              )}
             </div>
 
             {/* Step 2 */}
@@ -230,9 +237,16 @@ export function OccupationSelect({ value, onChange }: Props) {
                 <SelectFieldRow
                   label="संस्था स्तर निवडा"
                   value={state.institutionLevel}
-                  options={eduLevelsForType(state.institutionType)}
-                  onChange={x => patch({ institutionLevel: x, designation: "" })}
+                  options={eduLevelsForType(state.institutionType).length ? eduLevelsForType(state.institutionType) : ["Other (इतर)"]}
+                  onChange={x => patch({ institutionLevel: x, institutionLevelOther: "", designation: "", designationOther: "" })}
                 />
+                {state.institutionLevel === "Other (इतर)" && (
+                  <Input
+                    placeholder="संस्था स्तर नमूद करा"
+                    value={state.institutionLevelOther || ""}
+                    onChange={e => patch({ institutionLevelOther: e.target.value })}
+                  />
+                )}
               </div>
             )}
 
@@ -245,9 +259,16 @@ export function OccupationSelect({ value, onChange }: Props) {
                 <SelectFieldRow
                   label="पदनाम निवडा"
                   value={state.designation}
-                  options={EDU_DESIGNATIONS_BY_LEVEL[state.institutionLevel] || []}
-                  onChange={x => patch({ designation: x })}
+                  options={EDU_DESIGNATIONS_BY_LEVEL[state.institutionLevel] || ["Other (इतर)"]}
+                  onChange={x => patch({ designation: x, designationOther: "" })}
                 />
+                {state.designation === "Other (इतर)" && (
+                  <Input
+                    placeholder="पदनाम नमूद करा"
+                    value={state.designationOther || ""}
+                    onChange={e => patch({ designationOther: e.target.value })}
+                  />
+                )}
               </div>
             )}
 

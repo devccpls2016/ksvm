@@ -15,7 +15,10 @@ export type OccupationValue = {
   rank?: string;                     // सैन्य / पोलीस rank
   force?: string;                    // Army / Navy / BSF / Police force
   institutionType?: string;          // सरकारी / खाजगी / अनुदानित / PSU
+  institutionTypeOther?: string;     // custom when "Other (इतर)"
   institutionLevel?: string;         // प्राथमिक शाळा / महाविद्यालय …
+  institutionLevelOther?: string;    // custom when "Other (इतर)"
+  designationOther?: string;         // custom when designation === "Other (इतर)"
   sector?: string;                   // IT / Banking / Healthcare …
   bankType?: string;                 // RBI / Nationalized / Cooperative …
   hospitalType?: string;             // सरकारी / खाजगी
@@ -97,15 +100,15 @@ export function summariseOccupation(v: OccupationValue): string {
   if (v.branch) parts.push(v.branch);
   if (v.sector) parts.push(v.sector);
   if (v.bankType) parts.push(v.bankType);
-  if (v.institutionType) parts.push(v.institutionType);
-  if (v.institutionLevel) parts.push(v.institutionLevel);
+  if (v.institutionType) parts.push(v.institutionType === "Other (इतर)" && v.institutionTypeOther ? `संस्था प्रकार: ${v.institutionTypeOther}` : v.institutionType);
+  if (v.institutionLevel) parts.push(v.institutionLevel === "Other (इतर)" && v.institutionLevelOther ? `स्तर: ${v.institutionLevelOther}` : v.institutionLevel);
   if (v.hospitalType) parts.push(v.hospitalType);
   if (v.businessType) parts.push(v.businessType);
   if (v.businessTypes?.length) parts.push(v.businessTypes.join(", "));
   if (v.selfEmployedTypes?.length) parts.push(v.selfEmployedTypes.join(", "));
   if (v.businessName) parts.push(v.businessName);
   if (v.retiredFrom) parts.push(`निवृत्त: ${v.retiredFrom}`);
-  if (v.designation) parts.push(v.designation);
+  if (v.designation) parts.push(v.designation === "Other (इतर)" && v.designationOther ? `पदनाम: ${v.designationOther}` : v.designation);
   if (v.rank) parts.push(v.rank);
   if (v.farmingTypes?.length) parts.push(v.farmingTypes.join(", "));
   if (v.landSize) parts.push(v.landSize);
@@ -303,6 +306,7 @@ export const EDU_INSTITUTION_TYPES = [
   "Aided (अनुदानित)",
   "Private (खाजगी)",
   "University (विद्यापीठ)",
+  "Other (इतर)",
 ];
 
 export const EDU_LEVELS_NON_UNIVERSITY = [
@@ -311,9 +315,10 @@ export const EDU_LEVELS_NON_UNIVERSITY = [
   "Higher Secondary School (उच्च माध्यमिक विद्यालय)",
   "Junior College (कनिष्ठ महाविद्यालय)",
   "Degree College (पदवी महाविद्यालय)",
+  "Other (इतर)",
 ];
 
-export const EDU_LEVELS_UNIVERSITY = ["University (विद्यापीठ)"];
+export const EDU_LEVELS_UNIVERSITY = ["University (विद्यापीठ)", "Other (इतर)"];
 
 export function eduLevelsForType(type?: string): string[] {
   if (!type) return [];
