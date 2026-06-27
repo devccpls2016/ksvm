@@ -306,6 +306,46 @@ export function OccupationSelect({ value, onChange }: Props) {
         </div>
       )}
 
+      {/* ============ Loan / Business aspiration (Self Employed) ============ */}
+      {c === "स्वरोजगार (Self Employed)" && (
+        <div className="border-t pt-3 space-y-3 bg-muted/30 rounded-md p-3">
+          <YesNoRow
+            label="आपल्याला स्वतःचे दुकान किंवा व्यवसाय सुरू करण्याची इच्छा आहे का?"
+            value={state.wantOwnBusiness}
+            onChange={x => patch({ wantOwnBusiness: x, ...(x !== "होय" ? { loanNeeded: "", loanAmount: "", loanAmountOther: "" } : {}) })}
+          />
+          {state.wantOwnBusiness === "होय" && (
+            <YesNoRow
+              label="व्यवसाय सुरू करण्यासाठी कर्जाची आवश्यकता आहे का?"
+              value={state.loanNeeded}
+              onChange={x => patch({ loanNeeded: x, ...(x !== "होय" ? { loanAmount: "", loanAmountOther: "" } : {}) })}
+            />
+          )}
+          {state.wantOwnBusiness === "होय" && state.loanNeeded === "होय" && (
+            <LoanAmountRow state={state} patch={patch} />
+          )}
+        </div>
+      )}
+
+      {/* ============ Loan (Business Owner) ============ */}
+      {c === "व्यवसाय (Business Owner)" && (
+        <div className="border-t pt-3 space-y-3 bg-muted/30 rounded-md p-3">
+          <YesNoRow
+            label="आपल्या व्यवसायाच्या विस्तारासाठी किंवा नवीन व्यवसाय सुरू करण्यासाठी कर्जाची आवश्यकता आहे का?"
+            value={state.loanNeeded}
+            onChange={x => patch({ loanNeeded: x, ...(x !== "होय" ? { loanAmount: "", loanAmountOther: "", loanPurpose: "", loanPurposeOther: "" } : {}) })}
+          />
+          {state.loanNeeded === "होय" && (
+            <>
+              <LoanAmountRow state={state} patch={patch} />
+              <LoanPurposeRow state={state} patch={patch} />
+            </>
+          )}
+        </div>
+      )}
+
+
+
       {/* Preview chip */}
       {state.category && (
         <div>
