@@ -37,7 +37,29 @@ export type OccupationValue = {
   annualIncome?: string;             // वार्षिक उत्पन्न
   experienceYears?: string;          // अनुभव (वर्षे)
   notes?: string;                    // इतर तपशील
+  // Loan / business-aspiration fields (Self Employed & Business Owner)
+  wantOwnBusiness?: string;          // होय / नाही (Self Employed only)
+  loanNeeded?: string;               // होय / नाही
+  loanAmount?: string;               // selected bucket
+  loanAmountOther?: string;          // custom amount when "इतर"
+  loanPurpose?: string;              // single-select purpose (Business Owner)
+  loanPurposeOther?: string;         // custom purpose when "इतर"
 };
+
+export const LOAN_AMOUNT_OPTIONS = [
+  "₹0 ते ₹5 लाख",
+  "₹5 ते ₹10 लाख",
+  "₹10 लाखांपेक्षा जास्त",
+  "इतर",
+];
+
+export const LOAN_PURPOSE_OPTIONS = [
+  "नवीन व्यवसाय सुरू करणे",
+  "व्यवसाय विस्तार",
+  "यंत्रसामग्री / उपकरणे खरेदी",
+  "कार्यकारी भांडवल (Working Capital)",
+  "इतर",
+];
 
 export const EMPTY_OCCUPATION: OccupationValue = { category: "" };
 
@@ -91,6 +113,10 @@ export function summariseOccupation(v: OccupationValue): string {
   if (v.city) parts.push(v.city);
   if (v.organisation) parts.push(v.organisation);
   if (v.postingPlace) parts.push(v.postingPlace);
+  if (v.wantOwnBusiness) parts.push(`स्वतःचा व्यवसाय इच्छा: ${v.wantOwnBusiness}`);
+  if (v.loanNeeded) parts.push(`कर्ज आवश्यक: ${v.loanNeeded}`);
+  if (v.loanAmount) parts.push(`रक्कम: ${v.loanAmount === "इतर" && v.loanAmountOther ? `₹${v.loanAmountOther}` : v.loanAmount}`);
+  if (v.loanPurpose) parts.push(`उद्देश: ${v.loanPurpose === "इतर" && v.loanPurposeOther ? v.loanPurposeOther : v.loanPurpose}`);
   return parts.join(" • ");
 }
 
