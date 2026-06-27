@@ -382,3 +382,82 @@ function TextRow({ label, value, onChange, type = "text" }: { label: string; val
     </div>
   );
 }
+
+function YesNoRow({ label, value, onChange }: { label: string; value?: string; onChange: (v: string) => void }) {
+  return (
+    <div>
+      <Label className="text-sm font-medium mb-2 block">{label}</Label>
+      <div className="flex gap-2">
+        {["होय", "नाही"].map(opt => {
+          const active = value === opt;
+          return (
+            <button
+              type="button"
+              key={opt}
+              onClick={() => onChange(active ? "" : opt)}
+              className={`px-4 py-1.5 rounded-md text-sm border transition ${active ? "bg-primary text-primary-foreground border-primary" : "bg-background hover:bg-accent"}`}
+            >
+              {opt}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function LoanAmountRow({ state, patch }: { state: OccupationValue; patch: (p: Partial<OccupationValue>) => void }) {
+  return (
+    <div>
+      <Label className="text-sm font-medium mb-2 block">आवश्यक कर्ज रक्कम</Label>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {LOAN_AMOUNT_OPTIONS.map(opt => (
+          <Label key={opt} className="flex items-center gap-2 text-sm p-2 rounded border bg-background cursor-pointer">
+            <Checkbox
+              checked={state.loanAmount === opt}
+              onCheckedChange={() => patch({ loanAmount: state.loanAmount === opt ? "" : opt, ...(opt !== "इतर" ? { loanAmountOther: "" } : {}) })}
+            />
+            <span>{opt}</span>
+          </Label>
+        ))}
+      </div>
+      {state.loanAmount === "इतर" && (
+        <div className="mt-2">
+          <Input
+            placeholder="₹ रक्कम नमूद करा"
+            value={state.loanAmountOther || ""}
+            onChange={e => patch({ loanAmountOther: e.target.value })}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function LoanPurposeRow({ state, patch }: { state: OccupationValue; patch: (p: Partial<OccupationValue>) => void }) {
+  return (
+    <div>
+      <Label className="text-sm font-medium mb-2 block">कर्जाचा उद्देश</Label>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {LOAN_PURPOSE_OPTIONS.map(opt => (
+          <Label key={opt} className="flex items-center gap-2 text-sm p-2 rounded border bg-background cursor-pointer">
+            <Checkbox
+              checked={state.loanPurpose === opt}
+              onCheckedChange={() => patch({ loanPurpose: state.loanPurpose === opt ? "" : opt, ...(opt !== "इतर" ? { loanPurposeOther: "" } : {}) })}
+            />
+            <span>{opt}</span>
+          </Label>
+        ))}
+      </div>
+      {state.loanPurpose === "इतर" && (
+        <div className="mt-2">
+          <Input
+            placeholder="उद्देश नमूद करा"
+            value={state.loanPurposeOther || ""}
+            onChange={e => patch({ loanPurposeOther: e.target.value })}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
