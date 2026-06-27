@@ -17,7 +17,10 @@ import {
   eduLevelsForType,
   EDU_DESIGNATIONS_BY_LEVEL,
   MED_INSTITUTION_TYPES,
-  MED_DESIGNATIONS,
+  medDesignationsForType,
+  medNeedsHospitalFields,
+  medIsOwnSetup,
+
   WCD_DESIGNATIONS,
   ENG_INSTITUTION_TYPES,
   ENG_BRANCHES,
@@ -297,12 +300,137 @@ export function OccupationSelect({ value, onChange }: Props) {
       )}
 
       {c === "वैद्यकीय क्षेत्र (Medical Sector)" && (
-        <div className="grid gap-3 md:grid-cols-2 border-t pt-3">
-          <SelectFieldRow label="संस्था प्रकार (Institution Type)" value={state.hospitalType} options={MED_INSTITUTION_TYPES} onChange={x => patch({ hospitalType: x })} />
-          <SelectFieldRow label="पद (Designation)" value={state.designation} options={MED_DESIGNATIONS} onChange={x => patch({ designation: x })} />
-          <TextRow label="रुग्णालयाचे नाव (Hospital Name)" value={state.organisation} onChange={x => patch({ organisation: x })} />
+        <div className="border-t pt-4 mt-2">
+          <div className="mb-3 flex items-center gap-2">
+            <span className="inline-block h-2 w-2 rounded-full bg-primary" />
+            <h4 className="text-sm font-semibold text-foreground">
+              वैद्यकीय क्षेत्र – तपशील (Medical Sector Details)
+            </h4>
+          </div>
+
+          <div className="rounded-lg border bg-muted/30 p-4 space-y-4">
+            {/* Step 1 — Institution Type */}
+            <div className="space-y-2">
+              <div className="text-xs font-medium text-muted-foreground">
+                Step 1 — संस्था प्रकार (Institution Type)
+              </div>
+              <SelectFieldRow
+                label="संस्था प्रकार निवडा"
+                value={state.hospitalType}
+                options={MED_INSTITUTION_TYPES}
+                onChange={x => patch({
+                  hospitalType: x,
+                  hospitalTypeOther: "",
+                  designation: "",
+                  designationOther: "",
+                  organisation: "",
+                  postingPlace: "",
+                  department: "",
+                  setupName: "",
+                  setupAddress: "",
+                  setupCity: "",
+                  setupDistrict: "",
+                  setupPin: "",
+                })}
+              />
+              {state.hospitalType === "Other (इतर)" && (
+                <Input
+                  placeholder="संस्था प्रकार नमूद करा"
+                  value={state.hospitalTypeOther || ""}
+                  onChange={e => patch({ hospitalTypeOther: e.target.value })}
+                />
+              )}
+            </div>
+
+            {/* Step 2 — Role / Designation */}
+            {state.hospitalType && (
+              <div className="space-y-2">
+                <div className="text-xs font-medium text-muted-foreground">
+                  Step 2 — भूमिका / पदनाम (Role / Designation)
+                </div>
+                <SelectFieldRow
+                  label="पदनाम निवडा"
+                  value={state.designation}
+                  options={medDesignationsForType(state.hospitalType)}
+                  onChange={x => patch({ designation: x, designationOther: "" })}
+                />
+                {state.designation === "Other (इतर)" && (
+                  <Input
+                    placeholder="पदनाम नमूद करा"
+                    value={state.designationOther || ""}
+                    onChange={e => patch({ designationOther: e.target.value })}
+                  />
+                )}
+              </div>
+            )}
+
+            {/* Step 3 — Hospital / College fields */}
+            {state.designation && medNeedsHospitalFields(state.hospitalType) && (
+              <div className="space-y-2 pt-2 border-t border-dashed">
+                <div className="text-xs font-medium text-muted-foreground">
+                  Step 3 — अतिरिक्त माहिती (Hospital / College Details)
+                </div>
+                <div className="grid gap-3 md:grid-cols-2">
+                  <TextRow
+                    label="रुग्णालय / महाविद्यालयाचे नाव (Hospital / College Name)"
+                    value={state.organisation}
+                    onChange={x => patch({ organisation: x })}
+                  />
+                  <TextRow
+                    label="कार्यरत ठिकाण (Place of Posting)"
+                    value={state.postingPlace}
+                    onChange={x => patch({ postingPlace: x })}
+                  />
+                  <TextRow
+                    label="विभाग / वार्ड (Department / Unit) – ऐच्छिक"
+                    value={state.department}
+                    onChange={x => patch({ department: x })}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Step 4 — Own Setup */}
+            {state.designation && medIsOwnSetup(state.hospitalType) && (
+              <div className="space-y-2 pt-2 border-t border-dashed">
+                <div className="text-xs font-medium text-muted-foreground">
+                  Step 4 — स्वतःच्या क्लिनिक / रुग्णालय / लॅबचे तपशील (Own Setup Details)
+                </div>
+                <div className="grid gap-3 md:grid-cols-2">
+                  <TextRow
+                    label="क्लिनिक / रुग्णालय / लॅबचे नाव (Name of Setup)"
+                    value={state.setupName}
+                    onChange={x => patch({ setupName: x })}
+                  />
+                  <TextRow
+                    label="शहर / गाव (City / Village)"
+                    value={state.setupCity}
+                    onChange={x => patch({ setupCity: x })}
+                  />
+                  <TextRow
+                    label="जिल्हा (District)"
+                    value={state.setupDistrict}
+                    onChange={x => patch({ setupDistrict: x })}
+                  />
+                  <TextRow
+                    label="पिन कोड (Pin Code)"
+                    value={state.setupPin}
+                    onChange={x => patch({ setupPin: x })}
+                  />
+                  <div className="md:col-span-2">
+                    <TextRow
+                      label="पूर्ण पत्ता (Full Address)"
+                      value={state.setupAddress}
+                      onChange={x => patch({ setupAddress: x })}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
+
 
       {c === "महिला व बाल विकास (Women & Child Development)" && (
         <div className="grid gap-3 md:grid-cols-2 border-t pt-3">

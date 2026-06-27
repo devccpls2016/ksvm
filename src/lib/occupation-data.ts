@@ -47,7 +47,16 @@ export type OccupationValue = {
   loanAmountOther?: string;          // custom amount when "इतर"
   loanPurpose?: string;              // single-select purpose (Business Owner)
   loanPurposeOther?: string;         // custom purpose when "इतर"
+  // Medical Sector extras
+  hospitalTypeOther?: string;        // custom when MED institution type = Other
+  department?: string;               // Department / Unit (medical)
+  setupName?: string;                // Own Setup – clinic/hospital/lab name
+  setupAddress?: string;             // Own Setup – full address
+  setupCity?: string;                // Own Setup – city / village
+  setupDistrict?: string;            // Own Setup – district
+  setupPin?: string;                 // Own Setup – pin code
 };
+
 
 export const LOAN_AMOUNT_OPTIONS = [
   "₹0 ते ₹5 लाख",
@@ -102,7 +111,7 @@ export function summariseOccupation(v: OccupationValue): string {
   if (v.bankType) parts.push(v.bankType);
   if (v.institutionType) parts.push(v.institutionType === "Other (इतर)" && v.institutionTypeOther ? `संस्था प्रकार: ${v.institutionTypeOther}` : v.institutionType);
   if (v.institutionLevel) parts.push(v.institutionLevel === "Other (इतर)" && v.institutionLevelOther ? `स्तर: ${v.institutionLevelOther}` : v.institutionLevel);
-  if (v.hospitalType) parts.push(v.hospitalType);
+  if (v.hospitalType) parts.push(v.hospitalType === "Other (इतर)" && v.hospitalTypeOther ? `संस्था प्रकार: ${v.hospitalTypeOther}` : v.hospitalType);
   if (v.businessType) parts.push(v.businessType);
   if (v.businessTypes?.length) parts.push(v.businessTypes.join(", "));
   if (v.selfEmployedTypes?.length) parts.push(v.selfEmployedTypes.join(", "));
@@ -119,7 +128,14 @@ export function summariseOccupation(v: OccupationValue): string {
   if (v.wantOwnBusiness) parts.push(`स्वतःचा व्यवसाय इच्छा: ${v.wantOwnBusiness}`);
   if (v.loanNeeded) parts.push(`कर्ज आवश्यक: ${v.loanNeeded}`);
   if (v.loanAmount) parts.push(`रक्कम: ${v.loanAmount === "इतर" && v.loanAmountOther ? `₹${v.loanAmountOther}` : v.loanAmount}`);
+  if (v.department) parts.push(`विभाग: ${v.department}`);
+  if (v.setupName) parts.push(`Setup: ${v.setupName}`);
+  if (v.setupCity) parts.push(v.setupCity);
+  if (v.setupDistrict) parts.push(v.setupDistrict);
+  if (v.setupPin) parts.push(`PIN ${v.setupPin}`);
+  if (v.setupAddress) parts.push(v.setupAddress);
   if (v.loanPurpose) parts.push(`उद्देश: ${v.loanPurpose === "इतर" && v.loanPurposeOther ? v.loanPurposeOther : v.loanPurpose}`);
+
   return parts.join(" • ");
 }
 
@@ -386,10 +402,13 @@ export const MED_INSTITUTION_TYPES = [
   "Private Hospital (खाजगी रुग्णालय)",
   "Medical College (वैद्यकीय महाविद्यालय)",
   "Clinic (दवाखाना)",
+  "Laboratory (प्रयोगशाळा)",
   "Primary Health Centre / PHC (प्राथमिक आरोग्य केंद्र)",
+  "Own Setup (स्वतःचे क्लिनिक / रुग्णालय / लॅब)",
+  "Other (इतर)",
 ];
 
-export const MED_DESIGNATIONS = [
+const MED_DESIGNATIONS_HOSPITAL = [
   "Medical Officer (वैद्यकीय अधिकारी)",
   "Resident Doctor (निवासी डॉक्टर)",
   "Specialist Doctor (विशेषज्ञ डॉक्टर)",
@@ -405,14 +424,73 @@ export const MED_DESIGNATIONS = [
   "BAMS Doctor (आयुर्वेद)",
   "BHMS Doctor (होमिओपॅथी)",
   "BUMS Doctor (युनानी)",
-  "Physiotherapist (फिजिओथेरपिस्ट)",
-  "Pharmacist (फार्मासिस्ट)",
   "Staff Nurse / परिचारिका (Nurse)",
   "Nursing Superintendent (परिचारिका अधीक्षक)",
+  "Pharmacist (फार्मासिस्ट)",
   "Lab Technician (प्रयोगशाळा तंत्रज्ञ)",
   "Radiologist (रेडिओलॉजिस्ट)",
+  "Physiotherapist (फिजिओथेरपिस्ट)",
   "Other (इतर)",
 ];
+
+const MED_DESIGNATIONS_COLLEGE = [
+  "Professor (प्राध्यापक)",
+  "Associate Professor (सहयोगी प्राध्यापक)",
+  "Assistant Professor (सहाय्यक प्राध्यापक)",
+  "Lecturer (व्याख्याता)",
+  "Resident Doctor (निवासी डॉक्टर)",
+  "Medical Officer (वैद्यकीय अधिकारी)",
+  "Lab Technician (प्रयोगशाळा तंत्रज्ञ)",
+  "Nursing Staff (परिचारिका कर्मचारी)",
+  "Other (इतर)",
+];
+
+const MED_DESIGNATIONS_CLINIC = [
+  "Owner Doctor (मालक डॉक्टर)",
+  "Consultant Doctor (सल्लागार डॉक्टर)",
+  "General Practitioner (सामान्य डॉक्टर)",
+  "Dentist (दंतचिकित्सक)",
+  "Physiotherapist (फिजिओथेरपिस्ट)",
+  "Pharmacist (फार्मासिस्ट)",
+  "Lab Owner / Technician (लॅब मालक / तंत्रज्ञ)",
+  "Other (इतर)",
+];
+
+// Legacy flat list kept for any external reference / reports
+export const MED_DESIGNATIONS = MED_DESIGNATIONS_HOSPITAL;
+
+export const MED_HOSPITAL_TYPES = [
+  "Government Hospital (सरकारी रुग्णालय)",
+  "Private Hospital (खाजगी रुग्णालय)",
+  "Primary Health Centre / PHC (प्राथमिक आरोग्य केंद्र)",
+];
+
+export function medDesignationsForType(type?: string): string[] {
+  if (!type) return [];
+  if (type === "Medical College (वैद्यकीय महाविद्यालय)") return MED_DESIGNATIONS_COLLEGE;
+  if (
+    type === "Clinic (दवाखाना)" ||
+    type === "Laboratory (प्रयोगशाळा)" ||
+    type === "Own Setup (स्वतःचे क्लिनिक / रुग्णालय / लॅब)"
+  ) return MED_DESIGNATIONS_CLINIC;
+  if (type === "Other (इतर)") return ["Other (इतर)"];
+  return MED_DESIGNATIONS_HOSPITAL;
+}
+
+/** True for institution types that need Hospital Name + Place of Posting. */
+export function medNeedsHospitalFields(type?: string): boolean {
+  return (
+    type === "Government Hospital (सरकारी रुग्णालय)" ||
+    type === "Private Hospital (खाजगी रुग्णालय)" ||
+    type === "Primary Health Centre / PHC (प्राथमिक आरोग्य केंद्र)" ||
+    type === "Medical College (वैद्यकीय महाविद्यालय)"
+  );
+}
+
+export function medIsOwnSetup(type?: string): boolean {
+  return type === "Own Setup (स्वतःचे क्लिनिक / रुग्णालय / लॅब)";
+}
+
 
 // ---------- Women & Child Development ----------
 export const WCD_DESIGNATIONS = [
