@@ -12,6 +12,7 @@ export type OccupationValue = {
   classLevel?: string;               // Class 1 / 2 / 3 / 4
   designation?: string;              // पदनाम
   branch?: string;                   // शाखा (engineer / education stream)
+  branchOther?: string;              // custom when branch === "Other (इतर)"
   rank?: string;                     // सैन्य / पोलीस rank
   force?: string;                    // Army / Navy / BSF / Police force
   institutionType?: string;          // सरकारी / खाजगी / अनुदानित / PSU
