@@ -456,6 +456,8 @@ const MED_DESIGNATIONS_CLINIC = [
   "Other (इतर)",
 ];
 
+const MED_DESIGNATIONS_OWN_SETUP = ["Owner / Owner Doctor (मालक / मालक डॉक्टर)"];
+
 // Legacy flat list kept for any external reference / reports
 export const MED_DESIGNATIONS = MED_DESIGNATIONS_HOSPITAL;
 
@@ -468,11 +470,8 @@ export const MED_HOSPITAL_TYPES = [
 export function medDesignationsForType(type?: string): string[] {
   if (!type) return [];
   if (type === "Medical College (वैद्यकीय महाविद्यालय)") return MED_DESIGNATIONS_COLLEGE;
-  if (
-    type === "Clinic (दवाखाना)" ||
-    type === "Laboratory (प्रयोगशाळा)" ||
-    type === "Own Setup (स्वतःचे क्लिनिक / रुग्णालय / लॅब)"
-  ) return MED_DESIGNATIONS_CLINIC;
+  if (type === "Own Setup (स्वतःचे क्लिनिक / रुग्णालय / लॅब)") return MED_DESIGNATIONS_OWN_SETUP;
+  if (type === "Clinic (दवाखाना)" || type === "Laboratory (प्रयोगशाळा)") return MED_DESIGNATIONS_CLINIC;
   if (type === "Other (इतर)") return ["Other (इतर)"];
   return MED_DESIGNATIONS_HOSPITAL;
 }
