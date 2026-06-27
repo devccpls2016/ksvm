@@ -305,31 +305,67 @@ export const EDU_INSTITUTION_TYPES = [
   "University (विद्यापीठ)",
 ];
 
-export const EDU_INSTITUTION_LEVELS = [
+export const EDU_LEVELS_NON_UNIVERSITY = [
   "Primary School (प्राथमिक शाळा)",
   "Secondary School (माध्यमिक शाळा)",
   "Higher Secondary School (उच्च माध्यमिक विद्यालय)",
   "Junior College (कनिष्ठ महाविद्यालय)",
   "Degree College (पदवी महाविद्यालय)",
-  "University (विद्यापीठ)",
 ];
 
-export const EDU_DESIGNATIONS = [
-  "Primary Teacher (प्राथमिक शिक्षक)",
-  "Secondary Teacher (माध्यमिक शिक्षक)",
-  "Higher Secondary Teacher (उच्च माध्यमिक शिक्षक)",
-  "Lecturer (व्याख्याता)",
-  "Assistant Professor (सहाय्यक प्राध्यापक)",
-  "Associate Professor (सहयोगी प्राध्यापक)",
-  "Professor (प्राध्यापक)",
-  "Head of Department / HOD (विभागप्रमुख)",
-  "Principal (प्राचार्य)",
-  "Vice Principal (उपप्राचार्य)",
-  "Mukhyadhyapak / मुख्याध्यापक (Headmaster)",
-  "Dean (अधिष्ठाता)",
-  "Registrar (कुलसचिव)",
-  "Other (इतर)",
-];
+export const EDU_LEVELS_UNIVERSITY = ["University (विद्यापीठ)"];
+
+export function eduLevelsForType(type?: string): string[] {
+  if (!type) return [];
+  if (type === "University (विद्यापीठ)") return EDU_LEVELS_UNIVERSITY;
+  return EDU_LEVELS_NON_UNIVERSITY;
+}
+
+export const EDU_DESIGNATIONS_BY_LEVEL: Record<string, string[]> = {
+  "Primary School (प्राथमिक शाळा)": [
+    "Primary Teacher (प्राथमिक शिक्षक)",
+    "Mukhyadhyapak / Headmaster (मुख्याध्यापक)",
+    "Principal (प्राचार्य)",
+    "Other (इतर)",
+  ],
+  "Secondary School (माध्यमिक शाळा)": [
+    "Secondary Teacher (माध्यमिक शिक्षक)",
+    "Mukhyadhyapak / Headmaster (मुख्याध्यापक)",
+    "Vice Principal (उपप्राचार्य)",
+    "Principal (प्राचार्य)",
+    "Other (इतर)",
+  ],
+  "Higher Secondary School (उच्च माध्यमिक विद्यालय)": [
+    "Higher Secondary Teacher (उच्च माध्यमिक शिक्षक)",
+    "Vice Principal (उपप्राचार्य)",
+    "Principal (प्राचार्य)",
+    "Other (इतर)",
+  ],
+  "Junior College (कनिष्ठ महाविद्यालय)": [
+    "Lecturer (व्याख्याता)",
+    "Vice Principal (उपप्राचार्य)",
+    "Principal (प्राचार्य)",
+    "Other (इतर)",
+  ],
+  "Degree College (पदवी महाविद्यालय)": [
+    "Assistant Professor (सहाय्यक प्राध्यापक)",
+    "Associate Professor (सहयोगी प्राध्यापक)",
+    "Professor (प्राध्यापक)",
+    "Head of Department / HOD (विभागप्रमुख)",
+    "Vice Principal (उपप्राचार्य)",
+    "Principal (प्राचार्य)",
+    "Other (इतर)",
+  ],
+  "University (विद्यापीठ)": [
+    "Assistant Professor (सहाय्यक प्राध्यापक)",
+    "Associate Professor (सहयोगी प्राध्यापक)",
+    "Professor (प्राध्यापक)",
+    "Head of Department / HOD (विभागप्रमुख)",
+    "Dean (अधिष्ठाता)",
+    "Registrar (कुलसचिव)",
+    "Other (इतर)",
+  ],
+};
 
 // ---------- Medical Sector ----------
 export const MED_INSTITUTION_TYPES = [
