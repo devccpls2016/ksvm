@@ -359,6 +359,16 @@ export const EDU_DESIGNATIONS_BY_LEVEL: Record<string, string[]> = {
     "Principal (प्राचार्य)",
     "Other (इतर)",
   ],
+  "Post Graduate College (पदव्युत्तर महाविद्यालय)": [
+    "Assistant Professor (सहाय्यक प्राध्यापक)",
+    "Associate Professor (सहयोगी प्राध्यापक)",
+    "Professor (प्राध्यापक)",
+    "Head of Department / HOD (विभागप्रमुख)",
+    "Vice Principal (उपप्राचार्य)",
+    "Principal (प्राचार्य)",
+    "Dean (अधिष्ठाता)",
+    "Other (इतर)",
+  ],
   "University (विद्यापीठ)": [
     "Assistant Professor (सहाय्यक प्राध्यापक)",
     "Associate Professor (सहयोगी प्राध्यापक)",
