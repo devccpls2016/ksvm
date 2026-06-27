@@ -514,11 +514,55 @@ export function OccupationSelect({ value, onChange }: Props) {
       )}
 
       {c === "बँकिंग व वित्तीय क्षेत्र (Banking & Finance)" && (
-        <div className="grid gap-3 md:grid-cols-2 border-t pt-3">
-          <SelectFieldRow label="बँक / संस्था प्रकार" value={state.bankType} options={BANK_TYPES} onChange={x => patch({ bankType: x })} />
-          <SelectFieldRow label="पद (Designation)" value={state.designation} options={BANK_DESIGNATIONS} onChange={x => patch({ designation: x })} />
-          <TextRow label="बँक / संस्था नाव" value={state.organisation} onChange={x => patch({ organisation: x })} />
-          <TextRow label="शाखा (Branch)" value={state.branch} onChange={x => patch({ branch: x })} />
+        <div className="space-y-4 border-t pt-3">
+          <div className="text-sm font-semibold">बँकिंग व वित्तीय क्षेत्र – तपशील (Banking & Finance Details)</div>
+
+          {/* Step 1 */}
+          <div className="space-y-2">
+            <div className="text-xs font-medium text-muted-foreground">Step 1 — संस्था प्रकार (Institution Type)</div>
+            <SelectFieldRow
+              label="बँक / संस्था प्रकार"
+              value={state.bankType}
+              options={BANK_TYPES}
+              onChange={x => patch({ bankType: x, bankTypeOther: "", designation: "", designationOther: "" })}
+            />
+            {state.bankType === "Other (इतर)" && (
+              <Input
+                placeholder="संस्था प्रकार नमूद करा"
+                value={state.bankTypeOther || ""}
+                onChange={e => patch({ bankTypeOther: e.target.value })}
+              />
+            )}
+          </div>
+
+          {/* Step 2 */}
+          {state.bankType && (
+            <div className="space-y-2">
+              <div className="text-xs font-medium text-muted-foreground">Step 2 — पदनाम (Designation)</div>
+              <SelectFieldRow
+                label="पदनाम निवडा"
+                value={state.designation}
+                options={bankDesignationsFor(state.bankType)}
+                onChange={x => patch({ designation: x, designationOther: "" })}
+              />
+              {state.designation === "Other (इतर)" && (
+                <Input
+                  placeholder="पदनाम नमूद करा"
+                  value={state.designationOther || ""}
+                  onChange={e => patch({ designationOther: e.target.value })}
+                />
+              )}
+            </div>
+          )}
+
+          {/* Step 3 – Org details */}
+          {state.designation && (
+            <div className="grid gap-3 md:grid-cols-2">
+              <TextRow label="बँक / संस्था नाव" value={state.organisation} onChange={x => patch({ organisation: x })} />
+              <TextRow label="शाखा (Branch)" value={state.branch} onChange={x => patch({ branch: x })} />
+              <TextRow label="कार्यरत ठिकाण (Place of Posting)" value={state.postingPlace} onChange={x => patch({ postingPlace: x })} />
+            </div>
+          )}
         </div>
       )}
 
