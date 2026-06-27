@@ -456,6 +456,8 @@ const MED_DESIGNATIONS_CLINIC = [
   "Other (इतर)",
 ];
 
+const MED_DESIGNATIONS_OWN_SETUP = ["Owner / Owner Doctor (मालक / मालक डॉक्टर)"];
+
 // Legacy flat list kept for any external reference / reports
 export const MED_DESIGNATIONS = MED_DESIGNATIONS_HOSPITAL;
 
