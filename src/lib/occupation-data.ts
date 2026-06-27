@@ -325,14 +325,11 @@ export const EDU_DESIGNATIONS_BY_LEVEL: Record<string, string[]> = {
   "Primary School (प्राथमिक शाळा)": [
     "Primary Teacher (प्राथमिक शिक्षक)",
     "Mukhyadhyapak / Headmaster (मुख्याध्यापक)",
-    "Principal (प्राचार्य)",
     "Other (इतर)",
   ],
   "Secondary School (माध्यमिक शाळा)": [
     "Secondary Teacher (माध्यमिक शिक्षक)",
     "Mukhyadhyapak / Headmaster (मुख्याध्यापक)",
-    "Vice Principal (उपप्राचार्य)",
-    "Principal (प्राचार्य)",
     "Other (इतर)",
   ],
   "Higher Secondary School (उच्च माध्यमिक विद्यालय)": [
