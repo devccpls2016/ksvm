@@ -507,9 +507,8 @@ export function OccupationSelect({ value, onChange }: Props) {
             </div>
           )}
 
-          <div className="grid gap-3 md:grid-cols-2">
+          <div className="grid gap-3 md:grid-cols-1">
             <TextRow label="संस्थेचे नाव (Organisation Name)" value={state.organisation} onChange={x => patch({ organisation: x })} />
-            <TextRow label="कार्यरत ठिकाण (Place of Posting)" value={state.postingPlace} onChange={x => patch({ postingPlace: x })} />
           </div>
         </div>
       )}
