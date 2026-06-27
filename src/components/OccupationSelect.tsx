@@ -199,43 +199,79 @@ export function OccupationSelect({ value, onChange }: Props) {
       )}
 
       {c === "शिक्षण क्षेत्र (Education Sector)" && (
-        <div className="grid gap-3 md:grid-cols-2 border-t pt-3">
-          <SelectFieldRow
-            label="संस्था प्रकार (Institution Type)"
-            value={state.institutionType}
-            options={EDU_INSTITUTION_TYPES}
-            onChange={x => patch({ institutionType: x, institutionLevel: "", designation: "" })}
-          />
-          {state.institutionType && (
-            <SelectFieldRow
-              label="संस्था स्तर (Institution Level)"
-              value={state.institutionLevel}
-              options={eduLevelsForType(state.institutionType)}
-              onChange={x => patch({ institutionLevel: x, designation: "" })}
-            />
-          )}
-          {state.institutionLevel && (
-            <SelectFieldRow
-              label="पदनाम (Designation)"
-              value={state.designation}
-              options={EDU_DESIGNATIONS_BY_LEVEL[state.institutionLevel] || []}
-              onChange={x => patch({ designation: x })}
-            />
-          )}
-          {state.designation && (
-            <>
-              <TextRow
-                label="संस्थेचे नाव (School / College / University Name)"
-                value={state.organisation}
-                onChange={x => patch({ organisation: x })}
+        <div className="border-t pt-4 mt-2">
+          <div className="mb-3 flex items-center gap-2">
+            <span className="inline-block h-2 w-2 rounded-full bg-primary" />
+            <h4 className="text-sm font-semibold text-foreground">
+              शिक्षण क्षेत्र – तपशील (Education Sector Details)
+            </h4>
+          </div>
+
+          <div className="rounded-lg border bg-muted/30 p-4 space-y-4">
+            {/* Step 1 */}
+            <div className="space-y-2">
+              <div className="text-xs font-medium text-muted-foreground">
+                Step 1 — संस्था प्रकार (Institution Type)
+              </div>
+              <SelectFieldRow
+                label="संस्था प्रकार निवडा"
+                value={state.institutionType}
+                options={EDU_INSTITUTION_TYPES}
+                onChange={x => patch({ institutionType: x, institutionLevel: "", designation: "" })}
               />
-              <TextRow
-                label="कार्यरत ठिकाण (Place of Posting)"
-                value={state.postingPlace}
-                onChange={x => patch({ postingPlace: x })}
-              />
-            </>
-          )}
+            </div>
+
+            {/* Step 2 */}
+            {state.institutionType && (
+              <div className="space-y-2">
+                <div className="text-xs font-medium text-muted-foreground">
+                  Step 2 — संस्था स्तर (Institution Level)
+                </div>
+                <SelectFieldRow
+                  label="संस्था स्तर निवडा"
+                  value={state.institutionLevel}
+                  options={eduLevelsForType(state.institutionType)}
+                  onChange={x => patch({ institutionLevel: x, designation: "" })}
+                />
+              </div>
+            )}
+
+            {/* Step 3 */}
+            {state.institutionLevel && (
+              <div className="space-y-2">
+                <div className="text-xs font-medium text-muted-foreground">
+                  Step 3 — पदनाम (Designation)
+                </div>
+                <SelectFieldRow
+                  label="पदनाम निवडा"
+                  value={state.designation}
+                  options={EDU_DESIGNATIONS_BY_LEVEL[state.institutionLevel] || []}
+                  onChange={x => patch({ designation: x })}
+                />
+              </div>
+            )}
+
+            {/* Step 4 */}
+            {state.designation && (
+              <div className="space-y-2 pt-2 border-t border-dashed">
+                <div className="text-xs font-medium text-muted-foreground">
+                  Step 4 — संस्था व कार्यरत ठिकाण
+                </div>
+                <div className="grid gap-3 md:grid-cols-2">
+                  <TextRow
+                    label="संस्थेचे नाव (School / College / University Name)"
+                    value={state.organisation}
+                    onChange={x => patch({ organisation: x })}
+                  />
+                  <TextRow
+                    label="कार्यरत ठिकाण (Place of Posting)"
+                    value={state.postingPlace}
+                    onChange={x => patch({ postingPlace: x })}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
