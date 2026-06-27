@@ -107,7 +107,7 @@ export function summariseOccupation(v: OccupationValue): string {
   if (v.serviceType) parts.push(v.serviceType);
   if (v.force) parts.push(v.force);
   if (v.classLevel) parts.push(v.classLevel);
-  if (v.branch) parts.push(v.branch);
+  if (v.branch) parts.push(v.branch === "Other (इतर)" && v.branchOther ? `शाखा: ${v.branchOther}` : v.branch);
   if (v.sector) parts.push(v.sector);
   if (v.bankType) parts.push(v.bankType);
   if (v.institutionType) parts.push(v.institutionType === "Other (इतर)" && v.institutionTypeOther ? `संस्था प्रकार: ${v.institutionTypeOther}` : v.institutionType);
