@@ -367,6 +367,30 @@ export const EDU_DESIGNATIONS_BY_LEVEL: Record<string, string[]> = {
   ],
 };
 
+/** Filter designations by institution type and level.
+ *  Principal / Vice Principal are removed for Primary and Secondary schools
+ *  because those roles apply to colleges; Headmaster is the appropriate post. */
+export function eduDesignationsFor(
+  institutionType: string | undefined,
+  institutionLevel: string | undefined,
+): string[] {
+  if (!institutionLevel) return [];
+  const base = EDU_DESIGNATIONS_BY_LEVEL[institutionLevel] || [];
+
+  if (institutionLevel === "Primary School (प्राथमिक शाळा)") {
+    return base.filter(d => d !== "Principal (प्राचार्य)");
+  }
+
+  if (institutionLevel === "Secondary School (माध्यमिक शाळा)") {
+    return base.filter(
+      d => d !== "Principal (प्राचार्य)" && d !== "Vice Principal (उपप्राचार्य)",
+    );
+  }
+
+  return base;
+}
+
+
 // ---------- Medical Sector ----------
 export const MED_INSTITUTION_TYPES = [
   "Government Hospital (सरकारी रुग्णालय)",
