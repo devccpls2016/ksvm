@@ -365,6 +365,82 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
                       </RadioGroup>
                     </div>
                   )}
+                  <div className="space-y-2 pt-2 border-t border-primary/20">
+                    <Label className="text-sm font-medium">आपण सध्या कोणत्याही प्रकारचा ग्रामोद्योग किंवा घरगुती व्यवसाय करत आहात काय?</Label>
+                    <RadioGroup
+                      value={m.mahila_bachat_gat?.has_rural_home_business === true ? "yes" : m.mahila_bachat_gat?.has_rural_home_business === false ? "no" : ""}
+                      onValueChange={(x) =>
+                        updMember(i, {
+                          mahila_bachat_gat: {
+                            ...(m.mahila_bachat_gat || {}),
+                            has_rural_home_business: x === "yes",
+                            business_name: x === "yes" ? (m.mahila_bachat_gat?.business_name || "") : "",
+                            wants_to_start_business: x === "yes" ? null : (m.mahila_bachat_gat?.wants_to_start_business ?? null),
+                            desired_business: x === "yes" ? "" : (m.mahila_bachat_gat?.desired_business || ""),
+                          },
+                        })
+                      }
+                      className="flex gap-6"
+                    >
+                      <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
+                      <Label className="flex items-center gap-2"><RadioGroupItem value="no"/>{T.no}</Label>
+                    </RadioGroup>
+                  </div>
+                  {m.mahila_bachat_gat?.has_rural_home_business === true && (
+                    <div className="space-y-2 pl-4 border-l-2 border-primary/30">
+                      <Label className="text-sm font-medium">आपण कोणता ग्रामोद्योग किंवा घरगुती व्यवसाय करत आहात?</Label>
+                      <Input
+                        value={m.mahila_bachat_gat?.business_name || ""}
+                        onChange={(e) =>
+                          updMember(i, {
+                            mahila_bachat_gat: {
+                              ...(m.mahila_bachat_gat || {}),
+                              business_name: e.target.value,
+                            },
+                          })
+                        }
+                        placeholder="व्यवसायाचे नाव लिहा"
+                      />
+                    </div>
+                  )}
+                  {m.mahila_bachat_gat?.has_rural_home_business === false && (
+                    <div className="space-y-2 pl-4 border-l-2 border-primary/30">
+                      <Label className="text-sm font-medium">आपल्याला भविष्यात ग्रामोद्योग किंवा घरगुती व्यवसाय सुरू करण्याची इच्छा आहे का?</Label>
+                      <RadioGroup
+                        value={m.mahila_bachat_gat?.wants_to_start_business === true ? "yes" : m.mahila_bachat_gat?.wants_to_start_business === false ? "no" : ""}
+                        onValueChange={(x) =>
+                          updMember(i, {
+                            mahila_bachat_gat: {
+                              ...(m.mahila_bachat_gat || {}),
+                              wants_to_start_business: x === "yes",
+                              desired_business: x === "yes" ? (m.mahila_bachat_gat?.desired_business || "") : "",
+                            },
+                          })
+                        }
+                        className="flex gap-6"
+                      >
+                        <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
+                        <Label className="flex items-center gap-2"><RadioGroupItem value="no"/>{T.no}</Label>
+                      </RadioGroup>
+                    </div>
+                  )}
+                  {m.mahila_bachat_gat?.wants_to_start_business === true && (
+                    <div className="space-y-2 pl-4 border-l-2 border-primary/30">
+                      <Label className="text-sm font-medium">आपल्याला कोणता ग्रामोद्योग सुरू करायचा आहे?</Label>
+                      <Input
+                        value={m.mahila_bachat_gat?.desired_business || ""}
+                        onChange={(e) =>
+                          updMember(i, {
+                            mahila_bachat_gat: {
+                              ...(m.mahila_bachat_gat || {}),
+                              desired_business: e.target.value,
+                            },
+                          })
+                        }
+                        placeholder="ग्रामोद्योगाचे नाव लिहा"
+                      />
+                    </div>
+                  )}
                 </div>
               )}
             </div>
