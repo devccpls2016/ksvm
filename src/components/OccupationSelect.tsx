@@ -31,7 +31,7 @@ import {
   PRIVATE_SECTORS,
   RETIRED_FROM,
   NRI_CONTRIBUTIONS,
-  INCOME_RANGES,
+  
   decodeOccupation,
   encodeOccupation,
   summariseOccupation,
@@ -270,8 +270,6 @@ export function OccupationSelect({ value, onChange }: Props) {
           {!["शेतकरी (Farmer)", "कृषी मजूर / शेतमजूर (Farm Labour)"].includes(c) && (
             <TextRow label="कार्यरत ठिकाण (Place of Posting)" value={state.postingPlace} onChange={x => patch({ postingPlace: x })} />
           )}
-          <SelectFieldRow label="वार्षिक उत्पन्न (Annual Income)" value={state.annualIncome} options={INCOME_RANGES} onChange={x => patch({ annualIncome: x })} />
-          <TextRow label="अनुभव – वर्षे (Experience)" value={state.experienceYears} onChange={x => patch({ experienceYears: x })} type="number" />
         </div>
       )}
 
