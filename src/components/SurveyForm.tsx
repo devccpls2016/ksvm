@@ -254,12 +254,19 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       </Card>
 
       {/* C. कुटुंबातील सदस्य */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>C. {T.members}</CardTitle>
+      <Card className="section-card sec-emerald border-0 p-0 gap-0">
+        <CardHeader className="section-header [&>*]:p-0 justify-between">
+          <div className="flex items-center gap-3">
+            <div className="section-badge">C</div>
+            <div>
+              <CardTitle className="section-title">{T.members}</CardTitle>
+              <div className="section-sub">कुटुंबातील प्रत्येक सदस्याची माहिती जोडा</div>
+            </div>
+          </div>
           <Button type="button" variant="outline" size="sm" onClick={addMember}><Plus className="h-4 w-4 mr-1"/>{T.add}</Button>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 pt-6">
+
           {v.members.length === 0 && <p className="text-sm text-muted-foreground">अद्याप कोणीही सदस्य जोडलेला नाही.</p>}
           {v.members.map((m, i) => (
             <div key={i} className="border rounded-lg p-4 space-y-3 bg-muted/30">
