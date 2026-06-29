@@ -649,9 +649,16 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       </Card>
 
       {/* 6. शेती विषयक माहिती */}
-      <Card>
-        <CardHeader><CardTitle>{T.agriInfo}</CardTitle></CardHeader>
-        <CardContent className="space-y-4">
+      <Card className="section-card sec-lime border-0 p-0 gap-0">
+        <CardHeader className="section-header [&>*]:p-0">
+          <div className="section-badge">G</div>
+          <div>
+            <CardTitle className="section-title">{T.agriInfo}</CardTitle>
+            <div className="section-sub">शेतजमीन, सिंचन व पीक तपशील</div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4 pt-6">
+
           <Field label="शेतजमीन आहे काय?">
             <RadioGroup value={v.has_farmland === null ? "" : v.has_farmland ? "yes" : "no"} onValueChange={x => upd("has_farmland", x === "yes")} className="flex gap-6">
               <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
