@@ -107,10 +107,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       <Card className="section-card sec-amber border-0 p-0 gap-0">
         <CardHeader className="section-header [&>*]:p-0">
           <div className="section-badge">A</div>
-          <div>
-            <CardTitle className="section-title">{T.geoInfo}</CardTitle>
-            <div className="section-sub">गाव, तालुका, जिल्हा व मूळ वस्ती</div>
-          </div>
+          <CardTitle className="section-title">{T.geoInfo}</CardTitle>
+          <div className="section-sub">गाव, तालुका, जिल्हा व मूळ वस्ती</div>
         </CardHeader>
         <CardContent className="space-y-6 pt-6">
 
