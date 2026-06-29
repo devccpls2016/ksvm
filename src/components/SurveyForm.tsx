@@ -42,9 +42,10 @@ type Props = {
   onSubmit: (v: SurveyFormValues) => Promise<void>;
   submitting?: boolean;
   submitLabel?: string;
+  readOnly?: boolean;
 };
 
-export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props) {
+export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnly }: Props) {
   const [v, setV] = useState<SurveyFormValues>({ ...emptySurvey, ...initial });
   const [uploading, setUploading] = useState(false);
 
