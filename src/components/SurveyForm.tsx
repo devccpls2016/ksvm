@@ -102,11 +102,18 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
   }
 
   return (
-    <form onSubmit={handle} className="space-y-6">
+    <form onSubmit={handle} className="space-y-7">
       {/* A. भौगोलिक माहिती */}
-      <Card>
-        <CardHeader><CardTitle>A. {T.geoInfo}</CardTitle></CardHeader>
-        <CardContent className="space-y-6">
+      <Card className="section-card sec-amber border-0 p-0 gap-0">
+        <CardHeader className="section-header [&>*]:p-0">
+          <div className="section-badge">A</div>
+          <div>
+            <CardTitle className="section-title">{T.geoInfo}</CardTitle>
+            <div className="section-sub">गाव, तालुका, जिल्हा व मूळ वस्ती</div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-6 pt-6">
+
           <div className="grid md:grid-cols-2 gap-4">
             <Field label="गाव *"><Input required value={v.village} onChange={e=>upd("village", e.target.value)} /></Field>
             <Field label="तालुका"><Input value={v.taluka} onChange={e=>upd("taluka", e.target.value)} /></Field>
@@ -159,9 +166,16 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       </Card>
 
       {/* B. वैयक्तिक माहिती */}
-      <Card>
-        <CardHeader><CardTitle>B. {T.personalInfo}</CardTitle></CardHeader>
-        <CardContent className="space-y-4">
+      <Card className="section-card sec-rose border-0 p-0 gap-0">
+        <CardHeader className="section-header [&>*]:p-0">
+          <div className="section-badge">B</div>
+          <div>
+            <CardTitle className="section-title">{T.personalInfo}</CardTitle>
+            <div className="section-sub">कुटुंब प्रमुखाची माहिती</div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4 pt-6">
+
           <div className="flex items-center gap-4">
             <div className="h-24 w-24 rounded-lg bg-muted flex items-center justify-center overflow-hidden border">
               {v.head_photo_url ? <PhotoPreview path={v.head_photo_url} /> : <Upload className="h-8 w-8 text-muted-foreground" />}
@@ -240,12 +254,19 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       </Card>
 
       {/* C. कुटुंबातील सदस्य */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>C. {T.members}</CardTitle>
+      <Card className="section-card sec-emerald border-0 p-0 gap-0">
+        <CardHeader className="section-header [&>*]:p-0 justify-between">
+          <div className="flex items-center gap-3">
+            <div className="section-badge">C</div>
+            <div>
+              <CardTitle className="section-title">{T.members}</CardTitle>
+              <div className="section-sub">कुटुंबातील प्रत्येक सदस्याची माहिती जोडा</div>
+            </div>
+          </div>
           <Button type="button" variant="outline" size="sm" onClick={addMember}><Plus className="h-4 w-4 mr-1"/>{T.add}</Button>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 pt-6">
+
           {v.members.length === 0 && <p className="text-sm text-muted-foreground">अद्याप कोणीही सदस्य जोडलेला नाही.</p>}
           {v.members.map((m, i) => (
             <div key={i} className="border rounded-lg p-4 space-y-3 bg-muted/30">
@@ -449,9 +470,16 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       </Card>
 
       {/* D. धारण केलेले पद */}
-      <Card>
-        <CardHeader><CardTitle>D. ( राजकीय, सामाजिक, लोकप्रतिनिधी ) {T.position}</CardTitle></CardHeader>
-        <CardContent className="space-y-4">
+      <Card className="section-card sec-violet border-0 p-0 gap-0">
+        <CardHeader className="section-header [&>*]:p-0">
+          <div className="section-badge">D</div>
+          <div>
+            <CardTitle className="section-title">( राजकीय, सामाजिक, लोकप्रतिनिधी ) {T.position}</CardTitle>
+            <div className="section-sub">धारण केलेली पदे व सामाजिक भूमिका</div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4 pt-6">
+
           <Field label="धारण केलेले पद आहे का?">
             <RadioGroup value={v.has_position ? "yes" : "no"} onValueChange={x => upd("has_position", x === "yes")} className="flex gap-6">
               <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
@@ -520,9 +548,16 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       </Card>
 
       {/* 4. कौटुंबिक आवश्यक गरजा */}
-      <Card>
-        <CardHeader><CardTitle>{T.needs} (घरातील वापराच्या वस्तू)</CardTitle></CardHeader>
-        <CardContent className="space-y-4">
+      <Card className="section-card sec-indigo border-0 p-0 gap-0">
+        <CardHeader className="section-header [&>*]:p-0">
+          <div className="section-badge">E</div>
+          <div>
+            <CardTitle className="section-title">{T.needs} (घरातील वापराच्या वस्तू)</CardTitle>
+            <div className="section-sub">कुटुंबात असलेल्या प्रमुख वस्तू निवडा</div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4 pt-6">
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {HOUSEHOLD_ITEMS.map(item => {
               const checked = v.household_items.includes(item);
@@ -572,9 +607,16 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
 
 
       {/* 5. घर विषयक माहिती */}
-      <Card>
-        <CardHeader><CardTitle>{T.houseInfo}</CardTitle></CardHeader>
-        <CardContent className="space-y-4">
+      <Card className="section-card sec-orange border-0 p-0 gap-0">
+        <CardHeader className="section-header [&>*]:p-0">
+          <div className="section-badge">F</div>
+          <div>
+            <CardTitle className="section-title">{T.houseInfo}</CardTitle>
+            <div className="section-sub">घराची स्थिती व सुविधा</div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4 pt-6">
+
           <Field label="स्वतःचे घर आहे काय?">
             <RadioGroup value={v.owns_house === null ? "" : v.owns_house ? "yes" : "no"} onValueChange={x => upd("owns_house", x === "yes")} className="flex gap-6">
               <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
@@ -607,9 +649,16 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       </Card>
 
       {/* 6. शेती विषयक माहिती */}
-      <Card>
-        <CardHeader><CardTitle>{T.agriInfo}</CardTitle></CardHeader>
-        <CardContent className="space-y-4">
+      <Card className="section-card sec-lime border-0 p-0 gap-0">
+        <CardHeader className="section-header [&>*]:p-0">
+          <div className="section-badge">G</div>
+          <div>
+            <CardTitle className="section-title">{T.agriInfo}</CardTitle>
+            <div className="section-sub">शेतजमीन, सिंचन व पीक तपशील</div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4 pt-6">
+
           <Field label="शेतजमीन आहे काय?">
             <RadioGroup value={v.has_farmland === null ? "" : v.has_farmland ? "yes" : "no"} onValueChange={x => upd("has_farmland", x === "yes")} className="flex gap-6">
               <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
@@ -691,11 +740,17 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       <EmploymentSection v={v} setV={setV} />
 
 
-      <div className="flex justify-end gap-2 sticky bottom-0 bg-background/80 backdrop-blur p-3 -mx-4 border-t">
-        <Button type="submit" size="lg" disabled={submitting}>
+      <div className="flex justify-end gap-2 sticky bottom-0 bg-background/85 backdrop-blur-md p-4 -mx-4 border-t shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.15)]">
+        <Button
+          type="submit"
+          size="lg"
+          disabled={submitting}
+          className="bg-gradient-to-r from-primary via-primary to-accent text-primary-foreground font-semibold px-8 shadow-lg hover:shadow-xl hover:brightness-110 transition-all"
+        >
           {submitting ? T.saving : (submitLabel || T.save)}
         </Button>
       </div>
+
     </form>
   );
 }
@@ -977,9 +1032,16 @@ function BenefitsSection({ v, setV }: { v: SurveyFormValues; setV: React.Dispatc
     setV((prev) => ({ ...prev, benefits_info: { ...(prev.benefits_info || {}), ...p } }));
   }
   return (
-    <Card>
-      <CardHeader><CardTitle>सामाजिक व आर्थिक लाभार्थी माहिती</CardTitle></CardHeader>
-      <CardContent className="space-y-5">
+    <Card className="section-card sec-cyan border-0 p-0 gap-0">
+      <CardHeader className="section-header [&>*]:p-0">
+        <div className="section-badge">H</div>
+        <div>
+          <CardTitle className="section-title">सामाजिक व आर्थिक लाभार्थी माहिती</CardTitle>
+          <div className="section-sub">शासकीय योजना व लाभार्थी तपशील</div>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-5 pt-6">
+
         {/* 1. Ladki Bahin */}
         <div className="border rounded-lg p-4 space-y-3 bg-card/50">
           <div className="font-medium text-sm">1. आपल्या घरामध्ये "मुख्यमंत्री लाडकी बहीण योजना" चे लाभार्थी आहेत का?</div>
@@ -1049,9 +1111,16 @@ function EmploymentSection({ v, setV }: { v: SurveyFormValues; setV: React.Dispa
     setV((prev) => ({ ...prev, employment_info: { ...(prev.employment_info || {}), ...p } }));
   }
   return (
-    <Card>
-      <CardHeader><CardTitle>उद्योजक / स्वयंरोजगार व रोजगार संबंधित माहिती</CardTitle></CardHeader>
-      <CardContent className="space-y-5">
+    <Card className="section-card sec-fuchsia border-0 p-0 gap-0">
+      <CardHeader className="section-header [&>*]:p-0">
+        <div className="section-badge">I</div>
+        <div>
+          <CardTitle className="section-title">उद्योजक / स्वयंरोजगार व रोजगार संबंधित माहिती</CardTitle>
+          <div className="section-sub">व्यवसाय व रोजगार तपशील</div>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-5 pt-6">
+
         {/* 1. Entrepreneur / Self-employment */}
         <div className="border rounded-lg p-4 space-y-3 bg-card/50">
           <div className="font-medium text-sm">1. आपल्या कुटुंबातील सदस्य उद्योजक / स्वयंरोजगारात कार्यरत आहेत का?</div>
