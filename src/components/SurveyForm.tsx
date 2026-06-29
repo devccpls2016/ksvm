@@ -167,10 +167,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       <Card className="section-card sec-rose border-0 p-0 gap-0">
         <CardHeader className="section-header [&>*]:p-0">
           <div className="section-badge">B</div>
-          <div>
-            <CardTitle className="section-title">{T.personalInfo}</CardTitle>
-            <div className="section-sub">कुटुंब प्रमुखाची माहिती</div>
-          </div>
+          <CardTitle className="section-title">{T.personalInfo}</CardTitle>
+          <div className="section-sub">कुटुंब प्रमुखाची माहिती</div>
         </CardHeader>
         <CardContent className="space-y-4 pt-6">
 
@@ -253,15 +251,11 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
 
       {/* C. कुटुंबातील सदस्य */}
       <Card className="section-card sec-emerald border-0 p-0 gap-0">
-        <CardHeader className="section-header [&>*]:p-0 justify-between">
-          <div className="flex items-center gap-3">
-            <div className="section-badge">C</div>
-            <div>
-              <CardTitle className="section-title">{T.members}</CardTitle>
-              <div className="section-sub">कुटुंबातील प्रत्येक सदस्याची माहिती जोडा</div>
-            </div>
-          </div>
-          <Button type="button" size="lg" onClick={addMember} className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white shadow-lg shadow-emerald-600/30 hover:shadow-emerald-600/45 border-0 px-5 py-5 h-auto text-base font-semibold rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
+        <CardHeader className="section-header [&>*]:p-0 relative">
+          <div className="section-badge">C</div>
+          <CardTitle className="section-title">{T.members}</CardTitle>
+          <div className="section-sub">कुटुंबातील प्रत्येक सदस्याची माहिती जोडा</div>
+          <Button type="button" size="lg" onClick={addMember} className="absolute right-3 top-1/2 -translate-y-1/2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white shadow-lg shadow-emerald-600/30 hover:shadow-emerald-600/45 border-0 px-5 py-5 h-auto text-base font-semibold rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
             <Plus className="h-5 w-5 mr-2 stroke-[2.5]"/>
             {T.add}
           </Button>
