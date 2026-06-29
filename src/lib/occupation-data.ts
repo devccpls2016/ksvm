@@ -108,7 +108,7 @@ export function summariseOccupation(v: OccupationValue): string {
   const parts: string[] = [];
   if (v.category) parts.push(v.category);
   if (v.serviceType) parts.push(v.serviceType);
-  if (v.force) parts.push(v.force);
+  if (v.force) parts.push(v.force === "Other (इतर)" && v.forceOther ? `दल: ${v.forceOther}` : v.force);
   if (v.classLevel) parts.push(v.classLevel);
   if (v.branch) parts.push(v.branch === "Other (इतर)" && v.branchOther ? `शाखा: ${v.branchOther}` : v.branch);
   if (v.sector) parts.push(v.sector);
