@@ -128,6 +128,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnl
 
   return (
     <form onSubmit={handle} className="space-y-7">
+      <fieldset disabled={readOnly} className={readOnly ? "space-y-7 [&_*]:!cursor-default" : "space-y-7 contents"}>
+
       {/* A. भौगोलिक माहिती */}
       <Card className="section-card sec-amber border-0 p-0 gap-0">
         <CardHeader className="section-header [&>*]:p-0">
