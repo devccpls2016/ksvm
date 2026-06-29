@@ -50,9 +50,30 @@ type Props = {
   onChange: (encoded: string) => void;
 };
 
-const POLICE_FORCES = ["Maharashtra Police (महाराष्ट्र पोलीस)", "SRPF (राज्य राखीव पोलीस दल)", "GRP (रेल्वे पोलीस)", "RPF (रेल्वे संरक्षण दल)"];
+const MILITARY_FORCES = [
+  "Indian Army (भारतीय सैन्य)",
+  "Indian Navy (भारतीय नौदल)",
+  "Indian Air Force (भारतीय वायुदल)",
+];
+const CENTRAL_ARMED_FORCES = [
+  "BSF (सीमा सुरक्षा दल)",
+  "CRPF (केंद्रीय राखीव पोलीस दल)",
+  "CISF (केंद्रीय औद्योगिक सुरक्षा दल)",
+  "ITBP (भारत-तिबेट सीमा पोलीस)",
+  "SSB (सशस्त्र सीमा बल)",
+  "Assam Rifles (आसाम रायफल्स)",
+  "Coast Guard (तटरक्षक दल)",
+];
+const POLICE_FORCES = [
+  "Maharashtra Police (महाराष्ट्र पोलीस)",
+  "SRPF (राज्य राखीव पोलीस दल)",
+  "GRP (रेल्वे पोलीस)",
+  "RPF (रेल्वे संरक्षण दल)",
+];
 function ranksFor(force: string | undefined): string[] {
   if (!force) return MILITARY_RANKS;
+  if (MILITARY_FORCES.includes(force)) return MILITARY_RANKS;
+  if (CENTRAL_ARMED_FORCES.includes(force)) return CENTRAL_ARMED_FORCES_RANKS;
   if (POLICE_FORCES.includes(force)) return POLICE_RANKS;
   return MILITARY_RANKS;
 }
