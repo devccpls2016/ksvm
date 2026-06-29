@@ -75,11 +75,34 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
     }
   }
 
-  function addMember() {
-    setV(p => ({ ...p, members: [...p.members, { name: "", relationship: "" }] }));
+  const [memberDraft, setMemberDraft] = useState<FamilyMember | null>(null);
+  const [editIdx, setEditIdx] = useState<number | null>(null);
+
+  function openAddMember() {
+    setMemberDraft({ name: "", relationship: "" });
+    setEditIdx(null);
   }
-  function updMember(i: number, patch: Partial<FamilyMember>) {
-    setV(p => ({ ...p, members: p.members.map((m, idx) => idx === i ? { ...m, ...patch } : m) }));
+  function openEditMember(i: number) {
+    setMemberDraft({ ...v.members[i] });
+    setEditIdx(i);
+  }
+  function closeMemberDialog() {
+    setMemberDraft(null);
+    setEditIdx(null);
+  }
+  function updDraft(patch: Partial<FamilyMember>) {
+    setMemberDraft(d => d ? { ...d, ...patch } : d);
+  }
+  function saveMember() {
+    if (!memberDraft) return;
+    if (!memberDraft.name?.trim()) { toast.error("कृपया सदस्याचे नाव भरा"); return; }
+    if (!memberDraft.relationship) { toast.error("कृपया नाते निवडा"); return; }
+    setV(p => {
+      if (editIdx === null) return { ...p, members: [...p.members, memberDraft] };
+      return { ...p, members: p.members.map((m, idx) => idx === editIdx ? memberDraft : m) };
+    });
+    toast.success(editIdx === null ? "सदस्य जोडला गेला" : "सदस्य माहिती अद्यतनित झाली");
+    closeMemberDialog();
   }
   function delMember(i: number) {
     setV(p => ({ ...p, members: p.members.filter((_, idx) => idx !== i) }));
