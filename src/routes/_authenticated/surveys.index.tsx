@@ -15,7 +15,7 @@ import { exportExcel, exportPDF } from "@/lib/export";
 import { getSubmitterNames } from "@/lib/users.functions";
 import { downloadSurveyPDF } from "@/lib/single-export";
 
-export const Route = createFileRoute("/_authenticated/surveys")({
+export const Route = createFileRoute("/_authenticated/surveys/")({
   component: SurveysList,
 });
 
