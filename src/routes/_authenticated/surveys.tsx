@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Pencil, Trash2, Download, FileDown, FileText } from "lucide-react";
+import { Pencil, Trash2, Download, FileDown, FileText, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/lib/auth-context";
 import { exportExcel, exportPDF } from "@/lib/export";
@@ -136,7 +136,10 @@ function SurveysList() {
               {loading && <TableRow><TableCell colSpan={11} className="text-center py-8">लोड होत आहे...</TableCell></TableRow>}
               {!loading && filtered.length === 0 && <TableRow><TableCell colSpan={11} className="text-center py-8 text-muted-foreground">कोणताही रेकॉर्ड नाही</TableCell></TableRow>}
               {filtered.map(r => (
-                <TableRow key={r.id}>
+                <TableRow key={r.id} className="cursor-pointer hover:bg-muted/50" onClick={(e) => {
+                  if ((e.target as HTMLElement).closest('button,a,[role="menuitem"]')) return;
+                  window.location.assign(`/surveys/view/${r.id}`);
+                }}>
                   <TableCell className="text-xs text-muted-foreground">{r.id.slice(0, 8)}</TableCell>
                   <TableCell className="font-medium">{r.head_name}</TableCell>
                   <TableCell>{r.mobile || "-"}</TableCell>
@@ -147,10 +150,14 @@ function SurveysList() {
                   <TableCell className="text-xs text-muted-foreground">{new Date(r.created_at).toLocaleDateString("mr-IN")}</TableCell>
                   <TableCell className="text-xs text-muted-foreground">{new Date(r.updated_at).toLocaleDateString("mr-IN")}</TableCell>
                   <TableCell className="text-right whitespace-nowrap">
+                    <Button variant="ghost" size="sm" title="संपूर्ण फॉर्म पहा (View)" asChild>
+                      <Link to="/surveys/view/$id" params={{ id: r.id }}><Eye className="h-4 w-4"/></Link>
+                    </Button>
                     <Button variant="ghost" size="sm" title="संपादन करा (Edit)" asChild>
                       <Link to="/surveys/$id" params={{ id: r.id }}><Pencil className="h-4 w-4"/></Link>
                     </Button>
                     <Button variant="ghost" size="sm" title="PDF डाउनलोड करा (Save as PDF)" onClick={() => toast.promise(downloadSurveyPDF(r), { loading: "PDF तयार होत आहे...", success: "PDF डाउनलोड झाले", error: "PDF अपयशी" })}><FileText className="h-4 w-4"/></Button>
+
                     {role === "admin" && (
                       <AlertDialog>
                         <AlertDialogTrigger asChild>

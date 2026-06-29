@@ -42,9 +42,10 @@ type Props = {
   onSubmit: (v: SurveyFormValues) => Promise<void>;
   submitting?: boolean;
   submitLabel?: string;
+  readOnly?: boolean;
 };
 
-export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props) {
+export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnly }: Props) {
   const [v, setV] = useState<SurveyFormValues>({ ...emptySurvey, ...initial });
   const [uploading, setUploading] = useState(false);
 
@@ -127,6 +128,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
 
   return (
     <form onSubmit={handle} className="space-y-7">
+      <fieldset disabled={readOnly} className={readOnly ? "space-y-7 [&_*]:!cursor-default" : "space-y-7 contents"}>
+
       {/* A. भौगोलिक माहिती */}
       <Card className="section-card sec-amber border-0 p-0 gap-0">
         <CardHeader className="section-header [&>*]:p-0">
@@ -804,17 +807,19 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       <EmploymentSection v={v} setV={setV} />
 
 
-      <div className="flex justify-end gap-2 sticky bottom-0 bg-background/85 backdrop-blur-md p-4 -mx-4 border-t shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.15)]">
-        <Button
-          type="submit"
-          size="lg"
-          disabled={submitting}
-          className="bg-gradient-to-r from-primary via-primary to-accent text-primary-foreground font-semibold px-8 shadow-lg hover:shadow-xl hover:brightness-110 transition-all"
-        >
-          {submitting ? T.saving : (submitLabel || T.save)}
-        </Button>
-      </div>
-
+      {!readOnly && (
+        <div className="flex justify-end gap-2 sticky bottom-0 bg-background/85 backdrop-blur-md p-4 -mx-4 border-t shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.15)]">
+          <Button
+            type="submit"
+            size="lg"
+            disabled={submitting}
+            className="bg-gradient-to-r from-primary via-primary to-accent text-primary-foreground font-semibold px-8 shadow-lg hover:shadow-xl hover:brightness-110 transition-all"
+          >
+            {submitting ? T.saving : (submitLabel || T.save)}
+          </Button>
+        </div>
+      )}
+      </fieldset>
     </form>
   );
 }
