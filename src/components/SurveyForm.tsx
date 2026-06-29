@@ -468,10 +468,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       <Card className="section-card sec-violet border-0 p-0 gap-0">
         <CardHeader className="section-header [&>*]:p-0">
           <div className="section-badge">D</div>
-          <div>
-            <CardTitle className="section-title">( राजकीय, सामाजिक, लोकप्रतिनिधी ) {T.position}</CardTitle>
-            <div className="section-sub">धारण केलेली पदे व सामाजिक भूमिका</div>
-          </div>
+          <CardTitle className="section-title">( राजकीय, सामाजिक, लोकप्रतिनिधी ) {T.position}</CardTitle>
+          <div className="section-sub">धारण केलेली पदे व सामाजिक भूमिका</div>
         </CardHeader>
         <CardContent className="space-y-4 pt-6">
 
@@ -546,10 +544,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       <Card className="section-card sec-indigo border-0 p-0 gap-0">
         <CardHeader className="section-header [&>*]:p-0">
           <div className="section-badge">E</div>
-          <div>
-            <CardTitle className="section-title">{T.needs} (घरातील वापराच्या वस्तू)</CardTitle>
-            <div className="section-sub">कुटुंबात असलेल्या प्रमुख वस्तू निवडा</div>
-          </div>
+          <CardTitle className="section-title">{T.needs} (घरातील वापराच्या वस्तू)</CardTitle>
+          <div className="section-sub">कुटुंबात असलेल्या प्रमुख वस्तू निवडा</div>
         </CardHeader>
         <CardContent className="space-y-4 pt-6">
 
@@ -605,10 +601,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       <Card className="section-card sec-orange border-0 p-0 gap-0">
         <CardHeader className="section-header [&>*]:p-0">
           <div className="section-badge">F</div>
-          <div>
-            <CardTitle className="section-title">{T.houseInfo}</CardTitle>
-            <div className="section-sub">घराची स्थिती व सुविधा</div>
-          </div>
+          <CardTitle className="section-title">{T.houseInfo}</CardTitle>
+          <div className="section-sub">घराची स्थिती व सुविधा</div>
         </CardHeader>
         <CardContent className="space-y-4 pt-6">
 
@@ -647,10 +641,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       <Card className="section-card sec-lime border-0 p-0 gap-0">
         <CardHeader className="section-header [&>*]:p-0">
           <div className="section-badge">G</div>
-          <div>
-            <CardTitle className="section-title">{T.agriInfo}</CardTitle>
-            <div className="section-sub">शेतजमीन, सिंचन व पीक तपशील</div>
-          </div>
+          <CardTitle className="section-title">{T.agriInfo}</CardTitle>
+          <div className="section-sub">शेतजमीन, सिंचन व पीक तपशील</div>
         </CardHeader>
         <CardContent className="space-y-4 pt-6">
 
