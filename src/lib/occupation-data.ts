@@ -59,6 +59,12 @@ export type OccupationValue = {
   setupCity?: string;                // Own Setup – city / village
   setupDistrict?: string;            // Own Setup – district
   setupPin?: string;                 // Own Setup – pin code
+  // Unemployed (बेरोजगार) extras
+  seekingJob?: string;               // होय / नाही
+  desiredSector?: string;            // text – रोजगार क्षेत्र
+  wantsSkillTraining?: string;       // होय / नाही
+  desiredBusiness?: string;          // text – कोणता व्यवसाय
+  wantsGuidance?: string;            // होय / नाही
 };
 
 

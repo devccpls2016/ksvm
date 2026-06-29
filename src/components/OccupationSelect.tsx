@@ -670,9 +670,69 @@ export function OccupationSelect({ value, onChange }: Props) {
         </div>
       )}
 
-      {(c === "इतर (Other)" || c === "बेरोजगार (Unemployed)") && (
+      {c === "इतर (Other)" && (
         <div className="grid gap-3 md:grid-cols-2 border-t pt-3">
           <TextRow label="तपशील (Details)" value={state.notes} onChange={x => patch({ notes: x })} />
+        </div>
+      )}
+
+      {/* ============ Unemployed (बेरोजगार) – detailed questionnaire ============ */}
+      {c === "बेरोजगार (Unemployed)" && (
+        <div className="border-t pt-3 space-y-3 bg-muted/30 rounded-md p-3">
+          <div className="text-sm font-semibold">बेरोजगार – तपशील (Unemployment Details)</div>
+
+          <YesNoRow
+            label="1. आपण सध्या रोजगाराच्या शोधात आहात का?"
+            value={state.seekingJob}
+            onChange={x => patch({ seekingJob: x })}
+          />
+
+          <TextRow
+            label="2. आपणास कोणत्या क्षेत्रात रोजगार मिळवण्याची इच्छा आहे?"
+            value={state.desiredSector}
+            onChange={x => patch({ desiredSector: x })}
+          />
+
+          <YesNoRow
+            label="3. रोजगारासाठी आवश्यक कौशल्य प्रशिक्षण (Skill Development Training) घेण्याची इच्छा आहे का?"
+            value={state.wantsSkillTraining}
+            onChange={x => patch({ wantsSkillTraining: x })}
+          />
+
+          <YesNoRow
+            label="4. आपणास स्वतःचा व्यवसाय / दुकान सुरू करण्याची इच्छा आहे का?"
+            value={state.wantOwnBusiness}
+            onChange={x => patch({ wantOwnBusiness: x, ...(x !== "होय" ? { desiredBusiness: "", loanNeeded: "", loanAmount: "", loanAmountOther: "" } : {}) })}
+          />
+
+          {state.wantOwnBusiness === "होय" && (
+            <TextRow
+              label="5. जर 'होय' असेल, तर आपण कोणता व्यवसाय सुरू करू इच्छिता?"
+              value={state.desiredBusiness}
+              onChange={x => patch({ desiredBusiness: x })}
+            />
+          )}
+
+          {state.wantOwnBusiness === "होय" && (
+            <YesNoRow
+              label="6. व्यवसाय सुरू करण्यासाठी आर्थिक सहाय्य (कर्ज) आवश्यक आहे का?"
+              value={state.loanNeeded}
+              onChange={x => patch({ loanNeeded: x, ...(x !== "होय" ? { loanAmount: "", loanAmountOther: "" } : {}) })}
+            />
+          )}
+
+          {state.wantOwnBusiness === "होय" && state.loanNeeded === "होय" && (
+            <div>
+              <Label className="text-xs text-muted-foreground mb-1 block">7. जर 'होय' असेल, तर किती कर्जाची आवश्यकता आहे?</Label>
+              <LoanAmountRow state={state} patch={patch} />
+            </div>
+          )}
+
+          <YesNoRow
+            label="8. रोजगार, स्वयंरोजगार किंवा व्यवसाय सुरू करण्यासाठी मार्गदर्शन / समुपदेशन मिळण्यास आपण इच्छुक आहात का?"
+            value={state.wantsGuidance}
+            onChange={x => patch({ wantsGuidance: x })}
+          />
         </div>
       )}
 
