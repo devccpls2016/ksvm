@@ -14,7 +14,9 @@ export type OccupationValue = {
   branch?: string;                   // शाखा (engineer / education stream)
   branchOther?: string;              // custom when branch === "Other (इतर)"
   rank?: string;                     // सैन्य / पोलीस rank
+  rankOther?: string;                // custom when rank === "Other (इतर)"
   force?: string;                    // Army / Navy / BSF / Police force
+  forceOther?: string;               // custom when force === "Other (इतर)"
   institutionType?: string;          // सरकारी / खाजगी / अनुदानित / PSU
   institutionTypeOther?: string;     // custom when "Other (इतर)"
   institutionLevel?: string;         // प्राथमिक शाळा / महाविद्यालय …
@@ -106,7 +108,7 @@ export function summariseOccupation(v: OccupationValue): string {
   const parts: string[] = [];
   if (v.category) parts.push(v.category);
   if (v.serviceType) parts.push(v.serviceType);
-  if (v.force) parts.push(v.force);
+  if (v.force) parts.push(v.force === "Other (इतर)" && v.forceOther ? `दल: ${v.forceOther}` : v.force);
   if (v.classLevel) parts.push(v.classLevel);
   if (v.branch) parts.push(v.branch === "Other (इतर)" && v.branchOther ? `शाखा: ${v.branchOther}` : v.branch);
   if (v.sector) parts.push(v.sector);
@@ -120,7 +122,7 @@ export function summariseOccupation(v: OccupationValue): string {
   if (v.businessName) parts.push(v.businessName);
   if (v.retiredFrom) parts.push(`निवृत्त: ${v.retiredFrom}`);
   if (v.designation) parts.push(v.designation === "Other (इतर)" && v.designationOther ? `पदनाम: ${v.designationOther}` : v.designation);
-  if (v.rank) parts.push(v.rank);
+  if (v.rank) parts.push(v.rank === "Other (इतर)" && v.rankOther ? `रँक: ${v.rankOther}` : v.rank);
   if (v.farmingTypes?.length) parts.push(v.farmingTypes.join(", "));
   if (v.landSize) parts.push(v.landSize);
   if (v.country) parts.push(v.country);
@@ -709,12 +711,31 @@ export const POLICE_RANKS = [
   "API – Assistant Police Inspector (सहाय्यक पोलीस निरीक्षक)",
   "PI – Police Inspector (पोलीस निरीक्षक)",
   "ACP / DYSP (सहाय्यक पोलीस आयुक्त / उपअधीक्षक)",
+  "Additional SP (अतिरिक्त पोलीस अधीक्षक)",
   "SP – Superintendent of Police (पोलीस अधीक्षक)",
   "DIG (उप महानिरीक्षक)",
   "IG (महानिरीक्षक)",
+  "ADG (अतिरिक्त महासंचालक)",
   "DGP (पोलीस महासंचालक)",
   "Other (इतर)",
 ];
+
+export const CENTRAL_ARMED_FORCES_RANKS = [
+  "Constable (कॉन्स्टेबल)",
+  "Head Constable (मुख्य शिपाई)",
+  "Assistant Sub Inspector / ASI (सहाय्यक उपनिरीक्षक)",
+  "Sub Inspector / SI (उपनिरीक्षक)",
+  "Inspector (निरीक्षक)",
+  "Assistant Commandant (सहाय्यक कमांडंट)",
+  "Deputy Commandant (उप कमांडंट)",
+  "Commandant (कमांडंट)",
+  "Deputy Inspector General / DIG (उप महानिरीक्षक)",
+  "Inspector General / IG (महानिरीक्षक)",
+  "Additional Director General / ADG (अतिरिक्त महासंचालक)",
+  "Director General / DG (महासंचालक)",
+  "Other (इतर)",
+];
+
 
 // ---------- Private Sector ----------
 export const PRIVATE_SECTORS = [
