@@ -548,9 +548,16 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       </Card>
 
       {/* 4. कौटुंबिक आवश्यक गरजा */}
-      <Card>
-        <CardHeader><CardTitle>{T.needs} (घरातील वापराच्या वस्तू)</CardTitle></CardHeader>
-        <CardContent className="space-y-4">
+      <Card className="section-card sec-indigo border-0 p-0 gap-0">
+        <CardHeader className="section-header [&>*]:p-0">
+          <div className="section-badge">E</div>
+          <div>
+            <CardTitle className="section-title">{T.needs} (घरातील वापराच्या वस्तू)</CardTitle>
+            <div className="section-sub">कुटुंबात असलेल्या प्रमुख वस्तू निवडा</div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4 pt-6">
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {HOUSEHOLD_ITEMS.map(item => {
               const checked = v.household_items.includes(item);
