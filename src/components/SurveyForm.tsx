@@ -263,7 +263,10 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
               <div className="section-sub">कुटुंबातील प्रत्येक सदस्याची माहिती जोडा</div>
             </div>
           </div>
-          <Button type="button" variant="outline" size="sm" onClick={addMember}><Plus className="h-4 w-4 mr-1"/>{T.add}</Button>
+          <Button type="button" size="lg" onClick={addMember} className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white shadow-lg shadow-emerald-600/30 hover:shadow-emerald-600/45 border-0 px-5 py-5 h-auto text-base font-semibold rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
+            <Plus className="h-5 w-5 mr-2 stroke-[2.5]"/>
+            {T.add}
+          </Button>
         </CardHeader>
         <CardContent className="space-y-4 pt-6">
 
