@@ -166,9 +166,16 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       </Card>
 
       {/* B. वैयक्तिक माहिती */}
-      <Card>
-        <CardHeader><CardTitle>B. {T.personalInfo}</CardTitle></CardHeader>
-        <CardContent className="space-y-4">
+      <Card className="section-card sec-rose border-0 p-0 gap-0">
+        <CardHeader className="section-header [&>*]:p-0">
+          <div className="section-badge">B</div>
+          <div>
+            <CardTitle className="section-title">{T.personalInfo}</CardTitle>
+            <div className="section-sub">कुटुंब प्रमुखाची माहिती</div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4 pt-6">
+
           <div className="flex items-center gap-4">
             <div className="h-24 w-24 rounded-lg bg-muted flex items-center justify-center overflow-hidden border">
               {v.head_photo_url ? <PhotoPreview path={v.head_photo_url} /> : <Upload className="h-8 w-8 text-muted-foreground" />}
