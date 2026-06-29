@@ -711,12 +711,31 @@ export const POLICE_RANKS = [
   "API – Assistant Police Inspector (सहाय्यक पोलीस निरीक्षक)",
   "PI – Police Inspector (पोलीस निरीक्षक)",
   "ACP / DYSP (सहाय्यक पोलीस आयुक्त / उपअधीक्षक)",
+  "Additional SP (अतिरिक्त पोलीस अधीक्षक)",
   "SP – Superintendent of Police (पोलीस अधीक्षक)",
   "DIG (उप महानिरीक्षक)",
   "IG (महानिरीक्षक)",
+  "ADG (अतिरिक्त महासंचालक)",
   "DGP (पोलीस महासंचालक)",
   "Other (इतर)",
 ];
+
+export const CENTRAL_ARMED_FORCES_RANKS = [
+  "Constable (कॉन्स्टेबल)",
+  "Head Constable (मुख्य शिपाई)",
+  "Assistant Sub Inspector / ASI (सहाय्यक उपनिरीक्षक)",
+  "Sub Inspector / SI (उपनिरीक्षक)",
+  "Inspector (निरीक्षक)",
+  "Assistant Commandant (सहाय्यक कमांडंट)",
+  "Deputy Commandant (उप कमांडंट)",
+  "Commandant (कमांडंट)",
+  "Deputy Inspector General / DIG (उप महानिरीक्षक)",
+  "Inspector General / IG (महानिरीक्षक)",
+  "Additional Director General / ADG (अतिरिक्त महासंचालक)",
+  "Director General / DG (महासंचालक)",
+  "Other (इतर)",
+];
+
 
 // ---------- Private Sector ----------
 export const PRIVATE_SECTORS = [
