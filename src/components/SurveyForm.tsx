@@ -11,7 +11,8 @@ import { Separator } from "@/components/ui/separator";
 import { DateSelect } from "@/components/DateSelect";
 import { EducationSelect } from "@/components/EducationSelect";
 import { OccupationSelect } from "@/components/OccupationSelect";
-import { Trash2, Plus, Upload, X } from "lucide-react";
+import { Trash2, Plus, Upload, X, Pencil } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import {
