@@ -102,11 +102,18 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
   }
 
   return (
-    <form onSubmit={handle} className="space-y-6">
+    <form onSubmit={handle} className="space-y-7">
       {/* A. भौगोलिक माहिती */}
-      <Card>
-        <CardHeader><CardTitle>A. {T.geoInfo}</CardTitle></CardHeader>
-        <CardContent className="space-y-6">
+      <Card className="section-card sec-amber border-0 p-0 gap-0">
+        <CardHeader className="section-header [&>*]:p-0">
+          <div className="section-badge">A</div>
+          <div>
+            <CardTitle className="section-title">{T.geoInfo}</CardTitle>
+            <div className="section-sub">गाव, तालुका, जिल्हा व मूळ वस्ती</div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-6 pt-6">
+
           <div className="grid md:grid-cols-2 gap-4">
             <Field label="गाव *"><Input required value={v.village} onChange={e=>upd("village", e.target.value)} /></Field>
             <Field label="तालुका"><Input value={v.taluka} onChange={e=>upd("taluka", e.target.value)} /></Field>
