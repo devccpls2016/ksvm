@@ -283,7 +283,7 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
             <Button
               type="button"
               size="lg"
-              onClick={addMember}
+              onClick={openAddMember}
               className="h-16 px-10 text-xl font-bold gap-3 min-w-[240px] rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white shadow-2xl shadow-emerald-600/35 hover:shadow-emerald-600/55 border-2 border-white/30 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] [&_svg]:size-7"
             >
               <Plus className="stroke-[2.5]"/>
@@ -291,209 +291,255 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
             </Button>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4 pt-6">
+        <CardContent className="space-y-3 pt-6">
 
-          {v.members.length === 0 && <p className="text-sm text-muted-foreground">अद्याप कोणीही सदस्य जोडलेला नाही.</p>}
+          {v.members.length === 0 && (
+            <p className="text-sm text-muted-foreground text-center py-4">अद्याप कोणीही सदस्य जोडलेला नाही. वरील बटणावर क्लिक करून सदस्य जोडा.</p>
+          )}
           {v.members.map((m, i) => (
-            <div key={i} className="border rounded-lg p-4 space-y-3 bg-muted/30">
-              <div className="flex items-center justify-between">
-                <span className="font-medium text-sm">सदस्य #{i + 1}</span>
-                <Button type="button" variant="ghost" size="sm" onClick={() => delMember(i)}><Trash2 className="h-4 w-4"/></Button>
-              </div>
-              <div className="grid md:grid-cols-3 gap-3">
-                <Field label="नाव"><Input value={m.name} onChange={e=>updMember(i, { name: e.target.value })}/></Field>
-                <SelectField label="नाते" value={m.relationship} onChange={x=>updMember(i, { relationship: x })} options={RELATIONSHIP} />
-                <SelectField label="लिंग" value={m.gender || ""} onChange={x=>updMember(i, { gender: x })} options={GENDER} />
-                <SelectField label="वैवाहिक स्थिती" value={m.marital_status || ""} onChange={x=>updMember(i, { marital_status: x })} options={MARITAL} />
-                <Field label="जन्मतारीख">
-                  <DateSelect
-                    value={m.dob}
-                    onChange={(dob, age) => updMember(i, { dob, age })}
-                  />
-                </Field>
-                <Field label="वय"><Input type="number" value={m.age ?? ""} readOnly className="bg-muted" /></Field>
-                <Field label="मोबाईल"><Input value={m.mobile || ""} onChange={e=>updMember(i, { mobile: e.target.value })}/></Field>
-              </div>
-              <div className="border rounded-md p-3 bg-background space-y-2">
-                <Label className="block text-sm font-medium">मामेकुळ तपशील</Label>
-                <div className="grid md:grid-cols-3 gap-3">
-                  <Field label="नाव">
-                    <Input
-                      value={m.maternal_family?.name || ""}
-                      onChange={e => updMember(i, { maternal_family: { ...(m.maternal_family || {}), name: e.target.value } })}
-                    />
-                  </Field>
-                  <Field label="संपूर्ण पत्ता">
-                    <Input
-                      value={m.maternal_family?.address || ""}
-                      onChange={e => updMember(i, { maternal_family: { ...(m.maternal_family || {}), address: e.target.value } })}
-                    />
-                  </Field>
-                  <Field label="मोबाईल क्रमांक">
-                    <Input
-                      value={m.maternal_family?.mobile || ""}
-                      onChange={e => updMember(i, { maternal_family: { ...(m.maternal_family || {}), mobile: e.target.value } })}
-                    />
-                  </Field>
+            <div key={i} className="border rounded-lg p-4 bg-muted/30 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0 flex-1">
+                <div className="size-10 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center font-bold shrink-0">
+                  {i + 1}
                 </div>
-              </div>
-              {["मुलगा","मुलगी","भाऊ","बहीण"].includes(m.relationship) && m.marital_status === "विवाहित" && (
-                <div className="border rounded-md p-3 bg-background space-y-2">
-                  <Label className="block text-sm font-medium">सासुरवाडी</Label>
-                  <div className="grid md:grid-cols-3 gap-3">
-                    <Field label={m.relationship === "मुलगी" || m.relationship === "बहीण" ? "पतीचे नाव" : "नाव"}>
-                      <Input
-                        value={m.in_laws_family?.name || ""}
-                        onChange={e => updMember(i, { in_laws_family: { ...(m.in_laws_family || {}), name: e.target.value } })}
-                      />
-                    </Field>
-                    <Field label="संपूर्ण पत्ता">
-                      <Input
-                        value={m.in_laws_family?.address || ""}
-                        onChange={e => updMember(i, { in_laws_family: { ...(m.in_laws_family || {}), address: e.target.value } })}
-                      />
-                    </Field>
-                    <Field label="मोबाईल क्रमांक">
-                      <Input
-                        value={m.in_laws_family?.mobile || ""}
-                        onChange={e => updMember(i, { in_laws_family: { ...(m.in_laws_family || {}), mobile: e.target.value } })}
-                      />
-                    </Field>
+                <div className="min-w-0">
+                  <div className="font-semibold truncate">{m.name || "—"}</div>
+                  <div className="text-xs text-muted-foreground truncate">
+                    {[m.relationship, m.gender, m.age ? `वय ${m.age}` : null, m.mobile].filter(Boolean).join(" • ")}
                   </div>
                 </div>
-              )}
-              <div className="border rounded-md p-3 bg-background">
-                <Label className="mb-2 block text-sm font-medium">शिक्षण (Education)</Label>
-                <EducationSelect value={m.education || ""} onChange={x=>updMember(i, { education: x })} />
               </div>
-              <div className="border rounded-md p-3 bg-background">
-                <Label className="mb-2 block text-sm font-medium">नौकरी / व्यवसाय (Job / Occupation)</Label>
-                <OccupationSelect value={m.occupation || ""} onChange={x=>updMember(i, { occupation: x })} />
+              <div className="flex gap-2 shrink-0">
+                <Button type="button" variant="outline" size="sm" onClick={() => openEditMember(i)} className="gap-1">
+                  <Pencil className="h-4 w-4"/> संपादन
+                </Button>
+                <Button type="button" variant="ghost" size="sm" onClick={() => delMember(i)} className="text-destructive hover:text-destructive">
+                  <Trash2 className="h-4 w-4"/>
+                </Button>
               </div>
-              {m.gender === "स्त्री" && (
-                <div className="border rounded-md p-3 bg-background space-y-3">
-                  <Label className="block text-sm font-semibold text-primary">जर महिला असेल तर:</Label>
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium">आपण महिला बचत गटाची सदस्य आहात का?</Label>
-                    <RadioGroup
-                      value={m.mahila_bachat_gat?.is_member === true ? "yes" : m.mahila_bachat_gat?.is_member === false ? "no" : ""}
-                      onValueChange={(x) =>
-                        updMember(i, {
-                          mahila_bachat_gat: {
-                            ...(m.mahila_bachat_gat || {}),
-                            is_member: x === "yes",
-                            wants_to_join: x === "yes" ? null : m.mahila_bachat_gat?.wants_to_join ?? null,
-                          },
-                        })
-                      }
-                      className="flex gap-6"
-                    >
-                      <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
-                      <Label className="flex items-center gap-2"><RadioGroupItem value="no"/>{T.no}</Label>
-                    </RadioGroup>
-                  </div>
-                  {m.mahila_bachat_gat?.is_member === false && (
-                    <div className="space-y-2 pl-4 border-l-2 border-primary/30">
-                      <Label className="text-sm font-medium">आपल्याला कोहळी समाजाच्या महिला बचत गटामध्ये सहभागी व्हायला आवडेल का?</Label>
-                      <RadioGroup
-                        value={m.mahila_bachat_gat?.wants_to_join === true ? "yes" : m.mahila_bachat_gat?.wants_to_join === false ? "no" : ""}
-                        onValueChange={(x) =>
-                          updMember(i, {
-                            mahila_bachat_gat: {
-                              ...(m.mahila_bachat_gat || {}),
-                              wants_to_join: x === "yes",
-                            },
-                          })
-                        }
-                        className="flex gap-6"
-                      >
-                        <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
-                        <Label className="flex items-center gap-2"><RadioGroupItem value="no"/>{T.no}</Label>
-                      </RadioGroup>
-                    </div>
-                  )}
-                  <div className="space-y-2 pt-2 border-t border-primary/20">
-                    <Label className="text-sm font-medium">आपण सध्या कोणत्याही प्रकारचा ग्रामोद्योग किंवा घरगुती व्यवसाय करत आहात काय?</Label>
-                    <RadioGroup
-                      value={m.mahila_bachat_gat?.has_rural_home_business === true ? "yes" : m.mahila_bachat_gat?.has_rural_home_business === false ? "no" : ""}
-                      onValueChange={(x) =>
-                        updMember(i, {
-                          mahila_bachat_gat: {
-                            ...(m.mahila_bachat_gat || {}),
-                            has_rural_home_business: x === "yes",
-                            business_name: x === "yes" ? (m.mahila_bachat_gat?.business_name || "") : "",
-                            wants_to_start_business: x === "yes" ? null : (m.mahila_bachat_gat?.wants_to_start_business ?? null),
-                            desired_business: x === "yes" ? "" : (m.mahila_bachat_gat?.desired_business || ""),
-                          },
-                        })
-                      }
-                      className="flex gap-6"
-                    >
-                      <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
-                      <Label className="flex items-center gap-2"><RadioGroupItem value="no"/>{T.no}</Label>
-                    </RadioGroup>
-                  </div>
-                  {m.mahila_bachat_gat?.has_rural_home_business === true && (
-                    <div className="space-y-2 pl-4 border-l-2 border-primary/30">
-                      <Label className="text-sm font-medium">आपण कोणता ग्रामोद्योग किंवा घरगुती व्यवसाय करत आहात?</Label>
-                      <Input
-                        value={m.mahila_bachat_gat?.business_name || ""}
-                        onChange={(e) =>
-                          updMember(i, {
-                            mahila_bachat_gat: {
-                              ...(m.mahila_bachat_gat || {}),
-                              business_name: e.target.value,
-                            },
-                          })
-                        }
-                        placeholder="व्यवसायाचे नाव लिहा"
-                      />
-                    </div>
-                  )}
-                  {m.mahila_bachat_gat?.has_rural_home_business === false && (
-                    <div className="space-y-2 pl-4 border-l-2 border-primary/30">
-                      <Label className="text-sm font-medium">आपल्याला भविष्यात ग्रामोद्योग किंवा घरगुती व्यवसाय सुरू करण्याची इच्छा आहे का?</Label>
-                      <RadioGroup
-                        value={m.mahila_bachat_gat?.wants_to_start_business === true ? "yes" : m.mahila_bachat_gat?.wants_to_start_business === false ? "no" : ""}
-                        onValueChange={(x) =>
-                          updMember(i, {
-                            mahila_bachat_gat: {
-                              ...(m.mahila_bachat_gat || {}),
-                              wants_to_start_business: x === "yes",
-                              desired_business: x === "yes" ? (m.mahila_bachat_gat?.desired_business || "") : "",
-                            },
-                          })
-                        }
-                        className="flex gap-6"
-                      >
-                        <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
-                        <Label className="flex items-center gap-2"><RadioGroupItem value="no"/>{T.no}</Label>
-                      </RadioGroup>
-                    </div>
-                  )}
-                  {m.mahila_bachat_gat?.wants_to_start_business === true && (
-                    <div className="space-y-2 pl-4 border-l-2 border-primary/30">
-                      <Label className="text-sm font-medium">आपल्याला कोणता ग्रामोद्योग सुरू करायचा आहे?</Label>
-                      <Input
-                        value={m.mahila_bachat_gat?.desired_business || ""}
-                        onChange={(e) =>
-                          updMember(i, {
-                            mahila_bachat_gat: {
-                              ...(m.mahila_bachat_gat || {}),
-                              desired_business: e.target.value,
-                            },
-                          })
-                        }
-                        placeholder="ग्रामोद्योगाचे नाव लिहा"
-                      />
-                    </div>
-                  )}
-                </div>
-              )}
             </div>
           ))}
         </CardContent>
       </Card>
+
+      {/* Family member dialog */}
+      <Dialog open={memberDraft !== null} onOpenChange={(o) => { if (!o) closeMemberDialog(); }}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>
+              {editIdx === null ? "नवीन सदस्य जोडा" : `सदस्य संपादन — #${editIdx + 1}`}
+            </DialogTitle>
+          </DialogHeader>
+          {memberDraft && (() => {
+            const m = memberDraft;
+            return (
+              <div className="space-y-4">
+                <div className="grid md:grid-cols-3 gap-3">
+                  <Field label="नाव"><Input value={m.name} onChange={e=>updDraft({ name: e.target.value })}/></Field>
+                  <SelectField label="नाते" value={m.relationship} onChange={x=>updDraft({ relationship: x })} options={RELATIONSHIP} />
+                  <SelectField label="लिंग" value={m.gender || ""} onChange={x=>updDraft({ gender: x })} options={GENDER} />
+                  <SelectField label="वैवाहिक स्थिती" value={m.marital_status || ""} onChange={x=>updDraft({ marital_status: x })} options={MARITAL} />
+                  <Field label="जन्मतारीख">
+                    <DateSelect
+                      value={m.dob}
+                      onChange={(dob, age) => updDraft({ dob, age })}
+                    />
+                  </Field>
+                  <Field label="वय"><Input type="number" value={m.age ?? ""} readOnly className="bg-muted" /></Field>
+                  <Field label="मोबाईल"><Input value={m.mobile || ""} onChange={e=>updDraft({ mobile: e.target.value })}/></Field>
+                </div>
+                <div className="border rounded-md p-3 bg-background space-y-2">
+                  <Label className="block text-sm font-medium">मामेकुळ तपशील</Label>
+                  <div className="grid md:grid-cols-3 gap-3">
+                    <Field label="नाव">
+                      <Input
+                        value={m.maternal_family?.name || ""}
+                        onChange={e => updDraft({ maternal_family: { ...(m.maternal_family || {}), name: e.target.value } })}
+                      />
+                    </Field>
+                    <Field label="संपूर्ण पत्ता">
+                      <Input
+                        value={m.maternal_family?.address || ""}
+                        onChange={e => updDraft({ maternal_family: { ...(m.maternal_family || {}), address: e.target.value } })}
+                      />
+                    </Field>
+                    <Field label="मोबाईल क्रमांक">
+                      <Input
+                        value={m.maternal_family?.mobile || ""}
+                        onChange={e => updDraft({ maternal_family: { ...(m.maternal_family || {}), mobile: e.target.value } })}
+                      />
+                    </Field>
+                  </div>
+                </div>
+                {["मुलगा","मुलगी","भाऊ","बहीण"].includes(m.relationship) && m.marital_status === "विवाहित" && (
+                  <div className="border rounded-md p-3 bg-background space-y-2">
+                    <Label className="block text-sm font-medium">सासुरवाडी</Label>
+                    <div className="grid md:grid-cols-3 gap-3">
+                      <Field label={m.relationship === "मुलगी" || m.relationship === "बहीण" ? "पतीचे नाव" : "नाव"}>
+                        <Input
+                          value={m.in_laws_family?.name || ""}
+                          onChange={e => updDraft({ in_laws_family: { ...(m.in_laws_family || {}), name: e.target.value } })}
+                        />
+                      </Field>
+                      <Field label="संपूर्ण पत्ता">
+                        <Input
+                          value={m.in_laws_family?.address || ""}
+                          onChange={e => updDraft({ in_laws_family: { ...(m.in_laws_family || {}), address: e.target.value } })}
+                        />
+                      </Field>
+                      <Field label="मोबाईल क्रमांक">
+                        <Input
+                          value={m.in_laws_family?.mobile || ""}
+                          onChange={e => updDraft({ in_laws_family: { ...(m.in_laws_family || {}), mobile: e.target.value } })}
+                        />
+                      </Field>
+                    </div>
+                  </div>
+                )}
+                <div className="border rounded-md p-3 bg-background">
+                  <Label className="mb-2 block text-sm font-medium">शिक्षण (Education)</Label>
+                  <EducationSelect value={m.education || ""} onChange={x=>updDraft({ education: x })} />
+                </div>
+                <div className="border rounded-md p-3 bg-background">
+                  <Label className="mb-2 block text-sm font-medium">नौकरी / व्यवसाय (Job / Occupation)</Label>
+                  <OccupationSelect value={m.occupation || ""} onChange={x=>updDraft({ occupation: x })} />
+                </div>
+                {m.gender === "स्त्री" && (
+                  <div className="border rounded-md p-3 bg-background space-y-3">
+                    <Label className="block text-sm font-semibold text-primary">जर महिला असेल तर:</Label>
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">आपण महिला बचत गटाची सदस्य आहात का?</Label>
+                      <RadioGroup
+                        value={m.mahila_bachat_gat?.is_member === true ? "yes" : m.mahila_bachat_gat?.is_member === false ? "no" : ""}
+                        onValueChange={(x) =>
+                          updDraft({
+                            mahila_bachat_gat: {
+                              ...(m.mahila_bachat_gat || {}),
+                              is_member: x === "yes",
+                              wants_to_join: x === "yes" ? null : m.mahila_bachat_gat?.wants_to_join ?? null,
+                            },
+                          })
+                        }
+                        className="flex gap-6"
+                      >
+                        <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
+                        <Label className="flex items-center gap-2"><RadioGroupItem value="no"/>{T.no}</Label>
+                      </RadioGroup>
+                    </div>
+                    {m.mahila_bachat_gat?.is_member === false && (
+                      <div className="space-y-2 pl-4 border-l-2 border-primary/30">
+                        <Label className="text-sm font-medium">आपल्याला कोहळी समाजाच्या महिला बचत गटामध्ये सहभागी व्हायला आवडेल का?</Label>
+                        <RadioGroup
+                          value={m.mahila_bachat_gat?.wants_to_join === true ? "yes" : m.mahila_bachat_gat?.wants_to_join === false ? "no" : ""}
+                          onValueChange={(x) =>
+                            updDraft({
+                              mahila_bachat_gat: {
+                                ...(m.mahila_bachat_gat || {}),
+                                wants_to_join: x === "yes",
+                              },
+                            })
+                          }
+                          className="flex gap-6"
+                        >
+                          <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
+                          <Label className="flex items-center gap-2"><RadioGroupItem value="no"/>{T.no}</Label>
+                        </RadioGroup>
+                      </div>
+                    )}
+                    <div className="space-y-2 pt-2 border-t border-primary/20">
+                      <Label className="text-sm font-medium">आपण सध्या कोणत्याही प्रकारचा ग्रामोद्योग किंवा घरगुती व्यवसाय करत आहात काय?</Label>
+                      <RadioGroup
+                        value={m.mahila_bachat_gat?.has_rural_home_business === true ? "yes" : m.mahila_bachat_gat?.has_rural_home_business === false ? "no" : ""}
+                        onValueChange={(x) =>
+                          updDraft({
+                            mahila_bachat_gat: {
+                              ...(m.mahila_bachat_gat || {}),
+                              has_rural_home_business: x === "yes",
+                              business_name: x === "yes" ? (m.mahila_bachat_gat?.business_name || "") : "",
+                              wants_to_start_business: x === "yes" ? null : (m.mahila_bachat_gat?.wants_to_start_business ?? null),
+                              desired_business: x === "yes" ? "" : (m.mahila_bachat_gat?.desired_business || ""),
+                            },
+                          })
+                        }
+                        className="flex gap-6"
+                      >
+                        <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
+                        <Label className="flex items-center gap-2"><RadioGroupItem value="no"/>{T.no}</Label>
+                      </RadioGroup>
+                    </div>
+                    {m.mahila_bachat_gat?.has_rural_home_business === true && (
+                      <div className="space-y-2 pl-4 border-l-2 border-primary/30">
+                        <Label className="text-sm font-medium">आपण कोणता ग्रामोद्योग किंवा घरगुती व्यवसाय करत आहात?</Label>
+                        <Input
+                          value={m.mahila_bachat_gat?.business_name || ""}
+                          onChange={(e) =>
+                            updDraft({
+                              mahila_bachat_gat: {
+                                ...(m.mahila_bachat_gat || {}),
+                                business_name: e.target.value,
+                              },
+                            })
+                          }
+                          placeholder="व्यवसायाचे नाव लिहा"
+                        />
+                      </div>
+                    )}
+                    {m.mahila_bachat_gat?.has_rural_home_business === false && (
+                      <div className="space-y-2 pl-4 border-l-2 border-primary/30">
+                        <Label className="text-sm font-medium">आपल्याला भविष्यात ग्रामोद्योग किंवा घरगुती व्यवसाय सुरू करण्याची इच्छा आहे का?</Label>
+                        <RadioGroup
+                          value={m.mahila_bachat_gat?.wants_to_start_business === true ? "yes" : m.mahila_bachat_gat?.wants_to_start_business === false ? "no" : ""}
+                          onValueChange={(x) =>
+                            updDraft({
+                              mahila_bachat_gat: {
+                                ...(m.mahila_bachat_gat || {}),
+                                wants_to_start_business: x === "yes",
+                                desired_business: x === "yes" ? (m.mahila_bachat_gat?.desired_business || "") : "",
+                              },
+                            })
+                          }
+                          className="flex gap-6"
+                        >
+                          <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
+                          <Label className="flex items-center gap-2"><RadioGroupItem value="no"/>{T.no}</Label>
+                        </RadioGroup>
+                      </div>
+                    )}
+                    {m.mahila_bachat_gat?.wants_to_start_business === true && (
+                      <div className="space-y-2 pl-4 border-l-2 border-primary/30">
+                        <Label className="text-sm font-medium">आपल्याला कोणता ग्रामोद्योग सुरू करायचा आहे?</Label>
+                        <Input
+                          value={m.mahila_bachat_gat?.desired_business || ""}
+                          onChange={(e) =>
+                            updDraft({
+                              mahila_bachat_gat: {
+                                ...(m.mahila_bachat_gat || {}),
+                                desired_business: e.target.value,
+                              },
+                            })
+                          }
+                          placeholder="ग्रामोद्योगाचे नाव लिहा"
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })()}
+          <DialogFooter className="gap-2 sm:gap-2 pt-2">
+            <Button type="button" variant="outline" onClick={closeMemberDialog}>रद्द करा</Button>
+            <Button
+              type="button"
+              onClick={saveMember}
+              className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold shadow-lg gap-2"
+            >
+              <Plus className="h-4 w-4"/> सदस्य जतन करा
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
 
       {/* D. धारण केलेले पद */}
       <Card className="section-card sec-violet border-0 p-0 gap-0">
