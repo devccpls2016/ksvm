@@ -260,7 +260,7 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
               type="button"
               size="lg"
               onClick={addMember}
-              className="h-14 px-8 text-lg font-bold gap-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white shadow-xl shadow-emerald-600/30 hover:shadow-emerald-600/50 border-2 border-white/20 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] [&_svg]:size-6"
+              className="h-16 px-10 text-xl font-bold gap-3 min-w-[240px] rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white shadow-2xl shadow-emerald-600/35 hover:shadow-emerald-600/55 border-2 border-white/30 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] [&_svg]:size-7"
             >
               <Plus className="stroke-[2.5]"/>
               <span>{T.add} सदस्य</span>
