@@ -107,10 +107,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       <Card className="section-card sec-amber border-0 p-0 gap-0">
         <CardHeader className="section-header [&>*]:p-0">
           <div className="section-badge">A</div>
-          <div>
-            <CardTitle className="section-title">{T.geoInfo}</CardTitle>
-            <div className="section-sub">गाव, तालुका, जिल्हा व मूळ वस्ती</div>
-          </div>
+          <CardTitle className="section-title">{T.geoInfo}</CardTitle>
+          <div className="section-sub">गाव, तालुका, जिल्हा व मूळ वस्ती</div>
         </CardHeader>
         <CardContent className="space-y-6 pt-6">
 
@@ -169,10 +167,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       <Card className="section-card sec-rose border-0 p-0 gap-0">
         <CardHeader className="section-header [&>*]:p-0">
           <div className="section-badge">B</div>
-          <div>
-            <CardTitle className="section-title">{T.personalInfo}</CardTitle>
-            <div className="section-sub">कुटुंब प्रमुखाची माहिती</div>
-          </div>
+          <CardTitle className="section-title">{T.personalInfo}</CardTitle>
+          <div className="section-sub">कुटुंब प्रमुखाची माहिती</div>
         </CardHeader>
         <CardContent className="space-y-4 pt-6">
 
@@ -255,15 +251,11 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
 
       {/* C. कुटुंबातील सदस्य */}
       <Card className="section-card sec-emerald border-0 p-0 gap-0">
-        <CardHeader className="section-header [&>*]:p-0 justify-between">
-          <div className="flex items-center gap-3">
-            <div className="section-badge">C</div>
-            <div>
-              <CardTitle className="section-title">{T.members}</CardTitle>
-              <div className="section-sub">कुटुंबातील प्रत्येक सदस्याची माहिती जोडा</div>
-            </div>
-          </div>
-          <Button type="button" size="lg" onClick={addMember} className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white shadow-lg shadow-emerald-600/30 hover:shadow-emerald-600/45 border-0 px-5 py-5 h-auto text-base font-semibold rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
+        <CardHeader className="section-header [&>*]:p-0 relative">
+          <div className="section-badge">C</div>
+          <CardTitle className="section-title">{T.members}</CardTitle>
+          <div className="section-sub">कुटुंबातील प्रत्येक सदस्याची माहिती जोडा</div>
+          <Button type="button" size="lg" onClick={addMember} className="absolute right-3 top-1/2 -translate-y-1/2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white shadow-lg shadow-emerald-600/30 hover:shadow-emerald-600/45 border-0 px-5 py-5 h-auto text-base font-semibold rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
             <Plus className="h-5 w-5 mr-2 stroke-[2.5]"/>
             {T.add}
           </Button>
@@ -476,10 +468,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       <Card className="section-card sec-violet border-0 p-0 gap-0">
         <CardHeader className="section-header [&>*]:p-0">
           <div className="section-badge">D</div>
-          <div>
-            <CardTitle className="section-title">( राजकीय, सामाजिक, लोकप्रतिनिधी ) {T.position}</CardTitle>
-            <div className="section-sub">धारण केलेली पदे व सामाजिक भूमिका</div>
-          </div>
+          <CardTitle className="section-title">( राजकीय, सामाजिक, लोकप्रतिनिधी ) {T.position}</CardTitle>
+          <div className="section-sub">धारण केलेली पदे व सामाजिक भूमिका</div>
         </CardHeader>
         <CardContent className="space-y-4 pt-6">
 
@@ -554,10 +544,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       <Card className="section-card sec-indigo border-0 p-0 gap-0">
         <CardHeader className="section-header [&>*]:p-0">
           <div className="section-badge">E</div>
-          <div>
-            <CardTitle className="section-title">{T.needs} (घरातील वापराच्या वस्तू)</CardTitle>
-            <div className="section-sub">कुटुंबात असलेल्या प्रमुख वस्तू निवडा</div>
-          </div>
+          <CardTitle className="section-title">{T.needs} (घरातील वापराच्या वस्तू)</CardTitle>
+          <div className="section-sub">कुटुंबात असलेल्या प्रमुख वस्तू निवडा</div>
         </CardHeader>
         <CardContent className="space-y-4 pt-6">
 
@@ -613,10 +601,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       <Card className="section-card sec-orange border-0 p-0 gap-0">
         <CardHeader className="section-header [&>*]:p-0">
           <div className="section-badge">F</div>
-          <div>
-            <CardTitle className="section-title">{T.houseInfo}</CardTitle>
-            <div className="section-sub">घराची स्थिती व सुविधा</div>
-          </div>
+          <CardTitle className="section-title">{T.houseInfo}</CardTitle>
+          <div className="section-sub">घराची स्थिती व सुविधा</div>
         </CardHeader>
         <CardContent className="space-y-4 pt-6">
 
@@ -655,10 +641,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       <Card className="section-card sec-lime border-0 p-0 gap-0">
         <CardHeader className="section-header [&>*]:p-0">
           <div className="section-badge">G</div>
-          <div>
-            <CardTitle className="section-title">{T.agriInfo}</CardTitle>
-            <div className="section-sub">शेतजमीन, सिंचन व पीक तपशील</div>
-          </div>
+          <CardTitle className="section-title">{T.agriInfo}</CardTitle>
+          <div className="section-sub">शेतजमीन, सिंचन व पीक तपशील</div>
         </CardHeader>
         <CardContent className="space-y-4 pt-6">
 
@@ -1038,10 +1022,8 @@ function BenefitsSection({ v, setV }: { v: SurveyFormValues; setV: React.Dispatc
     <Card className="section-card sec-cyan border-0 p-0 gap-0">
       <CardHeader className="section-header [&>*]:p-0">
         <div className="section-badge">H</div>
-        <div>
-          <CardTitle className="section-title">सामाजिक व आर्थिक लाभार्थी माहिती</CardTitle>
-          <div className="section-sub">शासकीय योजना व लाभार्थी तपशील</div>
-        </div>
+        <CardTitle className="section-title">सामाजिक व आर्थिक लाभार्थी माहिती</CardTitle>
+        <div className="section-sub">शासकीय योजना व लाभार्थी तपशील</div>
       </CardHeader>
       <CardContent className="space-y-5 pt-6">
 
@@ -1117,10 +1099,8 @@ function EmploymentSection({ v, setV }: { v: SurveyFormValues; setV: React.Dispa
     <Card className="section-card sec-fuchsia border-0 p-0 gap-0">
       <CardHeader className="section-header [&>*]:p-0">
         <div className="section-badge">I</div>
-        <div>
-          <CardTitle className="section-title">उद्योजक / स्वयंरोजगार व रोजगार संबंधित माहिती</CardTitle>
-          <div className="section-sub">व्यवसाय व रोजगार तपशील</div>
-        </div>
+        <CardTitle className="section-title">उद्योजक / स्वयंरोजगार व रोजगार संबंधित माहिती</CardTitle>
+        <div className="section-sub">व्यवसाय व रोजगार तपशील</div>
       </CardHeader>
       <CardContent className="space-y-5 pt-6">
 
