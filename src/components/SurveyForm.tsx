@@ -1022,10 +1022,8 @@ function BenefitsSection({ v, setV }: { v: SurveyFormValues; setV: React.Dispatc
     <Card className="section-card sec-cyan border-0 p-0 gap-0">
       <CardHeader className="section-header [&>*]:p-0">
         <div className="section-badge">H</div>
-        <div>
-          <CardTitle className="section-title">सामाजिक व आर्थिक लाभार्थी माहिती</CardTitle>
-          <div className="section-sub">शासकीय योजना व लाभार्थी तपशील</div>
-        </div>
+        <CardTitle className="section-title">सामाजिक व आर्थिक लाभार्थी माहिती</CardTitle>
+        <div className="section-sub">शासकीय योजना व लाभार्थी तपशील</div>
       </CardHeader>
       <CardContent className="space-y-5 pt-6">
 
@@ -1101,10 +1099,8 @@ function EmploymentSection({ v, setV }: { v: SurveyFormValues; setV: React.Dispa
     <Card className="section-card sec-fuchsia border-0 p-0 gap-0">
       <CardHeader className="section-header [&>*]:p-0">
         <div className="section-badge">I</div>
-        <div>
-          <CardTitle className="section-title">उद्योजक / स्वयंरोजगार व रोजगार संबंधित माहिती</CardTitle>
-          <div className="section-sub">व्यवसाय व रोजगार तपशील</div>
-        </div>
+        <CardTitle className="section-title">उद्योजक / स्वयंरोजगार व रोजगार संबंधित माहिती</CardTitle>
+        <div className="section-sub">व्यवसाय व रोजगार तपशील</div>
       </CardHeader>
       <CardContent className="space-y-5 pt-6">
 
