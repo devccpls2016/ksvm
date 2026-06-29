@@ -607,9 +607,16 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
 
 
       {/* 5. घर विषयक माहिती */}
-      <Card>
-        <CardHeader><CardTitle>{T.houseInfo}</CardTitle></CardHeader>
-        <CardContent className="space-y-4">
+      <Card className="section-card sec-orange border-0 p-0 gap-0">
+        <CardHeader className="section-header [&>*]:p-0">
+          <div className="section-badge">F</div>
+          <div>
+            <CardTitle className="section-title">{T.houseInfo}</CardTitle>
+            <div className="section-sub">घराची स्थिती व सुविधा</div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4 pt-6">
+
           <Field label="स्वतःचे घर आहे काय?">
             <RadioGroup value={v.owns_house === null ? "" : v.owns_house ? "yes" : "no"} onValueChange={x => upd("owns_house", x === "yes")} className="flex gap-6">
               <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
