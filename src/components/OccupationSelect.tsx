@@ -677,7 +677,7 @@ export function OccupationSelect({ value, onChange }: Props) {
       )}
 
       {/* ============ Common fields (most categories) ============ */}
-      {c && c !== "बेरोजगार (Unemployed)" && c !== "परदेशस्थ (NRI)" && (
+      {c && c !== "बेरोजगार (Unemployed)" && c !== "परदेशस्थ (NRI)" && c !== "संरक्षण व सुरक्षा सेवा (Defence & Security)" && (
         <div className="grid gap-3 md:grid-cols-2 border-t pt-3">
           {!["शेतकरी (Farmer)", "कृषी मजूर / शेतमजूर (Farm Labour)", "शिक्षण क्षेत्र (Education Sector)"].includes(c) && (
             <TextRow label="कार्यरत ठिकाण (Place of Posting)" value={state.postingPlace} onChange={x => patch({ postingPlace: x })} />
