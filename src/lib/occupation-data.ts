@@ -122,7 +122,7 @@ export function summariseOccupation(v: OccupationValue): string {
   if (v.businessName) parts.push(v.businessName);
   if (v.retiredFrom) parts.push(`निवृत्त: ${v.retiredFrom}`);
   if (v.designation) parts.push(v.designation === "Other (इतर)" && v.designationOther ? `पदनाम: ${v.designationOther}` : v.designation);
-  if (v.rank) parts.push(v.rank);
+  if (v.rank) parts.push(v.rank === "Other (इतर)" && v.rankOther ? `रँक: ${v.rankOther}` : v.rank);
   if (v.farmingTypes?.length) parts.push(v.farmingTypes.join(", "));
   if (v.landSize) parts.push(v.landSize);
   if (v.country) parts.push(v.country);
