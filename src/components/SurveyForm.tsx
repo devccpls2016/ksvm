@@ -251,13 +251,18 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
 
       {/* C. कुटुंबातील सदस्य */}
       <Card className="section-card sec-emerald border-0 p-0 gap-0">
-        <CardHeader className="section-header [&>*]:p-0 relative">
+        <CardHeader className="section-header [&>*]:p-0">
           <div className="section-badge">C</div>
           <CardTitle className="section-title">{T.members}</CardTitle>
           <div className="section-sub">कुटुंबातील प्रत्येक सदस्याची माहिती जोडा</div>
-          <Button type="button" size="lg" onClick={addMember} className="absolute right-3 top-1/2 -translate-y-1/2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white shadow-lg shadow-emerald-600/30 hover:shadow-emerald-600/45 border-0 px-5 py-5 h-auto text-base font-semibold rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
-            <Plus className="h-5 w-5 mr-2 stroke-[2.5]"/>
-            {T.add}
+          <Button
+            type="button"
+            size="lg"
+            onClick={addMember}
+            className="mt-3 inline-flex items-center justify-center gap-2 whitespace-nowrap bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white shadow-lg shadow-emerald-600/30 hover:shadow-emerald-600/45 border-0 px-6 h-12 text-base font-semibold rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] [&_svg]:size-5"
+          >
+            <Plus className="stroke-[2.5]"/>
+            <span>{T.add} सदस्य</span>
           </Button>
         </CardHeader>
         <CardContent className="space-y-4 pt-6">
