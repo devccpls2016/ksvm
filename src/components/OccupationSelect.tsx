@@ -651,11 +651,9 @@ export function OccupationSelect({ value, onChange }: Props) {
       {c === "परदेशस्थ (NRI)" && (
         <div className="grid gap-3 md:grid-cols-2 border-t pt-3">
           <TextRow label="देश (Country)" value={state.country} onChange={x => patch({ country: x })} />
-          <TextRow label="राज्य / प्रांत (State / Province)" value={state.province} onChange={x => patch({ province: x })} />
           <TextRow label="शहर (City)" value={state.city} onChange={x => patch({ city: x })} />
           <TextRow label="व्यवसाय / पद (Occupation)" value={state.designation} onChange={x => patch({ designation: x })} />
           <TextRow label="कंपनी / व्यवसाय नाव" value={state.organisation} onChange={x => patch({ organisation: x })} />
-          <TextRow label="शिक्षण (Education)" value={state.notes} onChange={x => patch({ notes: x })} />
           <div className="md:col-span-2">
             <Label className="text-xs text-muted-foreground mb-1 block">समाजासाठी योगदान (Community Contribution)</Label>
             <div className="grid grid-cols-2 gap-2">
@@ -669,6 +667,7 @@ export function OccupationSelect({ value, onChange }: Props) {
           </div>
         </div>
       )}
+
 
       {c === "इतर (Other)" && (
         <div className="grid gap-3 md:grid-cols-2 border-t pt-3">

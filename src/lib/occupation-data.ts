@@ -36,8 +36,8 @@ export type OccupationValue = {
   contributions?: string[];          // NRI – community contributions
   // NRI specific
   country?: string;
-  province?: string;
   city?: string;
+
   // Common extra fields
   organisation?: string;             // कंपनी / संस्था / रुग्णालय नाव
   postingPlace?: string;             // कार्यरत ठिकाण
