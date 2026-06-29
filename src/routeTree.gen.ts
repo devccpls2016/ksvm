@@ -13,9 +13,9 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedUsersRouteImport } from './routes/_authenticated/users'
-import { Route as AuthenticatedSurveysRouteImport } from './routes/_authenticated/surveys'
 import { Route as AuthenticatedNewRouteImport } from './routes/_authenticated/new'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedSurveysIndexRouteImport } from './routes/_authenticated/surveys.index'
 import { Route as AuthenticatedSurveysIdRouteImport } from './routes/_authenticated/surveys.$id'
 import { Route as AuthenticatedSurveysViewIdRouteImport } from './routes/_authenticated/surveys.view.$id'
 
@@ -38,11 +38,6 @@ const AuthenticatedUsersRoute = AuthenticatedUsersRouteImport.update({
   path: '/users',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
-const AuthenticatedSurveysRoute = AuthenticatedSurveysRouteImport.update({
-  id: '/surveys',
-  path: '/surveys',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
 const AuthenticatedNewRoute = AuthenticatedNewRouteImport.update({
   id: '/new',
   path: '/new',
@@ -53,16 +48,22 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedSurveysIndexRoute =
+  AuthenticatedSurveysIndexRouteImport.update({
+    id: '/surveys/',
+    path: '/surveys/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedSurveysIdRoute = AuthenticatedSurveysIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => AuthenticatedSurveysRoute,
+  id: '/surveys/$id',
+  path: '/surveys/$id',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedSurveysViewIdRoute =
   AuthenticatedSurveysViewIdRouteImport.update({
-    id: '/view/$id',
-    path: '/view/$id',
-    getParentRoute: () => AuthenticatedSurveysRoute,
+    id: '/surveys/view/$id',
+    path: '/surveys/view/$id',
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -70,9 +71,9 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/new': typeof AuthenticatedNewRoute
-  '/surveys': typeof AuthenticatedSurveysRouteWithChildren
   '/users': typeof AuthenticatedUsersRoute
   '/surveys/$id': typeof AuthenticatedSurveysIdRoute
+  '/surveys/': typeof AuthenticatedSurveysIndexRoute
   '/surveys/view/$id': typeof AuthenticatedSurveysViewIdRoute
 }
 export interface FileRoutesByTo {
@@ -80,9 +81,9 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/new': typeof AuthenticatedNewRoute
-  '/surveys': typeof AuthenticatedSurveysRouteWithChildren
   '/users': typeof AuthenticatedUsersRoute
   '/surveys/$id': typeof AuthenticatedSurveysIdRoute
+  '/surveys': typeof AuthenticatedSurveysIndexRoute
   '/surveys/view/$id': typeof AuthenticatedSurveysViewIdRoute
 }
 export interface FileRoutesById {
@@ -92,9 +93,9 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/new': typeof AuthenticatedNewRoute
-  '/_authenticated/surveys': typeof AuthenticatedSurveysRouteWithChildren
   '/_authenticated/users': typeof AuthenticatedUsersRoute
   '/_authenticated/surveys/$id': typeof AuthenticatedSurveysIdRoute
+  '/_authenticated/surveys/': typeof AuthenticatedSurveysIndexRoute
   '/_authenticated/surveys/view/$id': typeof AuthenticatedSurveysViewIdRoute
 }
 export interface FileRouteTypes {
@@ -104,9 +105,9 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/new'
-    | '/surveys'
     | '/users'
     | '/surveys/$id'
+    | '/surveys/'
     | '/surveys/view/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -114,9 +115,9 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/new'
-    | '/surveys'
     | '/users'
     | '/surveys/$id'
+    | '/surveys'
     | '/surveys/view/$id'
   id:
     | '__root__'
@@ -125,9 +126,9 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/dashboard'
     | '/_authenticated/new'
-    | '/_authenticated/surveys'
     | '/_authenticated/users'
     | '/_authenticated/surveys/$id'
+    | '/_authenticated/surveys/'
     | '/_authenticated/surveys/view/$id'
   fileRoutesById: FileRoutesById
 }
@@ -167,13 +168,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUsersRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/_authenticated/surveys': {
-      id: '/_authenticated/surveys'
-      path: '/surveys'
-      fullPath: '/surveys'
-      preLoaderRoute: typeof AuthenticatedSurveysRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
     '/_authenticated/new': {
       id: '/_authenticated/new'
       path: '/new'
@@ -188,48 +182,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/surveys/': {
+      id: '/_authenticated/surveys/'
+      path: '/surveys'
+      fullPath: '/surveys/'
+      preLoaderRoute: typeof AuthenticatedSurveysIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/surveys/$id': {
       id: '/_authenticated/surveys/$id'
-      path: '/$id'
+      path: '/surveys/$id'
       fullPath: '/surveys/$id'
       preLoaderRoute: typeof AuthenticatedSurveysIdRouteImport
-      parentRoute: typeof AuthenticatedSurveysRoute
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/surveys/view/$id': {
       id: '/_authenticated/surveys/view/$id'
-      path: '/view/$id'
+      path: '/surveys/view/$id'
       fullPath: '/surveys/view/$id'
       preLoaderRoute: typeof AuthenticatedSurveysViewIdRouteImport
-      parentRoute: typeof AuthenticatedSurveysRoute
+      parentRoute: typeof AuthenticatedRoute
     }
   }
 }
 
-interface AuthenticatedSurveysRouteChildren {
-  AuthenticatedSurveysIdRoute: typeof AuthenticatedSurveysIdRoute
-  AuthenticatedSurveysViewIdRoute: typeof AuthenticatedSurveysViewIdRoute
-}
-
-const AuthenticatedSurveysRouteChildren: AuthenticatedSurveysRouteChildren = {
-  AuthenticatedSurveysIdRoute: AuthenticatedSurveysIdRoute,
-  AuthenticatedSurveysViewIdRoute: AuthenticatedSurveysViewIdRoute,
-}
-
-const AuthenticatedSurveysRouteWithChildren =
-  AuthenticatedSurveysRoute._addFileChildren(AuthenticatedSurveysRouteChildren)
-
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedNewRoute: typeof AuthenticatedNewRoute
-  AuthenticatedSurveysRoute: typeof AuthenticatedSurveysRouteWithChildren
   AuthenticatedUsersRoute: typeof AuthenticatedUsersRoute
+  AuthenticatedSurveysIdRoute: typeof AuthenticatedSurveysIdRoute
+  AuthenticatedSurveysIndexRoute: typeof AuthenticatedSurveysIndexRoute
+  AuthenticatedSurveysViewIdRoute: typeof AuthenticatedSurveysViewIdRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedNewRoute: AuthenticatedNewRoute,
-  AuthenticatedSurveysRoute: AuthenticatedSurveysRouteWithChildren,
   AuthenticatedUsersRoute: AuthenticatedUsersRoute,
+  AuthenticatedSurveysIdRoute: AuthenticatedSurveysIdRoute,
+  AuthenticatedSurveysIndexRoute: AuthenticatedSurveysIndexRoute,
+  AuthenticatedSurveysViewIdRoute: AuthenticatedSurveysViewIdRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
