@@ -596,9 +596,39 @@ export function OccupationSelect({ value, onChange }: Props) {
 
       {c === "संरक्षण व सुरक्षा सेवा (Defence & Security)" && (
         <div className="grid gap-3 md:grid-cols-2 border-t pt-3">
-          <SelectFieldRow label="दल (Force)" value={state.force} options={DEFENCE_FORCES} onChange={x => patch({ force: x, rank: "" })} />
-          <SelectFieldRow label="रँक (Rank)" value={state.rank} options={ranksFor(state.force)} onChange={x => patch({ rank: x })} />
-          <TextRow label="कार्यरत ठिकाण (Posting Place)" value={state.postingPlace} onChange={x => patch({ postingPlace: x })} />
+          <SelectFieldRow
+            label="दल (Force)"
+            value={state.force}
+            options={DEFENCE_FORCES}
+            onChange={x => patch({ force: x, forceOther: "", rank: "", rankOther: "" })}
+          />
+          {state.force === "Other (इतर)" && (
+            <TextRow
+              label="दलाचे नाव (Specify Force)"
+              value={state.forceOther}
+              onChange={x => patch({ forceOther: x })}
+            />
+          )}
+          {state.force && state.force !== "Other (इतर)" && (
+            <SelectFieldRow
+              label="पदनाम / रँक (Rank)"
+              value={state.rank}
+              options={ranksFor(state.force)}
+              onChange={x => patch({ rank: x, rankOther: "" })}
+            />
+          )}
+          {state.rank === "Other (इतर)" && (
+            <TextRow
+              label="पदनाम (Specify Rank)"
+              value={state.rankOther}
+              onChange={x => patch({ rankOther: x })}
+            />
+          )}
+          <TextRow
+            label="कार्यरत ठिकाण (Place of Posting)"
+            value={state.postingPlace}
+            onChange={x => patch({ postingPlace: x })}
+          />
         </div>
       )}
 
