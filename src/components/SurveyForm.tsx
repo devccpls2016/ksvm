@@ -1026,9 +1026,16 @@ function BenefitsSection({ v, setV }: { v: SurveyFormValues; setV: React.Dispatc
     setV((prev) => ({ ...prev, benefits_info: { ...(prev.benefits_info || {}), ...p } }));
   }
   return (
-    <Card>
-      <CardHeader><CardTitle>सामाजिक व आर्थिक लाभार्थी माहिती</CardTitle></CardHeader>
-      <CardContent className="space-y-5">
+    <Card className="section-card sec-cyan border-0 p-0 gap-0">
+      <CardHeader className="section-header [&>*]:p-0">
+        <div className="section-badge">H</div>
+        <div>
+          <CardTitle className="section-title">सामाजिक व आर्थिक लाभार्थी माहिती</CardTitle>
+          <div className="section-sub">शासकीय योजना व लाभार्थी तपशील</div>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-5 pt-6">
+
         {/* 1. Ladki Bahin */}
         <div className="border rounded-lg p-4 space-y-3 bg-card/50">
           <div className="font-medium text-sm">1. आपल्या घरामध्ये "मुख्यमंत्री लाडकी बहीण योजना" चे लाभार्थी आहेत का?</div>
