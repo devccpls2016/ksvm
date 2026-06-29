@@ -470,9 +470,16 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel }: Props
       </Card>
 
       {/* D. धारण केलेले पद */}
-      <Card>
-        <CardHeader><CardTitle>D. ( राजकीय, सामाजिक, लोकप्रतिनिधी ) {T.position}</CardTitle></CardHeader>
-        <CardContent className="space-y-4">
+      <Card className="section-card sec-violet border-0 p-0 gap-0">
+        <CardHeader className="section-header [&>*]:p-0">
+          <div className="section-badge">D</div>
+          <div>
+            <CardTitle className="section-title">( राजकीय, सामाजिक, लोकप्रतिनिधी ) {T.position}</CardTitle>
+            <div className="section-sub">धारण केलेली पदे व सामाजिक भूमिका</div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4 pt-6">
+
           <Field label="धारण केलेले पद आहे का?">
             <RadioGroup value={v.has_position ? "yes" : "no"} onValueChange={x => upd("has_position", x === "yes")} className="flex gap-6">
               <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
