@@ -138,6 +138,11 @@ export function summariseOccupation(v: OccupationValue): string {
   if (v.wantOwnBusiness) parts.push(`स्वतःचा व्यवसाय इच्छा: ${v.wantOwnBusiness}`);
   if (v.loanNeeded) parts.push(`कर्ज आवश्यक: ${v.loanNeeded}`);
   if (v.loanAmount) parts.push(`रक्कम: ${v.loanAmount === "इतर" && v.loanAmountOther ? `₹${v.loanAmountOther}` : v.loanAmount}`);
+  if (v.seekingJob) parts.push(`रोजगार शोध: ${v.seekingJob}`);
+  if (v.desiredSector) parts.push(`इच्छित क्षेत्र: ${v.desiredSector}`);
+  if (v.wantsSkillTraining) parts.push(`कौशल्य प्रशिक्षण: ${v.wantsSkillTraining}`);
+  if (v.desiredBusiness) parts.push(`इच्छित व्यवसाय: ${v.desiredBusiness}`);
+  if (v.wantsGuidance) parts.push(`मार्गदर्शन इच्छा: ${v.wantsGuidance}`);
   if (v.department) parts.push(`विभाग: ${v.department}`);
   if (v.setupName) parts.push(`Setup: ${v.setupName}`);
   if (v.setupCity) parts.push(v.setupCity);
