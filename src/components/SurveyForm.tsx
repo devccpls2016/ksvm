@@ -138,13 +138,16 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnl
           <div className="section-sub">गाव, तालुका, जिल्हा व मूळ वस्ती</div>
         </CardHeader>
         <CardContent className="space-y-6 pt-6">
-
-          <div className="grid md:grid-cols-2 gap-4">
-            <Field label="गाव *"><Input required value={v.village} onChange={e=>upd("village", e.target.value)} /></Field>
-            <Field label="तालुका"><Input value={v.taluka} onChange={e=>upd("taluka", e.target.value)} /></Field>
-            <Field label="जिल्हा"><Input value={v.district} onChange={e=>upd("district", e.target.value)} /></Field>
-            <Field label="पिनकोड"><Input value={v.pincode} onChange={e=>upd("pincode", e.target.value)} /></Field>
+          <div className="border rounded-lg p-4 space-y-4 bg-muted/20">
+            <Label className="text-base font-semibold block">पत्रव्यवहाराचा पत्ता (Correspondence Address)</Label>
+            <div className="grid md:grid-cols-2 gap-4">
+              <Field label="गाव *"><Input required value={v.village} onChange={e=>upd("village", e.target.value)} /></Field>
+              <Field label="तालुका"><Input value={v.taluka} onChange={e=>upd("taluka", e.target.value)} /></Field>
+              <Field label="जिल्हा"><Input value={v.district} onChange={e=>upd("district", e.target.value)} /></Field>
+              <Field label="पिनकोड"><Input value={v.pincode} onChange={e=>upd("pincode", e.target.value)} /></Field>
+            </div>
           </div>
+
 
           <div className="border rounded-lg p-4 space-y-4 bg-muted/20">
             <Label className="text-base font-semibold block">मूळ वस्ती (Permanent Address)</Label>
