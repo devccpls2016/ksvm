@@ -155,6 +155,16 @@ export function OccupationSelect({ value, onChange }: Props) {
           {c === "शेती + व्यवसाय (Agriculture + Business)" && state.businessType && (
             <TextRow label="व्यवसायाचे नाव (Business Name)" value={state.businessName} onChange={x => patch({ businessName: x })} />
           )}
+          {c === "शेती + व्यवसाय (Agriculture + Business)" && state.businessName && (
+            <div>
+              <TextRow
+                label="आपण आपल्या व्यवसायामार्फत किती व्यक्तींना रोजगार उपलब्ध करून दिला आहे? (संख्या नमूद करा)"
+                value={state.peopleEmployed}
+                type="number"
+                onChange={x => patch({ peopleEmployed: x })}
+              />
+            </div>
+          )}
         </div>
       )}
 
@@ -173,6 +183,12 @@ export function OccupationSelect({ value, onChange }: Props) {
           </div>
           <div className="grid gap-3 md:grid-cols-2">
             <TextRow label="व्यवसायाचे नाव (Business Name)" value={state.organisation} onChange={x => patch({ organisation: x })} />
+            <TextRow
+              label="आपण आपल्या व्यवसायामार्फत किती व्यक्तींना रोजगार उपलब्ध करून दिला आहे? (संख्या नमूद करा)"
+              value={state.peopleEmployed}
+              type="number"
+              onChange={x => patch({ peopleEmployed: x })}
+            />
           </div>
         </div>
       )}
