@@ -14,6 +14,8 @@ export type FamilyMember = {
   dob?: string;
   gender?: string;
   marital_status?: string;
+  marriage_type?: string;
+  spouse_caste?: string;
   education?: string;
   occupation?: string;
   job_place?: string;
