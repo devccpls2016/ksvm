@@ -48,6 +48,20 @@ type Props = {
 export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnly }: Props) {
   const [v, setV] = useState<SurveyFormValues>({ ...emptySurvey, ...initial });
   const [uploading, setUploading] = useState(false);
+  const [sameAsCorrespondence, setSameAsCorrespondence] = useState(false);
+
+  useEffect(() => {
+    if (sameAsCorrespondence) {
+      setV((p) => ({
+        ...p,
+        permanent_address: {
+          native_village: p.village,
+          native_taluka: p.taluka,
+          native_district: p.district,
+        },
+      }));
+    }
+  }, [sameAsCorrespondence, v.village, v.taluka, v.district]);
 
   const upd = <K extends keyof SurveyFormValues>(k: K, val: SurveyFormValues[K]) =>
     setV((p) => ({ ...p, [k]: val }));
@@ -150,7 +164,19 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnl
 
 
           <div className="border rounded-lg p-4 space-y-4 bg-muted/20">
-            <Label className="text-base font-semibold block">मूळ वस्ती (Permanent Address)</Label>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <Label className="text-base font-semibold block">मूळ वस्ती (Permanent Address)</Label>
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  id="same-as-correspondence"
+                  checked={sameAsCorrespondence}
+                  onCheckedChange={(checked) => setSameAsCorrespondence(!!checked)}
+                />
+                <Label htmlFor="same-as-correspondence" className="text-sm font-medium leading-none cursor-pointer select-none">
+                  पत्रव्यवहाराचा पत्ता हा मूळ वस्तीसाठी समान आहे <span className="text-muted-foreground">(Same as Correspondence Address)</span>
+                </Label>
+              </div>
+            </div>
             <div className="grid md:grid-cols-3 gap-4">
               <Field label="आपली मूळ वस्ती (गाव / शहर)">
                 <Input
@@ -162,6 +188,7 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnl
                     }))
                   }
                   placeholder="गाव / शहर"
+                  disabled={sameAsCorrespondence}
                 />
               </Field>
               <Field label="तालुका">
@@ -174,6 +201,7 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnl
                     }))
                   }
                   placeholder="तालुका"
+                  disabled={sameAsCorrespondence}
                 />
               </Field>
               <Field label="जिल्हा">
@@ -186,6 +214,7 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnl
                     }))
                   }
                   placeholder="जिल्हा"
+                  disabled={sameAsCorrespondence}
                 />
               </Field>
             </div>
