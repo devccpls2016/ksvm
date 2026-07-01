@@ -155,6 +155,19 @@ export function OccupationSelect({ value, onChange }: Props) {
           {c === "शेती + व्यवसाय (Agriculture + Business)" && state.businessType && (
             <TextRow label="व्यवसायाचे नाव (Business Name)" value={state.businessName} onChange={x => patch({ businessName: x })} />
           )}
+          {c === "शेती + व्यवसाय (Agriculture + Business)" && state.businessName && (
+            <TextRow
+              label="आपल्या व्यवसायाद्वारे प्रदान केलेला रोजगार (Employment provided through your business)"
+              value={state.peopleEmployed}
+              type="number"
+              onChange={x => patch({ peopleEmployed: x })}
+            />
+          )}
+          <div className="md:col-span-2 text-xs text-muted-foreground">
+            {c === "शेती + व्यवसाय (Agriculture + Business)" && state.businessName && (
+              <span>किती व्यक्तींना रोजगार दिला आहे? (संख्या नमूद करा)</span>
+            )}
+          </div>
         </div>
       )}
 
