@@ -233,6 +233,28 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnl
             <Field label="मोबाईल क्रमांक"><Input value={v.mobile} onChange={e=>upd("mobile", e.target.value)} /></Field>
             <Field label="समुदाय / जनजाती"><Input value={v.community} onChange={e=>upd("community", e.target.value)} /></Field>
             <SelectField label="वैवाहिक स्थिती" value={v.marital_status} onChange={x=>upd("marital_status", x)} options={MARITAL} />
+            {v.marital_status === "विवाहित" && (
+              <div className="md:col-span-2 border rounded-lg p-4 space-y-3 bg-primary/5">
+                <Label className="text-base font-semibold block">विवाहाचा प्रकार (Type of Marriage)</Label>
+                <RadioGroup
+                  value={v.marriage_type || ""}
+                  onValueChange={(x) => setV(p => ({ ...p, marriage_type: x, spouse_caste: x === "आंतरजातीय विवाह" ? p.spouse_caste : "" }))}
+                  className="flex flex-col sm:flex-row gap-3"
+                >
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <RadioGroupItem value="जातीय विवाह" /> जातीय विवाह (Within Community / Same Caste)
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <RadioGroupItem value="आंतरजातीय विवाह" /> आंतरजातीय विवाह (Inter-Caste Marriage)
+                  </label>
+                </RadioGroup>
+                {v.marriage_type === "आंतरजातीय विवाह" && (
+                  <Field label="जोडीदाराची जात (Spouse's Caste)">
+                    <Input value={v.spouse_caste || ""} onChange={e => upd("spouse_caste", e.target.value)} placeholder="जोडीदाराची जात नमूद करा" />
+                  </Field>
+                )}
+              </div>
+            )}
             <SelectField label="लिंग" value={v.gender} onChange={x=>upd("gender", x)} options={GENDER} />
             <Field label="जन्मतारीख">
               <DateSelect
@@ -242,28 +264,6 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnl
             </Field>
             <Field label="वय"><Input type="number" value={v.age} readOnly className="bg-muted" /></Field>
           </div>
-          {v.marital_status === "विवाहित" && (
-            <div className="border rounded-lg p-4 space-y-3 bg-primary/5">
-              <Label className="text-base font-semibold block">विवाहाचा प्रकार (Type of Marriage)</Label>
-              <RadioGroup
-                value={v.marriage_type || ""}
-                onValueChange={(x) => setV(p => ({ ...p, marriage_type: x, spouse_caste: x === "आंतरजातीय विवाह" ? p.spouse_caste : "" }))}
-                className="flex flex-col sm:flex-row gap-3"
-              >
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <RadioGroupItem value="जातीय विवाह" /> जातीय विवाह (Within Community / Same Caste)
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <RadioGroupItem value="आंतरजातीय विवाह" /> आंतरजातीय विवाह (Inter-Caste Marriage)
-                </label>
-              </RadioGroup>
-              {v.marriage_type === "आंतरजातीय विवाह" && (
-                <Field label="जोडीदाराची जात (Spouse's Caste)">
-                  <Input value={v.spouse_caste || ""} onChange={e => upd("spouse_caste", e.target.value)} placeholder="जोडीदाराची जात नमूद करा" />
-                </Field>
-              )}
-            </div>
-          )}
           <div className="border rounded-lg p-4 space-y-3 bg-muted/20">
             <Label className="text-base font-semibold block">मामेकुळ तपशील</Label>
             <div className="grid md:grid-cols-3 gap-3">
