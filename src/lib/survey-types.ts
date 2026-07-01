@@ -79,6 +79,8 @@ export interface SurveyFormValues {
   mobile: string;
   community: string;
   marital_status: string;
+  marriage_type: string;
+  spouse_caste: string;
   gender: string;
   age: number | "";
   dob: string;
