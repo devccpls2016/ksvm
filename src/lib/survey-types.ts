@@ -14,6 +14,8 @@ export type FamilyMember = {
   dob?: string;
   gender?: string;
   marital_status?: string;
+  marriage_type?: string;
+  spouse_caste?: string;
   education?: string;
   occupation?: string;
   job_place?: string;
@@ -77,6 +79,8 @@ export interface SurveyFormValues {
   mobile: string;
   community: string;
   marital_status: string;
+  marriage_type: string;
+  spouse_caste: string;
   gender: string;
   age: number | "";
   dob: string;
@@ -166,7 +170,7 @@ export type FarmingToolsDetails = {
 export const emptySurvey: SurveyFormValues = {
   village: "", taluka: "", district: "", pincode: "",
   head_name: "", head_photo_url: "", mobile: "", community: "कोहळी",
-  marital_status: "", gender: "", age: "", dob: "", education: "", occupation: "",
+  marital_status: "", marriage_type: "", spouse_caste: "", gender: "", age: "", dob: "", education: "", occupation: "",
   household_items: [],
   household_item_counts: {},
   owns_house: null, house_type: "", living_status: "", gharkul_received: null, gharkul_wanted: null, solar_panel_installed: null, solar_panel_wanted: null,
