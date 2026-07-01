@@ -31,6 +31,7 @@ export type OccupationValue = {
   businessType?: string;             // single (Agriculture + Business)
   businessTypes?: string[];          // multi (Business Owner)
   selfEmployedTypes?: string[];      // multi (Self Employed trades)
+  selfEmployedTypeOther?: string;    // custom trade when "इतर (Other)" selected
   businessName?: string;
   retiredFrom?: string;              // पूर्वीचा विभाग
   contributions?: string[];          // NRI – community contributions
@@ -126,7 +127,7 @@ export function summariseOccupation(v: OccupationValue): string {
   if (v.businessType) parts.push(v.businessType);
   if (v.businessTypes?.length) parts.push(v.businessTypes.join(", "));
   if (v.selfEmployedTypes?.length) parts.push(v.selfEmployedTypes.join(", "));
-  if (v.businessName) parts.push(v.businessName);
+  if (v.selfEmployedTypeOther) parts.push(`इतर कौशल्य: ${v.selfEmployedTypeOther}`);
   if (v.retiredFrom) parts.push(`निवृत्त: ${v.retiredFrom}`);
   if (v.designation) parts.push(v.designation === "Other (इतर)" && v.designationOther ? `पदनाम: ${v.designationOther}` : v.designation);
   if (v.rank) parts.push(v.rank === "Other (इतर)" && v.rankOther ? `रँक: ${v.rankOther}` : v.rank);

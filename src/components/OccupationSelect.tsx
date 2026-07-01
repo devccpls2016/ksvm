@@ -107,7 +107,11 @@ export function OccupationSelect({ value, onChange }: Props) {
   }
   function toggleSelfEmployed(t: string) {
     const arr = state.selfEmployedTypes || [];
-    patch({ selfEmployedTypes: arr.includes(t) ? arr.filter(x => x !== t) : [...arr, t] });
+    const next = arr.includes(t) ? arr.filter(x => x !== t) : [...arr, t];
+    patch({
+      selfEmployedTypes: next,
+      ...(next.includes("इतर (Other)") ? {} : { selfEmployedTypeOther: "" }),
+    });
   }
   function toggleContribution(t: string) {
     const arr = state.contributions || [];
@@ -205,6 +209,16 @@ export function OccupationSelect({ value, onChange }: Props) {
                 </Label>
               ))}
             </div>
+            {state.selfEmployedTypes?.includes("इतर (Other)") && (
+              <div className="mt-3">
+                <Label className="text-xs text-muted-foreground mb-1 block">इतर कौशल्य / Trade नमूद करा</Label>
+                <Input
+                  placeholder="इतर कौशल्य नमूद करा"
+                  value={state.selfEmployedTypeOther || ""}
+                  onChange={e => patch({ selfEmployedTypeOther: e.target.value })}
+                />
+              </div>
+            )}
           </div>
         </div>
       )}
