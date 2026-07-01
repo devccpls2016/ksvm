@@ -183,6 +183,12 @@ export function OccupationSelect({ value, onChange }: Props) {
           </div>
           <div className="grid gap-3 md:grid-cols-2">
             <TextRow label="व्यवसायाचे नाव (Business Name)" value={state.organisation} onChange={x => patch({ organisation: x })} />
+            <TextRow
+              label="आपण आपल्या व्यवसायामार्फत किती व्यक्तींना रोजगार उपलब्ध करून दिला आहे? (संख्या नमूद करा)"
+              value={state.peopleEmployed}
+              type="number"
+              onChange={x => patch({ peopleEmployed: x })}
+            />
           </div>
         </div>
       )}
