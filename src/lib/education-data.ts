@@ -226,6 +226,46 @@ export const EDUCATION_TREE: EducationLevel[] = [
     ],
   },
   {
+    level: "डॉक्टरेट / पीएच.डी. (Doctorate / Ph.D.)",
+    askInstitution: true,
+    streams: [
+      {
+        stream: "Doctoral Degrees (डॉक्टरेट पदव्या)",
+        courses: [
+          "Ph.D. (Doctor of Philosophy)",
+          "D.Sc. (Doctor of Science)",
+          "D.Litt. (Doctor of Literature)",
+          "Ed.D. (Doctor of Education)",
+          "DBA (Doctor of Business Administration)",
+          "LL.D. (Doctor of Laws)",
+          "D.Mus. (Doctor of Music)",
+          "D.Tech. (Doctor of Technology)",
+          "D.Phil. (Doctor of Philosophy – Oxford Style)",
+          "Doctor of Engineering (Eng.D. / D.Eng.)",
+          "Doctor of Public Health (DrPH)",
+          "Doctor of Social Work (DSW)",
+          "Doctor of Nursing Practice (DNP)",
+          "Doctor of Pharmacy (Pharm.D.)",
+          "Doctor of Theology (Th.D. / D.Div.)",
+        ],
+      },
+      {
+        stream: "Post-Doctoral & Research (पोस्ट-डॉक्टरल व संशोधन)",
+        courses: [
+          "Post-Doctoral Fellow (Post-Doc)",
+          "Research Scientist",
+          "Principal Scientist",
+          "Senior Research Fellow (SRF)",
+          "Junior Research Fellow (JRF)",
+        ],
+      },
+      {
+        stream: "इतर (Other)",
+        courses: ["इतर (नमूद करा)"],
+      },
+    ],
+  },
+  {
     level: "इतर (Other)",
     askInstitution: true,
     streams: [

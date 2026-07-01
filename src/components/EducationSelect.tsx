@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import {
   EDUCATION_TREE,
   INSTITUTION_TYPES,
@@ -101,7 +102,7 @@ export function EducationSelect({ value, onChange }: Props) {
         <div>
           <Label className="text-xs text-muted-foreground mb-1 block">अभ्यासक्रम (Course)</Label>
           <Select
-            value={course}
+            value={course.startsWith("इतर (नमूद करा)") ? "इतर (नमूद करा)" : course}
             onValueChange={(v) => {
               setCourse(v);
               emit({ course: v });
@@ -114,6 +115,21 @@ export function EducationSelect({ value, onChange }: Props) {
               ))}
             </SelectContent>
           </Select>
+          {course.startsWith("इतर (नमूद करा)") && (
+            <div className="mt-2">
+              <Label className="text-xs text-muted-foreground mb-1 block">इतर – नमूद करा</Label>
+              <Input
+                value={course.replace(/^इतर \(नमूद करा\):?\s*/, "")}
+                onChange={(e) => {
+                  const txt = e.target.value;
+                  const next = txt ? `इतर (नमूद करा): ${txt}` : "इतर (नमूद करा)";
+                  setCourse(next);
+                  emit({ course: next });
+                }}
+                placeholder="उदा. D.Arch. (Doctor of Architecture)"
+              />
+            </div>
+          )}
         </div>
       )}
 
