@@ -51,6 +51,7 @@ export type OccupationValue = {
   loanAmountOther?: string;          // custom amount when "इतर"
   loanPurpose?: string;              // single-select purpose (Business Owner)
   loanPurposeOther?: string;         // custom purpose when "इतर"
+  peopleEmployed?: string;           // व्यवसायामार्फत रोजगार दिलेलेली व्यक्ती संख्या
   // Medical Sector extras
   hospitalTypeOther?: string;        // custom when MED institution type = Other
   department?: string;               // Department / Unit (medical)
@@ -150,6 +151,7 @@ export function summariseOccupation(v: OccupationValue): string {
   if (v.setupPin) parts.push(`PIN ${v.setupPin}`);
   if (v.setupAddress) parts.push(v.setupAddress);
   if (v.loanPurpose) parts.push(`उद्देश: ${v.loanPurpose === "इतर" && v.loanPurposeOther ? v.loanPurposeOther : v.loanPurpose}`);
+  if (v.peopleEmployed) parts.push(`रोजगार दिलेले: ${v.peopleEmployed} व्यक्ती`);
 
   return parts.join(" • ");
 }
