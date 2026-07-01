@@ -155,7 +155,7 @@ export function OccupationSelect({ value, onChange }: Props) {
           {c === "शेती + व्यवसाय (Agriculture + Business)" && state.businessType && (
             <TextRow label="व्यवसायाचे नाव (Business Name)" value={state.businessName} onChange={x => patch({ businessName: x })} />
           )}
-          {c === "शेती + व्यवसाय (Agriculture + Business)" && state.businessName && (
+          {c === "शेती + व्यवसाय (Agriculture + Business)" && state.businessType && (
             <div>
               <TextRow
                 label="आपण आपल्या व्यवसायामार्फत किती व्यक्तींना रोजगार उपलब्ध करून दिला आहे? (संख्या नमूद करा)"
