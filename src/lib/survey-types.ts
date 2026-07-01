@@ -170,7 +170,7 @@ export type FarmingToolsDetails = {
 export const emptySurvey: SurveyFormValues = {
   village: "", taluka: "", district: "", pincode: "",
   head_name: "", head_photo_url: "", mobile: "", community: "कोहळी",
-  marital_status: "", gender: "", age: "", dob: "", education: "", occupation: "",
+  marital_status: "", marriage_type: "", spouse_caste: "", gender: "", age: "", dob: "", education: "", occupation: "",
   household_items: [],
   household_item_counts: {},
   owns_house: null, house_type: "", living_status: "", gharkul_received: null, gharkul_wanted: null, solar_panel_installed: null, solar_panel_wanted: null,
