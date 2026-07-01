@@ -48,6 +48,20 @@ type Props = {
 export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnly }: Props) {
   const [v, setV] = useState<SurveyFormValues>({ ...emptySurvey, ...initial });
   const [uploading, setUploading] = useState(false);
+  const [sameAsCorrespondence, setSameAsCorrespondence] = useState(false);
+
+  useEffect(() => {
+    if (sameAsCorrespondence) {
+      setV((p) => ({
+        ...p,
+        permanent_address: {
+          native_village: p.village,
+          native_taluka: p.taluka,
+          native_district: p.district,
+        },
+      }));
+    }
+  }, [sameAsCorrespondence, v.village, v.taluka, v.district]);
 
   const upd = <K extends keyof SurveyFormValues>(k: K, val: SurveyFormValues[K]) =>
     setV((p) => ({ ...p, [k]: val }));
