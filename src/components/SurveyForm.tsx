@@ -155,13 +155,12 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnl
           <div className="border rounded-lg p-4 space-y-4 bg-muted/20">
             <Label className="text-base font-semibold block">पत्रव्यवहाराचा पत्ता (Correspondence Address)</Label>
             <div className="grid md:grid-cols-2 gap-4">
-              <Field label="गाव *"><Input required value={v.village} onChange={e=>upd("village", e.target.value)} /></Field>
-              <Field label="तालुका"><Input value={v.taluka} onChange={e=>upd("taluka", e.target.value)} /></Field>
               <Field label="जिल्हा"><Input value={v.district} onChange={e=>upd("district", e.target.value)} /></Field>
+              <Field label="तालुका"><Input value={v.taluka} onChange={e=>upd("taluka", e.target.value)} /></Field>
+              <Field label="गाव *"><Input required value={v.village} onChange={e=>upd("village", e.target.value)} /></Field>
               <Field label="पिनकोड"><Input value={v.pincode} onChange={e=>upd("pincode", e.target.value)} /></Field>
             </div>
           </div>
-
 
           <div className="border rounded-lg p-4 space-y-4 bg-muted/20">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -177,17 +176,17 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnl
                 </Label>
               </div>
             </div>
-            <div className="grid md:grid-cols-3 gap-4">
-              <Field label="आपली मूळ वस्ती (गाव / शहर)">
+            <div className="grid md:grid-cols-2 gap-4">
+              <Field label="जिल्हा">
                 <Input
-                  value={v.permanent_address?.native_village || ""}
+                  value={v.permanent_address?.native_district || ""}
                   onChange={(e) =>
                     setV((p) => ({
                       ...p,
-                      permanent_address: { ...(p.permanent_address || {}), native_village: e.target.value },
+                      permanent_address: { ...(p.permanent_address || {}), native_district: e.target.value },
                     }))
                   }
-                  placeholder="गाव / शहर"
+                  placeholder="जिल्हा"
                   disabled={sameAsCorrespondence}
                 />
               </Field>
@@ -204,21 +203,35 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnl
                   disabled={sameAsCorrespondence}
                 />
               </Field>
-              <Field label="जिल्हा">
+              <Field label="मूळ वस्ती (गाव / शहर)">
                 <Input
-                  value={v.permanent_address?.native_district || ""}
+                  value={v.permanent_address?.native_village || ""}
                   onChange={(e) =>
                     setV((p) => ({
                       ...p,
-                      permanent_address: { ...(p.permanent_address || {}), native_district: e.target.value },
+                      permanent_address: { ...(p.permanent_address || {}), native_village: e.target.value },
                     }))
                   }
-                  placeholder="जिल्हा"
+                  placeholder="गाव / शहर"
+                  disabled={sameAsCorrespondence}
+                />
+              </Field>
+              <Field label="पिनकोड">
+                <Input
+                  value={v.permanent_address?.native_pincode || ""}
+                  onChange={(e) =>
+                    setV((p) => ({
+                      ...p,
+                      permanent_address: { ...(p.permanent_address || {}), native_pincode: e.target.value },
+                    }))
+                  }
+                  placeholder="पिनकोड"
                   disabled={sameAsCorrespondence}
                 />
               </Field>
             </div>
           </div>
+
         </CardContent>
       </Card>
 
