@@ -76,6 +76,7 @@ export type Database = {
           major_crop_types: string[] | null
           major_crop_types_other: string | null
           marital_status: string | null
+          marriage_type: string | null
           maternal_family: Json | null
           members: Json | null
           mobile: string | null
@@ -87,6 +88,7 @@ export type Database = {
           rabi_area: string | null
           solar_panel_installed: boolean | null
           solar_panel_wanted: boolean | null
+          spouse_caste: string | null
           summer_area: string | null
           taluka: string | null
           total_farmland: string | null
@@ -128,6 +130,7 @@ export type Database = {
           major_crop_types?: string[] | null
           major_crop_types_other?: string | null
           marital_status?: string | null
+          marriage_type?: string | null
           maternal_family?: Json | null
           members?: Json | null
           mobile?: string | null
@@ -139,6 +142,7 @@ export type Database = {
           rabi_area?: string | null
           solar_panel_installed?: boolean | null
           solar_panel_wanted?: boolean | null
+          spouse_caste?: string | null
           summer_area?: string | null
           taluka?: string | null
           total_farmland?: string | null
@@ -180,6 +184,7 @@ export type Database = {
           major_crop_types?: string[] | null
           major_crop_types_other?: string | null
           marital_status?: string | null
+          marriage_type?: string | null
           maternal_family?: Json | null
           members?: Json | null
           mobile?: string | null
@@ -191,6 +196,7 @@ export type Database = {
           rabi_area?: string | null
           solar_panel_installed?: boolean | null
           solar_panel_wanted?: boolean | null
+          spouse_caste?: string | null
           summer_area?: string | null
           taluka?: string | null
           total_farmland?: string | null
