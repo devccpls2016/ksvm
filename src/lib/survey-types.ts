@@ -133,10 +133,25 @@ export type PermanentAddress = {
   native_pincode?: string;
 };
 
+export type LadkiBahinBeneficiary = {
+  name: string;
+  regular?: boolean | null;
+  reason?: string;
+  reason_other?: string;
+};
+
+export type LadkiBahinNonBeneficiary = {
+  name: string;
+  reason?: string;
+  reason_other?: string;
+};
+
 export type BenefitsInfo = {
   ladki_bahin?: boolean | null;
   ladki_bahin_count?: number | "";
   ladki_bahin_regular?: boolean | null;
+  ladki_bahin_beneficiaries?: LadkiBahinBeneficiary[];
+  ladki_bahin_non_beneficiaries?: LadkiBahinNonBeneficiary[];
   critical_illness?: boolean | null;
   medical_aid_needed?: boolean | null;
   has_sportsperson?: boolean | null;
