@@ -635,80 +635,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnl
 
 
       {/* D. धारण केलेले पद */}
-      <Card className="section-card sec-violet border-0 p-0 gap-0">
-        <CardHeader className="section-header [&>*]:p-0">
-          <div className="section-badge">D</div>
-          <CardTitle className="section-title">( राजकीय, सामाजिक, लोकप्रतिनिधी ) {T.position}</CardTitle>
-          <div className="section-sub">धारण केलेली पदे व सामाजिक भूमिका</div>
-        </CardHeader>
-        <CardContent className="space-y-4 pt-6">
+      <PositionsSection v={v} setV={setV} />
 
-          <Field label="धारण केलेले पद आहे का?">
-            <RadioGroup value={v.has_position ? "yes" : "no"} onValueChange={x => upd("has_position", x === "yes")} className="flex gap-6">
-              <Label className="flex items-center gap-2"><RadioGroupItem value="yes"/>{T.yes}</Label>
-              <Label className="flex items-center gap-2"><RadioGroupItem value="no"/>{T.no}</Label>
-            </RadioGroup>
-          </Field>
-
-          {v.has_position && (
-            <div className="grid md:grid-cols-2 gap-4 border-t pt-4">
-              <SelectField label="पदाचा प्रकार" value={v.position_data.type || ""} onChange={x => upd("position_data", { ...v.position_data, type: x })} options={POSITION_TYPES} />
-              <SelectField label="वर्तमान स्थिती" value={v.position_data.status || ""} onChange={x => upd("position_data", { ...v.position_data, status: x })} options={POSITION_STATUS} />
-
-              {v.position_data.type === "राजकीय" && (
-                <>
-                  <SelectField label="राजकीय पद" value={v.position_data.political_level || ""} onChange={x => upd("position_data", { ...v.position_data, political_level: x })} options={POLITICAL_LEVELS} />
-                  <Field label="पक्षाचे नाव"><Input value={v.position_data.party_name || ""} onChange={e => upd("position_data", { ...v.position_data, party_name: e.target.value })}/></Field>
-                </>
-              )}
-
-              {v.position_data.type === "लोकप्रतिनिधी" && (
-                <>
-                  <SelectField label="लोकप्रतिनिधी पद" value={v.position_data.representative_type || ""} onChange={x => upd("position_data", { ...v.position_data, representative_type: x, coop_role: "" })} options={REPRESENTATIVES} />
-                  {v.position_data.representative_type && REPRESENTATIVE_ROLES[v.position_data.representative_type] && (
-                    <>
-                      <SelectField label="पद" value={v.position_data.coop_role || ""} onChange={x => upd("position_data", { ...v.position_data, coop_role: x })} options={REPRESENTATIVE_ROLES[v.position_data.representative_type] || []} />
-                      {(v.position_data.representative_type === "Co-operative Bank (सहकारी बँक)" || v.position_data.representative_type === "Co-operative Society (सहकारी संस्था)" || v.position_data.representative_type === "पतसंस्था") && (
-                        <Field label={v.position_data.representative_type === "पतसंस्था" ? "पतसंस्थेचे नाव" : "संस्थेचे नाव"}><Input value={v.position_data.coop_org_name || ""} onChange={e => upd("position_data", { ...v.position_data, coop_org_name: e.target.value })}/></Field>
-                      )}
-                    </>
-                  )}
-                  {v.position_data.coop_role && (
-                    <>
-                      <div className="md:col-span-2 mt-2">
-                        <h4 className="font-semibold text-sm mb-2">१. कार्यकाळ (Period)</h4>
-                        <div className="grid grid-cols-2 gap-3">
-                          <SelectField label="वर्ष (पासून)" value={v.position_data.term_from || ""} onChange={x => upd("position_data", { ...v.position_data, term_from: x })} options={YEAR_OPTIONS} />
-                          <SelectField label="वर्ष (पर्यंत)" value={v.position_data.term_to || ""} onChange={x => upd("position_data", { ...v.position_data, term_to: x })} options={YEAR_OPTIONS} />
-                        </div>
-                      </div>
-                      <div className="md:col-span-2">
-                        <h4 className="font-semibold text-sm mb-2">२. पक्ष (Political Party)</h4>
-                        <SelectField label="पक्षाचे नाव" value={v.position_data.party_name || ""} onChange={x => upd("position_data", { ...v.position_data, party_name: x, party_name_other: x === "इतर (Other)" ? v.position_data.party_name_other : "" })} options={POLITICAL_PARTIES} />
-                        {v.position_data.party_name === "इतर (Other)" && (
-                          <div className="mt-2">
-                            <Field label="पक्षाचे नाव लिहा"><Input value={v.position_data.party_name_other || ""} onChange={e => upd("position_data", { ...v.position_data, party_name_other: e.target.value })}/></Field>
-                          </div>
-                        )}
-                      </div>
-                    </>
-                  )}
-                </>
-              )}
-
-              {v.position_data.type === "सामाजिक" && (
-                <>
-                  <SelectField label="संस्था" value={v.position_data.social_org || ""} onChange={x => upd("position_data", { ...v.position_data, social_org: x, social_role: "" })} options={SOCIAL_ORGS.map((s: { name: string }) => s.name)} />
-                  {v.position_data.social_org && (
-                    <SelectField label="पद" value={v.position_data.social_role || ""} onChange={x => upd("position_data", { ...v.position_data, social_role: x })}
-                      options={SOCIAL_ORGS.find((s: { name: string; roles: string[] }) => s.name === v.position_data.social_org)?.roles || []} />
-                  )}
-                </>
-              )}
-            </div>
-          )}
-        </CardContent>
-      </Card>
 
       {/* 4. कौटुंबिक आवश्यक गरजा */}
       <Card className="section-card sec-indigo border-0 p-0 gap-0">
