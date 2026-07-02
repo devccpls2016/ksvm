@@ -54,7 +54,8 @@ export type IrrigationDetails = {
 
 
 
-export type PositionData = {
+export type PositionEntry = {
+  person_name?: string;
   type?: string; // राजकीय / सामाजिक / लोकप्रतिनिधी
   status?: string; // आजी / माजी
   political_level?: string;
@@ -67,6 +68,10 @@ export type PositionData = {
   coop_org_name?: string;
   social_org?: string;
   social_role?: string;
+};
+
+export type PositionData = PositionEntry & {
+  positions?: PositionEntry[];
 };
 
 export interface SurveyFormValues {
