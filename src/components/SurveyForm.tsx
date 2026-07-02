@@ -1259,11 +1259,11 @@ function FarmingToolsSection({ v, setV }: { v: SurveyFormValues; setV: React.Dis
                   </Field>
                 )}
               </div>
-              {tool.extra && d.has === false && (
+              {d.has === false && (
                 <div className="space-y-3 pt-2 border-t">
                   <div>
-                    <Label className="text-xs text-muted-foreground mb-1.5 block">ट्रॅक्टर घ्यायची इच्छा आहे का?</Label>
-                    <YesNo value={d.want_to_buy} onChange={(val) => patchTool(tool.key, { want_to_buy: val })} />
+                    <Label className="text-xs text-muted-foreground mb-1.5 block">{tool.shortLabel} घ्यायची इच्छा आहे का?</Label>
+                    <YesNo value={d.want_to_buy} onChange={(val) => patchTool(tool.key, { want_to_buy: val, ...(val !== true ? { needs_loan: null } : {}) })} />
                   </div>
                   {d.want_to_buy === true && (
                     <div>
