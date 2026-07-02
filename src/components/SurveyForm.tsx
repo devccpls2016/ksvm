@@ -55,13 +55,14 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnl
       setV((p) => ({
         ...p,
         permanent_address: {
-          native_village: p.village,
-          native_taluka: p.taluka,
           native_district: p.district,
+          native_taluka: p.taluka,
+          native_village: p.village,
+          native_pincode: p.pincode,
         },
       }));
     }
-  }, [sameAsCorrespondence, v.village, v.taluka, v.district]);
+  }, [sameAsCorrespondence, v.district, v.taluka, v.village, v.pincode]);
 
   const upd = <K extends keyof SurveyFormValues>(k: K, val: SurveyFormValues[K]) =>
     setV((p) => ({ ...p, [k]: val }));
