@@ -1310,28 +1310,8 @@ function BenefitsSection({ v, setV }: { v: SurveyFormValues; setV: React.Dispatc
       <CardContent className="space-y-5 pt-6">
 
         {/* 1. Ladki Bahin */}
-        <div className="border rounded-lg p-4 space-y-3 bg-card/50">
-          <div className="font-medium text-sm">1. आपल्या घरामध्ये "मुख्यमंत्री लाडकी बहीण योजना" चे लाभार्थी आहेत का?</div>
-          <YesNo value={b.ladki_bahin} onChange={(val) => patch({ ladki_bahin: val, ...(val !== true ? { ladki_bahin_count: "", ladki_bahin_regular: null } : {}) })} />
-          {b.ladki_bahin === true && (
-            <div className="grid md:grid-cols-2 gap-3 pt-2 border-t">
-              <Field label="लाभार्थी संख्या (घरातील किती सदस्य)">
-                <Select value={b.ladki_bahin_count ? String(b.ladki_bahin_count) : ""} onValueChange={(x) => patch({ ladki_bahin_count: Number(x) })}>
-                  <SelectTrigger><SelectValue placeholder="निवडा" /></SelectTrigger>
-                  <SelectContent>
-                    {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
-                      <SelectItem key={n} value={String(n)}>{n}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </Field>
-              <div>
-                <Label className="text-sm mb-1.5 block">या योजनेचा लाभ नियमितपणे मिळतो का?</Label>
-                <YesNo value={b.ladki_bahin_regular} onChange={(val) => patch({ ladki_bahin_regular: val })} />
-              </div>
-            </div>
-          )}
-        </div>
+        <LadkiBahinBlock v={v} b={b} patch={patch} />
+
 
         {/* 2. Critical illness */}
         <div className="border rounded-lg p-4 space-y-3 bg-card/50">
