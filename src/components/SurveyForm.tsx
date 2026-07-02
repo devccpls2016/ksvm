@@ -1199,12 +1199,12 @@ function IrrigationSection({
   );
 }
 
-const FARM_TOOL_LIST: { key: "tractor" | "harvester" | "rotavator" | "cultivator" | "tractor_trolley"; label: string; extra?: boolean }[] = [
-  { key: "tractor", label: "ट्रॅक्टर", extra: true },
-  { key: "harvester", label: "हार्वेस्टर (Harvestor)" },
-  { key: "rotavator", label: "रोटावेटर (Rotavator)" },
-  { key: "cultivator", label: "कल्टिवेटर (Cultivator)" },
-  { key: "tractor_trolley", label: "ट्रॅक्टर ट्रॉली (Tractor Trolley)" },
+const FARM_TOOL_LIST: { key: "tractor" | "harvester" | "rotavator" | "cultivator" | "tractor_trolley"; label: string; shortLabel: string }[] = [
+  { key: "tractor", label: "ट्रॅक्टर", shortLabel: "ट्रॅक्टर" },
+  { key: "harvester", label: "हार्वेस्टर (Harvestor)", shortLabel: "हार्वेस्टर" },
+  { key: "rotavator", label: "रोटावेटर (Rotavator)", shortLabel: "रोटावेटर" },
+  { key: "cultivator", label: "कल्टिवेटर (Cultivator)", shortLabel: "कल्टिवेटर" },
+  { key: "tractor_trolley", label: "ट्रॅक्टर ट्रॉली (Tractor Trolley)", shortLabel: "ट्रॅक्टर ट्रॉली" },
 ];
 
 function YesNo({ value, onChange }: { value: boolean | null | undefined; onChange: (v: boolean | null) => void }) {
