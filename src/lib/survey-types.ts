@@ -122,9 +122,10 @@ export interface SurveyFormValues {
 }
 
 export type PermanentAddress = {
-  native_village?: string;
-  native_taluka?: string;
   native_district?: string;
+  native_taluka?: string;
+  native_village?: string;
+  native_pincode?: string;
 };
 
 export type BenefitsInfo = {
