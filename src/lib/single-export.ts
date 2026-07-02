@@ -142,8 +142,8 @@ export async function buildSurveyHTML(r: any) {
     ${row("ओलिताखालील क्षेत्र (एकर)", r.irrigated_area)}
     ${row("कोरडवाहू क्षेत्र (एकर)", r.dryland_area)}
     ${row("खरीप हंगामाखालील क्षेत्र (एकर)", r.kharif_area)}
-    ${row("रब्बी हंगामाखालील क्षेत्र (एकर)", r.rabi_area)}
-    ${row("उन्हाळी हंगामाखालील क्षेत्र (एकर)", r.summer_area)}
+    ${row("रब्बी हंगामाखालील क्षेत्र (धान सोडून) (एकर)", r.rabi_area)}
+    ${row("उन्हाळी हंगामाखालील क्षेत्र (धानासह) (एकर)", r.summer_area)}
     ${row("प्रमुख पीक प्रकार", [...(r.major_crop_types || []), r.major_crop_types_other].filter(Boolean).join(", "))}
   </table>
   ${crops.length > 0 ? `

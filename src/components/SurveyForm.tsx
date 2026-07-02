@@ -786,8 +786,8 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnl
                 <Label className="text-base font-semibold">हंगामनिहाय लागवड क्षेत्र</Label>
                 <div className="grid md:grid-cols-3 gap-3">
                   <Field label="खरीप हंगामाखालील क्षेत्र (एकरमध्ये)"><Input type="number" min="0" step="0.01" value={v.kharif_area} onChange={e=>upd("kharif_area", e.target.value)} /></Field>
-                  <Field label="रब्बी हंगामाखालील क्षेत्र (एकरमध्ये)"><Input type="number" min="0" step="0.01" value={v.rabi_area} onChange={e=>upd("rabi_area", e.target.value)} /></Field>
-                  <Field label="उन्हाळी हंगामाखालील क्षेत्र (एकरमध्ये)"><Input type="number" min="0" step="0.01" value={v.summer_area} onChange={e=>upd("summer_area", e.target.value)} /></Field>
+                  <Field label="रब्बी हंगामाखालील क्षेत्र (धान सोडून) (एकरमध्ये)"><Input type="number" min="0" step="0.01" value={v.rabi_area} onChange={e=>upd("rabi_area", e.target.value)} /></Field>
+                  <Field label="उन्हाळी हंगामाखालील क्षेत्र (धानासह) (एकरमध्ये)"><Input type="number" min="0" step="0.01" value={v.summer_area} onChange={e=>upd("summer_area", e.target.value)} /></Field>
                 </div>
               </div>
 
