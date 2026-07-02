@@ -842,6 +842,188 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnl
   );
 }
 
+function PositionsSection({ v, setV }: { v: SurveyFormValues; setV: React.Dispatch<React.SetStateAction<SurveyFormValues>> }) {
+  const positions = v.position_data?.positions || [];
+  const [draft, setDraft] = useState<import("@/lib/survey-types").PositionEntry | null>(null);
+  const [editIdx, setEditIdx] = useState<number | null>(null);
+
+  // one-time migration from legacy single position_data → positions[]
+  useEffect(() => {
+    if (v.has_position && !v.position_data?.positions && (v.position_data?.type || v.position_data?.representative_type || v.position_data?.social_org)) {
+      const { positions: _p, ...legacy } = v.position_data || {};
+      setV(p => ({ ...p, position_data: { positions: [legacy as any] } }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const personOptions = [
+    ...(v.head_name ? [`${v.head_name} (कुटुंब प्रमुख)`] : []),
+    ...v.members.filter(m => m.name?.trim()).map(m => `${m.name}${m.relationship ? ` (${m.relationship})` : ""}`),
+  ];
+
+  function openAdd() { setDraft({}); setEditIdx(null); }
+  function openEdit(i: number) { setDraft({ ...positions[i] }); setEditIdx(i); }
+  function close() { setDraft(null); setEditIdx(null); }
+  function updD(patch: Partial<import("@/lib/survey-types").PositionEntry>) {
+    setDraft(d => d ? { ...d, ...patch } : d);
+  }
+  function save() {
+    if (!draft) return;
+    if (!draft.person_name) { toast.error("कृपया व्यक्ती निवडा"); return; }
+    if (!draft.type) { toast.error("कृपया पदाचा प्रकार निवडा"); return; }
+    setV(p => {
+      const list = p.position_data?.positions ? [...p.position_data.positions] : [];
+      if (editIdx === null) list.push(draft);
+      else list[editIdx] = draft;
+      return { ...p, has_position: true, position_data: { positions: list } };
+    });
+    toast.success(editIdx === null ? "पद जोडले" : "पद अद्यतनित");
+    close();
+  }
+  function del(i: number) {
+    setV(p => {
+      const list = (p.position_data?.positions || []).filter((_, idx) => idx !== i);
+      return { ...p, position_data: { positions: list }, has_position: list.length > 0 ? p.has_position : false };
+    });
+  }
+
+  return (
+    <Card className="section-card sec-violet border-0 p-0 gap-0">
+      <CardHeader className="section-header [&>*]:p-0">
+        <div className="section-badge">D</div>
+        <CardTitle className="section-title">( राजकीय, सामाजिक, लोकप्रतिनिधी ) {T.position}</CardTitle>
+        <div className="section-sub">धारण केलेली पदे व सामाजिक भूमिका</div>
+      </CardHeader>
+      <CardContent className="space-y-4 pt-6">
+        <Field label="कुटुंबातील कोणी धारण केलेले पद आहे का?">
+          <RadioGroup
+            value={v.has_position ? "yes" : "no"}
+            onValueChange={x => setV(p => ({ ...p, has_position: x === "yes", position_data: x === "yes" ? (p.position_data || { positions: [] }) : { positions: [] } }))}
+            className="flex gap-6"
+          >
+            <Label className="flex items-center gap-2"><RadioGroupItem value="yes" />{T.yes}</Label>
+            <Label className="flex items-center gap-2"><RadioGroupItem value="no" />{T.no}</Label>
+          </RadioGroup>
+        </Field>
+
+        {v.has_position && (
+          <div className="space-y-3 border-t pt-4">
+            {positions.length === 0 && (
+              <div className="text-sm text-muted-foreground text-center py-4 border border-dashed rounded-lg">
+                अजून कोणतेही पद जोडलेले नाही. खालील बटणावर क्लिक करून जोडा.
+              </div>
+            )}
+            {positions.map((p, i) => (
+              <div key={i} className="border rounded-lg p-4 bg-muted/20 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div className="space-y-1">
+                  <div className="font-semibold">{p.person_name || "—"}</div>
+                  <div className="text-sm text-muted-foreground">
+                    {[p.type, p.status, p.political_level, p.representative_type, p.coop_role, p.social_org, p.social_role].filter(Boolean).join(" · ")}
+                  </div>
+                  {(p.term_from || p.term_to) && (
+                    <div className="text-xs text-muted-foreground">कार्यकाळ: {p.term_from || "…"} — {p.term_to || "…"}</div>
+                  )}
+                  {(p.party_name || p.party_name_other) && (
+                    <div className="text-xs text-muted-foreground">पक्ष: {p.party_name === "इतर (Other)" ? p.party_name_other : p.party_name}</div>
+                  )}
+                  {p.coop_org_name && <div className="text-xs text-muted-foreground">संस्था: {p.coop_org_name}</div>}
+                </div>
+                <div className="flex gap-2">
+                  <Button type="button" size="sm" variant="outline" onClick={() => openEdit(i)}><Pencil className="h-4 w-4 mr-1" />संपादित करा</Button>
+                  <Button type="button" size="sm" variant="destructive" onClick={() => del(i)}><Trash2 className="h-4 w-4 mr-1" />हटवा</Button>
+                </div>
+              </div>
+            ))}
+
+            <div className="flex justify-center pt-2">
+              <Button type="button" size="lg" onClick={openAdd} className="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 text-white">
+                <Plus className="h-5 w-5 mr-1" />पद जोडा
+              </Button>
+            </div>
+          </div>
+        )}
+
+        <Dialog open={!!draft} onOpenChange={(o) => !o && close()}>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>{editIdx === null ? "नवीन पद जोडा" : "पद संपादित करा"}</DialogTitle>
+            </DialogHeader>
+            {draft && (
+              <div className="grid md:grid-cols-2 gap-4 py-2">
+                <div className="md:col-span-2">
+                  <SelectField label="व्यक्तीचे नाव *" value={draft.person_name || ""} onChange={x => updD({ person_name: x })} options={personOptions} />
+                  {personOptions.length === 0 && (
+                    <p className="text-xs text-destructive mt-1">कृपया आधी कुटुंब प्रमुख किंवा सदस्य जोडा.</p>
+                  )}
+                </div>
+                <SelectField label="पदाचा प्रकार *" value={draft.type || ""} onChange={x => updD({ type: x, political_level: "", representative_type: "", coop_role: "", coop_org_name: "", social_org: "", social_role: "" })} options={POSITION_TYPES} />
+                <SelectField label="वर्तमान स्थिती" value={draft.status || ""} onChange={x => updD({ status: x })} options={POSITION_STATUS} />
+
+                {draft.type === "राजकीय" && (
+                  <>
+                    <SelectField label="राजकीय पद" value={draft.political_level || ""} onChange={x => updD({ political_level: x })} options={POLITICAL_LEVELS} />
+                    <Field label="पक्षाचे नाव"><Input value={draft.party_name || ""} onChange={e => updD({ party_name: e.target.value })} /></Field>
+                  </>
+                )}
+
+                {draft.type === "लोकप्रतिनिधी" && (
+                  <>
+                    <SelectField label="लोकप्रतिनिधी पद" value={draft.representative_type || ""} onChange={x => updD({ representative_type: x, coop_role: "" })} options={REPRESENTATIVES} />
+                    {draft.representative_type && REPRESENTATIVE_ROLES[draft.representative_type] && (
+                      <>
+                        <SelectField label="पद" value={draft.coop_role || ""} onChange={x => updD({ coop_role: x })} options={REPRESENTATIVE_ROLES[draft.representative_type] || []} />
+                        {(draft.representative_type === "Co-operative Bank (सहकारी बँक)" || draft.representative_type === "Co-operative Society (सहकारी संस्था)" || draft.representative_type === "पतसंस्था") && (
+                          <Field label={draft.representative_type === "पतसंस्था" ? "पतसंस्थेचे नाव" : "संस्थेचे नाव"}>
+                            <Input value={draft.coop_org_name || ""} onChange={e => updD({ coop_org_name: e.target.value })} />
+                          </Field>
+                        )}
+                      </>
+                    )}
+                    {draft.coop_role && (
+                      <>
+                        <div className="md:col-span-2 mt-2">
+                          <h4 className="font-semibold text-sm mb-2">१. कार्यकाळ (Period)</h4>
+                          <div className="grid grid-cols-2 gap-3">
+                            <SelectField label="वर्ष (पासून)" value={draft.term_from || ""} onChange={x => updD({ term_from: x })} options={YEAR_OPTIONS} />
+                            <SelectField label="वर्ष (पर्यंत)" value={draft.term_to || ""} onChange={x => updD({ term_to: x })} options={YEAR_OPTIONS} />
+                          </div>
+                        </div>
+                        <div className="md:col-span-2">
+                          <h4 className="font-semibold text-sm mb-2">२. पक्ष (Political Party)</h4>
+                          <SelectField label="पक्षाचे नाव" value={draft.party_name || ""} onChange={x => updD({ party_name: x, party_name_other: x === "इतर (Other)" ? draft.party_name_other : "" })} options={POLITICAL_PARTIES} />
+                          {draft.party_name === "इतर (Other)" && (
+                            <div className="mt-2">
+                              <Field label="पक्षाचे नाव लिहा"><Input value={draft.party_name_other || ""} onChange={e => updD({ party_name_other: e.target.value })} /></Field>
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
+
+                {draft.type === "सामाजिक" && (
+                  <>
+                    <SelectField label="संस्था" value={draft.social_org || ""} onChange={x => updD({ social_org: x, social_role: "" })} options={SOCIAL_ORGS.map((s: { name: string }) => s.name)} />
+                    {draft.social_org && (
+                      <SelectField label="पद" value={draft.social_role || ""} onChange={x => updD({ social_role: x })}
+                        options={SOCIAL_ORGS.find((s: { name: string; roles: string[] }) => s.name === draft.social_org)?.roles || []} />
+                    )}
+                  </>
+                )}
+              </div>
+            )}
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={close}>रद्द करा</Button>
+              <Button type="button" onClick={save}>पद जतन करा</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </CardContent>
+    </Card>
+  );
+}
+
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return <div className="space-y-1.5"><Label className="text-sm">{label}</Label>{children}</div>;
 }
