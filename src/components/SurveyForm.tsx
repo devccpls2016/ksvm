@@ -1295,6 +1295,204 @@ function FarmingToolsSection({ v, setV }: { v: SurveyFormValues; setV: React.Dis
   );
 }
 
+const LADKI_BAHIN_REASONS = [
+  "KYC पूर्ण केलेली नाही / KYC प्रलंबित आहे",
+  "आधार कार्ड व बँक खाते लिंक नाही",
+  "बँक खात्यात DBT सुविधा सक्रिय नाही",
+  "अर्जाची पडताळणी (Verification) प्रलंबित आहे",
+  "अर्जातील माहिती किंवा कागदपत्रांमध्ये त्रुटी आहे",
+  "बँक खाते निष्क्रिय / बंद / चुकीचे आहे",
+  "इतर",
+];
+
+function getFemaleNames(v: SurveyFormValues): string[] {
+  const list: string[] = [];
+  if (v.gender === "स्त्री" && v.head_name?.trim()) list.push(v.head_name.trim());
+  (v.members || []).forEach((m) => {
+    if (m.gender === "स्त्री" && m.name?.trim()) list.push(m.name.trim());
+  });
+  return Array.from(new Set(list));
+}
+
+function LadkiBahinBlock({
+  v, b, patch,
+}: {
+  v: SurveyFormValues;
+  b: NonNullable<SurveyFormValues["benefits_info"]>;
+  patch: (p: Partial<NonNullable<SurveyFormValues["benefits_info"]>>) => void;
+}) {
+  const femaleNames = getFemaleNames(v);
+  const beneficiaries = b.ladki_bahin_beneficiaries || [];
+  const nonBeneficiaries = b.ladki_bahin_non_beneficiaries || [];
+
+  const usedBenef = new Set(beneficiaries.map((x) => x.name));
+  const usedNon = new Set(nonBeneficiaries.map((x) => x.name));
+
+  function addBenef(name: string) {
+    if (!name || usedBenef.has(name)) return;
+    patch({ ladki_bahin_beneficiaries: [...beneficiaries, { name, regular: null }] });
+  }
+  function updBenef(i: number, p: Partial<typeof beneficiaries[number]>) {
+    const arr = beneficiaries.map((x, idx) => (idx === i ? { ...x, ...p } : x));
+    patch({ ladki_bahin_beneficiaries: arr });
+  }
+  function delBenef(i: number) {
+    patch({ ladki_bahin_beneficiaries: beneficiaries.filter((_, idx) => idx !== i) });
+  }
+  function addNon(name: string) {
+    if (!name || usedNon.has(name)) return;
+    patch({ ladki_bahin_non_beneficiaries: [...nonBeneficiaries, { name }] });
+  }
+  function updNon(i: number, p: Partial<typeof nonBeneficiaries[number]>) {
+    const arr = nonBeneficiaries.map((x, idx) => (idx === i ? { ...x, ...p } : x));
+    patch({ ladki_bahin_non_beneficiaries: arr });
+  }
+  function delNon(i: number) {
+    patch({ ladki_bahin_non_beneficiaries: nonBeneficiaries.filter((_, idx) => idx !== i) });
+  }
+
+  return (
+    <div className="border rounded-lg p-4 space-y-3 bg-card/50">
+      <div className="font-medium text-sm">
+        1. आपल्या घरामध्ये "मुख्यमंत्री लाडकी बहीण योजना" चे लाभार्थी आहेत का?
+      </div>
+      <YesNo
+        value={b.ladki_bahin}
+        onChange={(val) =>
+          patch({
+            ladki_bahin: val,
+            ...(val !== true ? { ladki_bahin_beneficiaries: [] } : {}),
+            ...(val !== false ? { ladki_bahin_non_beneficiaries: [] } : {}),
+          })
+        }
+      />
+
+      {femaleNames.length === 0 && b.ladki_bahin !== null && b.ladki_bahin !== undefined && (
+        <div className="text-xs text-muted-foreground italic pt-2 border-t">
+          टीप: कृपया आधी कुटुंब प्रमुख / सदस्य विभागात स्त्री सदस्यांची नोंद करा.
+        </div>
+      )}
+
+      {b.ladki_bahin === true && femaleNames.length > 0 && (
+        <div className="pt-3 border-t space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-end gap-2">
+            <div className="flex-1">
+              <Label className="text-sm mb-1.5 block">लाभार्थी सदस्य निवडा (स्त्री)</Label>
+              <Select value="" onValueChange={addBenef}>
+                <SelectTrigger><SelectValue placeholder="नाव निवडा व जोडा" /></SelectTrigger>
+                <SelectContent>
+                  {femaleNames.filter((n) => !usedBenef.has(n)).map((n) => (
+                    <SelectItem key={n} value={n}>{n}</SelectItem>
+                  ))}
+                  {femaleNames.filter((n) => !usedBenef.has(n)).length === 0 && (
+                    <div className="px-2 py-1.5 text-xs text-muted-foreground">सर्व नावे जोडली गेली आहेत</div>
+                  )}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {beneficiaries.map((row, i) => (
+            <div key={i} className="border rounded-md p-3 bg-background space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="font-medium text-sm">{row.name}</div>
+                <Button type="button" size="sm" variant="ghost" onClick={() => delBenef(i)}>
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+              <div>
+                <Label className="text-sm mb-1.5 block">या योजनेचा लाभ नियमितपणे मिळतो का?</Label>
+                <YesNo
+                  value={row.regular ?? null}
+                  onChange={(val) =>
+                    updBenef(i, { regular: val, ...(val !== false ? { reason: "", reason_other: "" } : {}) })
+                  }
+                />
+              </div>
+              {row.regular === false && (
+                <div className="space-y-2">
+                  <Label className="text-sm mb-1.5 block">
+                    लाभ मिळत नसल्यास मुख्य कारण
+                  </Label>
+                  <Select value={row.reason || ""} onValueChange={(x) => updBenef(i, { reason: x })}>
+                    <SelectTrigger><SelectValue placeholder="कारण निवडा" /></SelectTrigger>
+                    <SelectContent>
+                      {LADKI_BAHIN_REASONS.map((r) => (
+                        <SelectItem key={r} value={r}>{r}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {row.reason === "इतर" && (
+                    <Input
+                      value={row.reason_other || ""}
+                      onChange={(e) => updBenef(i, { reason_other: e.target.value })}
+                      placeholder="कारण नमूद करा"
+                    />
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {b.ladki_bahin === false && femaleNames.length > 0 && (
+        <div className="pt-3 border-t space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-end gap-2">
+            <div className="flex-1">
+              <Label className="text-sm mb-1.5 block">
+                लाभ न मिळणारे सदस्य निवडा (स्त्री)
+              </Label>
+              <Select value="" onValueChange={addNon}>
+                <SelectTrigger><SelectValue placeholder="नाव निवडा व जोडा" /></SelectTrigger>
+                <SelectContent>
+                  {femaleNames.filter((n) => !usedNon.has(n)).map((n) => (
+                    <SelectItem key={n} value={n}>{n}</SelectItem>
+                  ))}
+                  {femaleNames.filter((n) => !usedNon.has(n)).length === 0 && (
+                    <div className="px-2 py-1.5 text-xs text-muted-foreground">सर्व नावे जोडली गेली आहेत</div>
+                  )}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {nonBeneficiaries.map((row, i) => (
+            <div key={i} className="border rounded-md p-3 bg-background space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="font-medium text-sm">{row.name}</div>
+                <Button type="button" size="sm" variant="ghost" onClick={() => delNon(i)}>
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+              <div>
+                <Label className="text-sm mb-1.5 block">
+                  लाभ न मिळण्याचे मुख्य कारण
+                </Label>
+                <Select value={row.reason || ""} onValueChange={(x) => updNon(i, { reason: x })}>
+                  <SelectTrigger><SelectValue placeholder="कारण निवडा" /></SelectTrigger>
+                  <SelectContent>
+                    {LADKI_BAHIN_REASONS.map((r) => (
+                      <SelectItem key={r} value={r}>{r}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {row.reason === "इतर" && (
+                  <Input
+                    value={row.reason_other || ""}
+                    onChange={(e) => updNon(i, { reason_other: e.target.value })}
+                    placeholder="कारण नमूद करा"
+                  />
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function BenefitsSection({ v, setV }: { v: SurveyFormValues; setV: React.Dispatch<React.SetStateAction<SurveyFormValues>> }) {
   const b = v.benefits_info || {};
   function patch(p: Partial<typeof b>) {
@@ -1310,28 +1508,8 @@ function BenefitsSection({ v, setV }: { v: SurveyFormValues; setV: React.Dispatc
       <CardContent className="space-y-5 pt-6">
 
         {/* 1. Ladki Bahin */}
-        <div className="border rounded-lg p-4 space-y-3 bg-card/50">
-          <div className="font-medium text-sm">1. आपल्या घरामध्ये "मुख्यमंत्री लाडकी बहीण योजना" चे लाभार्थी आहेत का?</div>
-          <YesNo value={b.ladki_bahin} onChange={(val) => patch({ ladki_bahin: val, ...(val !== true ? { ladki_bahin_count: "", ladki_bahin_regular: null } : {}) })} />
-          {b.ladki_bahin === true && (
-            <div className="grid md:grid-cols-2 gap-3 pt-2 border-t">
-              <Field label="लाभार्थी संख्या (घरातील किती सदस्य)">
-                <Select value={b.ladki_bahin_count ? String(b.ladki_bahin_count) : ""} onValueChange={(x) => patch({ ladki_bahin_count: Number(x) })}>
-                  <SelectTrigger><SelectValue placeholder="निवडा" /></SelectTrigger>
-                  <SelectContent>
-                    {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
-                      <SelectItem key={n} value={String(n)}>{n}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </Field>
-              <div>
-                <Label className="text-sm mb-1.5 block">या योजनेचा लाभ नियमितपणे मिळतो का?</Label>
-                <YesNo value={b.ladki_bahin_regular} onChange={(val) => patch({ ladki_bahin_regular: val })} />
-              </div>
-            </div>
-          )}
-        </div>
+        <LadkiBahinBlock v={v} b={b} patch={patch} />
+
 
         {/* 2. Critical illness */}
         <div className="border rounded-lg p-4 space-y-3 bg-card/50">
