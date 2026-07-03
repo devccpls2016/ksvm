@@ -29,6 +29,20 @@ export const EDUCATION_TREE: EducationLevel[] = [
     streams: [{ stream: "—", courses: ["निरक्षर"] }],
   },
   {
+    level: "पूर्व-प्राथमिक (Pre-Primary)",
+    askInstitution: true,
+    streams: [
+      {
+        stream: "पूर्व-प्राथमिक शिक्षण",
+        courses: [
+          "Nursery (नर्सरी)",
+          "Jr. KG / LKG (ज्युनियर केजी)",
+          "Sr. KG / UKG (सिनियर केजी)",
+        ],
+      },
+    ],
+  },
+  {
     level: "प्राथमिक (Primary)",
     askInstitution: true,
     streams: [
