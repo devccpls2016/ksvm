@@ -36,6 +36,7 @@ const POLITICAL_PARTIES = [
 const YEAR_OPTIONS = Array.from({ length: 2050 - 1949 }, (_, i) => String(2050 - i));
 import type { SurveyFormValues, FamilyMember, Crop } from "@/lib/survey-types";
 import { emptySurvey } from "@/lib/survey-types";
+import { TranslateToggle } from "@/components/TranslateToggle";
 
 type Props = {
   initial?: Partial<SurveyFormValues>;
