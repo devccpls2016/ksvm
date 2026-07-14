@@ -10,10 +10,42 @@ declare global {
 }
 
 let scriptLoaded = false;
+let reactPatched = false;
+
+/**
+ * Google Translate wraps text nodes in <font> tags, which breaks React's
+ * reconciler (NotFoundError on removeChild / insertBefore) — dropdown
+ * options vanish, sections crash. Patch the DOM APIs to no-op safely
+ * when the node was moved out from under React by Google Translate.
+ */
+function patchReactDomForTranslate() {
+  if (reactPatched) return;
+  reactPatched = true;
+  if (typeof Node === "undefined") return;
+  const origRemoveChild = Node.prototype.removeChild;
+  Node.prototype.removeChild = function <T extends Node>(child: T): T {
+    if (child.parentNode !== this) {
+      if (child.parentNode) {
+        try { child.parentNode.removeChild(child); } catch { /* noop */ }
+      }
+      return child;
+    }
+    return origRemoveChild.call(this, child) as T;
+  } as typeof Node.prototype.removeChild;
+
+  const origInsertBefore = Node.prototype.insertBefore;
+  Node.prototype.insertBefore = function <T extends Node>(newNode: T, referenceNode: Node | null): T {
+    if (referenceNode && referenceNode.parentNode !== this) {
+      return origInsertBefore.call(this, newNode, null) as T;
+    }
+    return origInsertBefore.call(this, newNode, referenceNode) as T;
+  } as typeof Node.prototype.insertBefore;
+}
 
 function loadScript() {
   if (scriptLoaded) return;
   scriptLoaded = true;
+  patchReactDomForTranslate();
   window.googleTranslateElementInit = () => {
     // eslint-disable-next-line new-cap
     new window.google.translate.TranslateElement(
