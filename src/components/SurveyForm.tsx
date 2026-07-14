@@ -36,6 +36,7 @@ const POLITICAL_PARTIES = [
 const YEAR_OPTIONS = Array.from({ length: 2050 - 1949 }, (_, i) => String(2050 - i));
 import type { SurveyFormValues, FamilyMember, Crop } from "@/lib/survey-types";
 import { emptySurvey } from "@/lib/survey-types";
+import { TranslateToggle } from "@/components/TranslateToggle";
 
 type Props = {
   initial?: Partial<SurveyFormValues>;
@@ -143,6 +144,9 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnl
 
   return (
     <form onSubmit={handle} className="space-y-7">
+      <div className="flex justify-end">
+        <TranslateToggle />
+      </div>
       <fieldset disabled={readOnly} className={readOnly ? "space-y-7 [&_*]:!cursor-default" : "space-y-7 contents"}>
 
       {/* A. भौगोलिक माहिती */}
