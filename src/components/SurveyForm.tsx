@@ -143,6 +143,9 @@ export function SurveyForm({ initial, onSubmit, submitting, submitLabel, readOnl
 
   return (
     <form onSubmit={handle} className="space-y-7">
+      <div className="flex justify-end">
+        <TranslateToggle />
+      </div>
       <fieldset disabled={readOnly} className={readOnly ? "space-y-7 [&_*]:!cursor-default" : "space-y-7 contents"}>
 
       {/* A. भौगोलिक माहिती */}
