@@ -23,7 +23,7 @@ function patchReactDomForTranslate() {
   reactPatched = true;
   if (typeof Node === "undefined") return;
   const origRemoveChild = Node.prototype.removeChild;
-  Node.prototype.removeChild = function <T extends Node>(child: T): T {
+  Node.prototype.removeChild = function <T extends Node>(this: Node, child: T): T {
     if (child.parentNode !== this) {
       if (child.parentNode) {
         try { child.parentNode.removeChild(child); } catch { /* noop */ }
@@ -34,7 +34,7 @@ function patchReactDomForTranslate() {
   } as typeof Node.prototype.removeChild;
 
   const origInsertBefore = Node.prototype.insertBefore;
-  Node.prototype.insertBefore = function <T extends Node>(newNode: T, referenceNode: Node | null): T {
+  Node.prototype.insertBefore = function <T extends Node>(this: Node, newNode: T, referenceNode: Node | null): T {
     if (referenceNode && referenceNode.parentNode !== this) {
       return origInsertBefore.call(this, newNode, null) as T;
     }
