@@ -15,7 +15,7 @@ import {
 // Each section: { badge, title:{mr,en}, groups:[{ title:{mr,en}, fields:[...], notes:[...] }] }
 // Field: { name:{mr,en}, type:{mr,en}, options?:[{mr,en}], logic?:[{mr,en}] }
 
-const sections = [
+export const sections = [
   {
     badge: "A",
     title: { mr: "भौगोलिक माहिती", en: "Geographic Information" },
@@ -791,5 +791,7 @@ async function write(lang, filename) {
   console.log("Wrote", outPath, buf.length, "bytes");
 }
 
-await write("en", "Survey-Form-Structure-English.docx");
-await write("mr", "Survey-Form-Structure-Marathi.docx");
+if (import.meta.url === `file://${process.argv[1]}`) {
+  await write("en", "Survey-Form-Structure-English.docx");
+  await write("mr", "Survey-Form-Structure-Marathi.docx");
+}
