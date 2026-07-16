@@ -15,7 +15,7 @@ import {
 // Each section: { badge, title:{mr,en}, groups:[{ title:{mr,en}, fields:[...], notes:[...] }] }
 // Field: { name:{mr,en}, type:{mr,en}, options?:[{mr,en}], logic?:[{mr,en}] }
 
-export const sections = [
+const sections = [
   {
     badge: "A",
     title: { mr: "भौगोलिक माहिती", en: "Geographic Information" },
