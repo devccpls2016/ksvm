@@ -777,7 +777,7 @@ function buildDoc(lang) {
           margin: { top: 900, right: 900, bottom: 900, left: 900 },
         },
       },
-      children: [...cover, new Paragraph({ children: [new PageBreak()] }), ...body],
+      children: [...cover, ...body],
     }],
   });
 }
