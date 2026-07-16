@@ -756,7 +756,7 @@ function buildDoc(lang) {
     })),
   ];
 
-  const body = sections.flatMap((s, i) => renderSection(s, lang, i === 0 ? false : false));
+  const body = sections.flatMap((s, i) => renderSection(s, lang, i === 0));
 
   return new Document({
     styles: {
